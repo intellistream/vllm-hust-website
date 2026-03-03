@@ -200,6 +200,14 @@ install_hooks() {
         else
             echo -e "${YELLOW}⚠️ pre-push template not found, skipping${NC}"
         fi
+
+        if [ -f "$TEMPLATE_DIR/post-commit" ]; then
+            ln -sf "../../hooks/post-commit" "$HOOKS_DIR/post-commit"
+            chmod +x "$HOOKS_DIR/post-commit"
+            echo -e "${GREEN}✓ Installed post-commit hook${NC}"
+        else
+            echo -e "${YELLOW}⚠️ post-commit template not found, skipping${NC}"
+        fi
     else
         echo -e "${YELLOW}⚠️ .git directory not found, skipping hooks installation${NC}"
     fi
