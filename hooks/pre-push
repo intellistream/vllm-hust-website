@@ -4,7 +4,7 @@
 # Flow:
 #   1. Block direct push to main branch
 #   2. Only proceed for main-dev pushes (other branches: skip cleanly)
-#   3. Auto-bump version if unchanged in recent commits
+#   3. If publish is requested and the version already exists on PyPI, bump BUILD digit
 #   4. Exit 0 → git push proceeds immediately
 #   5. Background job publishes to PyPI after push finishes only when publish is explicitly requested
 #
@@ -279,16 +279,17 @@ if [ -z "$CURRENT_VERSION" ] || [ "$CURRENT_VERSION" = "unknown" ]; then
 fi
 
 # --- Version / Publish ---
-# post-commit already bumps the BUILD digit on every commit, so by the time
-# we push the version is always current.  The only thing pre-push needs to
-# guard against is re-pushing a version that was already published to PyPI
-# (e.g. after a failed push/publish on a previous attempt).
+PUBLISH_REQUESTED=false
+if has_publish_flag; then
+    PUBLISH_REQUESTED=true
+fi
 
-# Quick PyPI check (5s timeout, non-blocking)
-# Exit codes: 0=version exists on PyPI, 1=not found, 2=network/other error
-PYPI_CHECK_RESULT=1
-if [ "$PACKAGE_NAME" != "unknown" ] && command -v python3 &>/dev/null; then
-    python3 - "$PACKAGE_NAME" "$CURRENT_VERSION" <<'PY' && PYPI_CHECK_RESULT=0 || PYPI_CHECK_RESULT=$?
+if [ "$PUBLISH_REQUESTED" = true ]; then
+    # Quick PyPI check (5s timeout, non-blocking)
+    # Exit codes: 0=version exists on PyPI, 1=not found, 2=network/other error
+    PYPI_CHECK_RESULT=1
+    if [ "$PACKAGE_NAME" != "unknown" ] && command -v python3 &>/dev/null; then
+        python3 - "$PACKAGE_NAME" "$CURRENT_VERSION" <<'PY' && PYPI_CHECK_RESULT=0 || PYPI_CHECK_RESULT=$?
 import json, sys, urllib.request
 try:
     with urllib.request.urlopen(f"https://pypi.org/pypi/{sys.argv[1]}/json", timeout=5) as r:
@@ -300,27 +301,28 @@ except (urllib.error.URLError, OSError, TimeoutError):
 except Exception:
     sys.exit(2)
 PY
-fi
-
-if [ "$PYPI_CHECK_RESULT" -eq 0 ]; then
-    new_version=$(bump_patch "$CURRENT_VERSION")
-    old_version="$CURRENT_VERSION"
-    echo -e "${YELLOW}⚠ ${PACKAGE_NAME} ${CURRENT_VERSION} already on PyPI — auto-bumping: ${old_version} → ${new_version}${NC}"
-    if update_version "$CURRENT_VERSION" "$new_version"; then
-        git commit -m "chore: bump version to ${new_version}"
-        CURRENT_VERSION="$new_version"
-        echo -e "${GREEN}✓ Bumped to ${new_version}${NC}"
-    else
-        exit 1
     fi
-elif [ "$PYPI_CHECK_RESULT" -eq 2 ]; then
-    echo -e "${DIM}(PyPI check skipped — network/timeout)${NC}"
+
+    if [ "$PYPI_CHECK_RESULT" -eq 0 ]; then
+        new_version=$(bump_patch "$CURRENT_VERSION")
+        old_version="$CURRENT_VERSION"
+        echo -e "${YELLOW}⚠ ${PACKAGE_NAME} ${CURRENT_VERSION} already on PyPI — auto-bumping for requested publish: ${old_version} → ${new_version}${NC}"
+        if update_version "$CURRENT_VERSION" "$new_version"; then
+            git commit -m "chore: bump version to ${new_version}"
+            CURRENT_VERSION="$new_version"
+            echo -e "${GREEN}✓ Bumped to ${new_version}${NC}"
+        else
+            exit 1
+        fi
+    elif [ "$PYPI_CHECK_RESULT" -eq 2 ]; then
+        echo -e "${DIM}(PyPI check skipped — network/timeout)${NC}"
+    fi
 fi
 
 echo -e "${GREEN}✓ [${REPO_NAME}] Version: ${CURRENT_VERSION}${NC}"
 
 
-if ! has_publish_flag; then
+if [ "$PUBLISH_REQUESTED" != true ]; then
     echo -e "${DIM}  (publish disabled by default — use 'git push -o ${PUBLISH_TRIGGER_FLAG} origin main-dev' to publish)${NC}"
 elif has_pypi_token; then
     echo -e "${BLUE}📦 Publish requested for ${CURRENT_VERSION} via push flag...${NC}"
