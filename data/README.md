@@ -1,15 +1,15 @@
-# sageLLM Leaderboard Data Model
+# vllm-hust Leaderboard Data Model
 
 ## Source Of Truth
 
-- Local benchmark outputs: owned by `sagellm-benchmark`. The stable publishable interface is `leaderboard_manifest.json` plus per-entry `*_leaderboard.json` files emitted from canonical `execution_result` artifacts.
+- Local benchmark outputs: owned by `vllm-hust-benchmark`. The stable publishable interface is `leaderboard_manifest.json` plus per-entry `*_leaderboard.json` files emitted from canonical `execution_result` artifacts.
 - HF dataset: the primary distribution surface for the website. It should publish `leaderboard_single.json`, `leaderboard_multi.json`, `leaderboard_compare.json`, and `last_updated.json` snapshots derived from validated standard leaderboard artifacts.
 - Website `data/`: a compatibility cache for checked-in snapshots and offline development. It should not be edited by hand and should not ingest raw compare directory layouts.
 
 ## Update Policy
 
 - Preferred path: benchmark `publish` validates the standard export boundary and uploads only the canonical HF dataset snapshots. The website consumes those HF snapshot files.
-- Offline compatibility path: run `sagellm-benchmark/sync_results_to_website.sh`, which calls `scripts/aggregate_results.py` on benchmark `leaderboard_manifest.json` exports and regenerates the same snapshot files locally, including `leaderboard_compare.json` for direct head-to-head rendering.
+- Offline compatibility path: run `vllm-hust-benchmark/sync_results_to_website.sh`, which calls `scripts/aggregate_results.py` on benchmark `leaderboard_manifest.json` exports and regenerates the same snapshot files locally, including `leaderboard_compare.json` for direct head-to-head rendering.
 - Fail-fast rule: invalid leaderboard entries or malformed manifests must be fixed at the benchmark export side; do not patch website data by hand.
 
 ## Publish Boundary
@@ -77,7 +77,7 @@ ______________________________________________________________________
 
 - `leaderboard_compare.json` is a derived website artifact, not a second benchmark result schema.
 - It is computed only from validated `leaderboard_manifest.json` + `*_leaderboard.json` exports.
-- Its purpose is to let the homepage render direct `sageLLM vs vLLM` or `vLLM-Ascend` gap cards without hand-written patches.
+- Its purpose is to let the homepage render direct `vllm-hust vs vLLM` or `vLLM-Ascend` gap cards without hand-written patches.
 
 ### 1. Protocol v0.1 对齐
 
@@ -99,18 +99,18 @@ ______________________________________________________________________
 
 ### 3. 版本追踪
 
-记录所有 sageLLM 组件版本：
+记录所有 vllm-hust 组件版本：
 
-- isagellm (umbrella)
-- isagellm-protocol
-- isagellm-backend
-- isagellm-core
-- isagellm-control-plane
-- isagellm-gateway
-- isagellm-kv-cache
-- isagellm-comm (多机必填)
-- isagellm-compression
-- isagellm-benchmark
+- ivllm-hust (umbrella)
+- ivllm-hust-protocol
+- ivllm-hust-backend
+- ivllm-hust-core
+- ivllm-hust-control-plane
+- ivllm-hust-gateway
+- ivllm-hust-kv-cache
+- ivllm-hust-comm (多机必填)
+- ivllm-hust-compression
+- ivllm-hust-benchmark
 
 ### 4. 可复现性
 
@@ -135,7 +135,7 @@ $ python validate_schema.py examples/single_node_example.json
 ✅ Validation passed!
 
 ✅ Data structure:
-   - sageLLM version: 0.2.3.3
+   - vllm-hust version: 0.2.3.3
    - Hardware: NVIDIA A100-80GB
    - Model: Qwen2-7B (7B)
    - Configuration: Single-node
@@ -151,7 +151,7 @@ $ python validate_schema.py examples/multi_node_example.json
 ✅ Validation passed!
 
 ✅ Data structure:
-   - sageLLM version: 0.2.3.3
+   - vllm-hust version: 0.2.3.3
    - Hardware: Huawei Ascend 910B
    - Model: Llama-3-70B (70B)
    - Configuration: Multi-node
@@ -235,7 +235,7 @@ ______________________________________________________________________
 ### 数据导入任务
 
 1. 开发数据转换脚本（`scripts/import_benchmark.py`）
-1. 将 `sagellm-benchmark` 输出转换为 leaderboard 格式
+1. 将 `vllm-hust-benchmark` 输出转换为 leaderboard 格式
 1. 自动补充元数据（版本号、时间戳、复现命令）
 1. 产出真实数据文件（5-7 条单机 + 2-3 条多机）
 
@@ -254,7 +254,7 @@ ______________________________________________________________________
 
 ### 1. 在 benchmark 侧生成标准导出物
 
-使用 `sagellm-benchmark run` / `compare` / `vllm-compare run` 生成：
+使用 `vllm-hust-benchmark run` / `compare` / `vllm-compare run` 生成：
 
 - `*.canonical.json`
 - `*_leaderboard.json`
@@ -268,7 +268,7 @@ ______________________________________________________________________
 
 ```bash
 # website 离线聚合（基于 leaderboard_manifest.json）
-python scripts/aggregate_results.py --source-dir /path/to/sagellm-benchmark/outputs
+python scripts/aggregate_results.py --source-dir /path/to/vllm-hust-benchmark/outputs
 
 # 验证聚合后的 website 快照
 python validate_schema.py data/leaderboard_single.json data/leaderboard_multi.json
@@ -278,7 +278,7 @@ python validate_schema.py data/leaderboard_single.json data/leaderboard_multi.js
 
 ### 3. 分发数据
 
-- HF 主路径：使用 `sagellm-benchmark upload-hf --input /path/to/outputs` 上传标准导出结果并刷新 HF 快照。
+- HF 主路径：使用 `vllm-hust-benchmark upload-hf --input /path/to/outputs` 上传标准导出结果并刷新 HF 快照。
 - Website 离线路径：仅在需要本地或离线预览时，运行 `sync_results_to_website.sh` 生成 `data/leaderboard_single.json` / `data/leaderboard_multi.json` / `data/last_updated.json`。
 
 ### 4. 提交更改
@@ -298,4 +298,4 @@ ______________________________________________________________________
 如有疑问，请联系：
 
 - **负责人**: IntelliStream Team
-- **项目文档**: sagellm-docs
+- **项目文档**: vllm-hust-docs

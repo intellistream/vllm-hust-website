@@ -19,9 +19,8 @@ def test_index_contains_expected_project_markers() -> None:
     root = Path(__file__).resolve().parents[1]
     text = (root / "index.html").read_text(encoding="utf-8")
 
-    assert "sageLLM" in text
+    assert "vllm-hust" in text
     assert "leaderboard" in text.lower()
-    assert "SageLLM Workstation" in text
     assert "长征 Desktop 下载" not in text
 
 

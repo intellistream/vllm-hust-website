@@ -16,7 +16,7 @@ python data/validate_schema.py \
    - accepts entry object or entry array
 1. **Entry required keys**
    - `entry_id`, `engine`, `engine_version`, `config_type`, `hardware`, `model`, `workload`, `metrics`,
-     `versions`, `environment`, `metadata`
+   `constraints`, `versions`, `environment`, `metadata`
 1. **Hardware minimum**
    - `vendor`, `chip_model`, `chip_count`
    - at least one of `interconnect` / `intra_node_interconnect`
@@ -26,6 +26,11 @@ python data/validate_schema.py \
 1. **Cluster rules**
    - single-node: `cluster = null`
    - multi-node: object with `node_count>=2`, `comm_backend`, `topology_type`
+1. **Hard constraints rules**
+   - `constraints.scenario_source` must be `vllm-benchmark`
+   - `constraints.accountable_scope` must include domestic chip class, 7B-13B model band,
+     representative business scenario, baseline engine
+   - all hard-constraint metric fields are mandatory and must pass type/range checks
 1. **Version rules**
    - required `protocol`, `backend`, `core`
    - semver-like `X.Y.Z(.W)` or `N/A`

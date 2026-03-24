@@ -22,5 +22,5 @@ SOFTWARE.
 
 ---
 
-Note: This license applies to the demo website materials only.
-sageLLM core engine is proprietary software.
+Note: This license applies to the demo website materials in this repository only.
+Runtime and serving engine components referenced by this website may live in other repositories with their own licenses.

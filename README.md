@@ -2,34 +2,34 @@
 
 <!-- BEGIN:VERSION_META -->
 
-**🎉 sageLLM 0.5 正式发布！** v0.5 的发布标志着 sageLLM 从“功能可用”进入“工程可用”阶段：命令入口统一、推理链路更完整、安装与依赖管理更稳定、发布与版本治理更可靠。
+**vllm-hust 项目概览** vllm-hust 围绕上游 vLLM 展开，聚焦国产算力适配、AGI4S 服务场景和 benchmark 驱动验证。
 
-## 0.5 Release Highlights
+## Project Highlights
 
-- ✅ **统一 CLI 工具**：`sagellm` 主命令（保留 `sage-llm` 兼容）
-- ✅ **CPU-First 设计**：所有功能默认 CPU，可选 GPU/NPU 加速
-- ✅ **Ascend NPU 原生支持**：Ascend 后端引擎可用，支持异构部署
+- ✅ **上游兼容入口**：围绕 vLLM 兼容接口组织 CLI、服务与 benchmark 链路
+- ✅ **国产算力使能**：面向 Ascend 等国产硬件扩展后端与部署能力
+- ✅ **AGI4S 服务优化**：关注长上下文、工具调用与结构化输出场景
 - ✅ **OpenAI 兼容 API**：完整支持 `/v1/chat/completions` 和流式响应
 - ✅ **安装与依赖治理增强**：发布链路与版本一致性检查更稳健
-- ✅ **模块化架构**：Protocol-first, Fail-fast, Observable
+- ✅ **Benchmark 驱动优化**：通过对比数据持续验证服务性能与稳定性
 
-## Quick Start (v0.5)
+## Quick Start
 
 ```bash
 # 安装
-pip install isagellm
+pip install ivllm-hust
 
 # Hello World
-sagellm hello
+vllm-hust hello
 
 # 运行推理 (CPU 默认)
-sagellm run -p "Hello, world!" --max-tokens 32
+vllm-hust run -p "Hello, world!" --max-tokens 32
 
 # 运行推理 (Ascend NPU)
-sagellm run -p "Hello AI" --backend cuda
+vllm-hust run -p "Hello AI" --backend cuda
 
 # 启动 OpenAI 兼容服务器
-sagellm serve --port 8000
+vllm-hust serve --port 8000
 ```
 
 _该区块由 `data/version_meta.json` 驱动，运行 `python scripts/sync_version_meta.py` 自动更新。_
@@ -43,6 +43,11 @@ _该区块由 `data/version_meta.json` 驱动，运行 `python scripts/sync_vers
 - Auto sync workflow: `.github/workflows/sync-version-meta.yml`
 - Consistency/stale check: `bash scripts/check_stale_versions.sh`
 - 维护说明：`docs/VERSION_METADATA.md`
+
+## Architecture And Planning Notes
+
+- vLLM 实际运行时架构与 9 个子任务映射：`docs/ARCHITECTURE_TASK_MAPPING.md`
+- 首阶段实施优先级与验证清单：`docs/IMPLEMENTATION_PRIORITIES.md`
 
 ## Benchmark Data Chain
 
@@ -60,13 +65,22 @@ The only supported leaderboard data chain is:
 
 Homepage rendering consumes only those snapshot files, with `leaderboard_compare.json` providing neutral engine-vs-engine head-to-head views.
 
+`leaderboard_compare.json` now also carries a mandatory hard-constraint snapshot derived from validated entries:
+
+- single-chip effective utilization >= 90%
+- typical scene throughput >= 2x baseline and TTFT/TPOT reduction > 20%
+- long-context (>=32K) throughput + TTFT/TPOT P95/P99 stability
+- single-business token-cost reduction >= 30% with high multi-tenant utilization
+
+All hard-constraint records must declare `constraints.scenario_source = vllm-benchmark`, using the vLLM benchmark inheritance path as the accountable scenario and dataset source.
+
 ## Repository Quickstart
 
 本仓库提供统一的 `quickstart.sh` 模式入口：
 
 - `--standard`：标准模式，依赖优先从 PyPI 安装（稳定/发布导向）
 - `--dev`：开发模式，在 standard 基础上尝试本地 editable 覆盖（使用 `--no-deps`）
-- 安装前会执行同前缀包动态清理（默认前缀：`isagellm-website`）
+- 安装前会执行同前缀包动态清理（默认前缀：`ivllm-hust-website`）
 
 ```bash
 # 查看帮助

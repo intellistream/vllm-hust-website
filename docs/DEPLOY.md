@@ -6,7 +6,7 @@
 # On GitHub.com:
 # 1. Create new repository: intellistream/vllm-hust-website
 # 2. Make it PUBLIC ✅
-# 3. Add description: "sageLLM Demo Website - Interactive inference speed showcase"
+# 3. Add description: "vllm-hust website - benchmark-driven serving showcase for domestic hardware"
 ```
 
 ### 2. Push to GitHub
@@ -36,13 +36,13 @@ https://intellistream.github.io/vllm-hust-website/
 
 ### 5. Optional: Custom Domain
 
-If you have a domain (e.g., sagellm.ai):
+If you have a domain (e.g., vllm-hust.sage.org.ai):
 
 ```
 Settings → Pages → Custom domain:
-  - Enter: sagellm.ai
+  - Enter: vllm-hust.sage.org.ai
   - Add CNAME record in DNS:
-    sagellm.ai → intellistream.github.io
+    vllm-hust.sage.org.ai → intellistream.github.io
 ```
 
 ______________________________________________________________________

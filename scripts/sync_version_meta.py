@@ -52,26 +52,29 @@ def _render_readme_block(meta: dict[str, Any]) -> str:
     release = meta.get("release", {}) if isinstance(meta, dict) else {}
     quickstart = meta.get("quickstart", {}) if isinstance(meta, dict) else {}
 
-    headline = release.get("headline_zh", "🎉 sageLLM 0.5 正式发布")
-    message = release.get("message_zh", "v0.5 标志着 sageLLM 进入工程可用阶段。")
-    quickstart_title = quickstart.get("title_zh", "🚀 Quick Start (v0.5)")
-    install_command = quickstart.get("install_command", "pip install isagellm")
+    headline = release.get("headline_zh", "vllm-hust 项目概览")
+    message = release.get(
+        "message_zh",
+        "vllm-hust 围绕上游 vLLM 展开，聚焦国产算力适配、AGI4S 服务场景和 benchmark 驱动验证。",
+    )
+    quickstart_title = quickstart.get("title_zh", "🚀 Quick Start")
+    install_command = quickstart.get("install_command", "pip install ivllm-hust")
     run_command = quickstart.get(
-        "run_command", 'sagellm run -p "Hello AI" --backend cuda'
+        "run_command", 'vllm-hust run -p "Hello AI" --backend cuda'
     )
 
     return "\n".join(
         [
-            f"**{headline}！** {message}",
+            f"**{headline}** {message}",
             "",
-            "## 0.5 Release Highlights",
+            "## Project Highlights",
             "",
-            "- ✅ **统一 CLI 工具**：`sagellm` 主命令（保留 `sage-llm` 兼容）",
-            "- ✅ **CPU-First 设计**：所有功能默认 CPU，可选 GPU/NPU 加速",
-            "- ✅ **Ascend NPU 原生支持**：Ascend 后端引擎可用，支持异构部署",
+            "- ✅ **上游兼容入口**：围绕 vLLM 兼容接口组织 CLI、服务与 benchmark 链路",
+            "- ✅ **国产算力使能**：面向 Ascend 等国产硬件扩展后端与部署能力",
+            "- ✅ **AGI4S 服务优化**：关注长上下文、工具调用与结构化输出场景",
             "- ✅ **OpenAI 兼容 API**：完整支持 `/v1/chat/completions` 和流式响应",
             "- ✅ **安装与依赖治理增强**：发布链路与版本一致性检查更稳健",
-            "- ✅ **模块化架构**：Protocol-first, Fail-fast, Observable",
+            "- ✅ **Benchmark 驱动优化**：通过对比数据持续验证服务性能与稳定性",
             "",
             f"## {quickstart_title.replace('🚀 ', '')}",
             "",
@@ -80,16 +83,16 @@ def _render_readme_block(meta: dict[str, Any]) -> str:
             install_command,
             "",
             "# Hello World",
-            "sagellm hello",
+            "vllm-hust hello",
             "",
             "# 运行推理 (CPU 默认)",
-            'sagellm run -p "Hello, world!" --max-tokens 32',
+            'vllm-hust run -p "Hello, world!" --max-tokens 32',
             "",
             "# 运行推理 (Ascend NPU)",
             run_command,
             "",
             "# 启动 OpenAI 兼容服务器",
-            "sagellm serve --port 8000",
+            "vllm-hust serve --port 8000",
             "```",
             "",
             "_该区块由 `data/version_meta.json` 驱动，运行 `python scripts/sync_version_meta.py` 自动更新。_",

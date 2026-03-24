@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sageLLM - Modular LLM Inference for Domestic Computing Power</title>
+    <title>vllm-hust - Modular LLM Inference for Domestic Computing Power</title>
 
     <!-- Dependencies -->
     <link
@@ -1149,245 +1149,27 @@
         </button>
 
         <div class="badges">
-          <span class="badge" data-i18n="badge_perf">🔬 Scientific Discovery LLMs</span>
-          <span class="badge" data-i18n="badge_ascend">🇨🇳 Domestic Hardware First</span>
-          <span class="badge" data-i18n="badge_private">📊 Benchmark-Driven Compare</span>
+          <span class="badge" data-i18n="badge_ascend">🇨🇳 Domestic Hardware</span>
+          <span class="badge" data-i18n="badge_private">📊 Benchmark First</span>
         </div>
-        <h1>sageLLM</h1>
+        <h1>vllm-hust</h1>
         <p class="subtitle" data-i18n="subtitle">
-          Built for scientific discovery models, optimized for domestic hardware, and benchmarked against alternative engines.
+          Upstream-compatible vLLM serving, measured on real benchmark workloads.
         </p>
 
         <div class="hero-install">
-          <code>pip install isagellm</code>
+          <code>pip install ivllm-hust</code>
         </div>
       </header>
-
-      <div class="launchpad-grid">
-        <div class="demo-section">
-          <div class="section-kicker" data-i18n="demo_kicker">Live Path</div>
-          <h2 data-i18n="demo_title">⚡ Live Inference Demo</h2>
-          <p data-i18n="demo_desc">
-            Real-time streaming response powered by sageLLM engine (CPU/CUDA/Ascend backends
-            available).
-          </p>
-
-          <div
-            class="demo-container"
-            style="border: 1px solid #333; border-radius: 8px; overflow: hidden; background: #000"
-          >
-            <div class="demo-title-bar" id="demo-title-bar">📺 sagellm run --backend ascend</div>
-
-            <div
-              id="demo-player"
-              style="
-                width: 100%;
-                min-height: 400px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: #000;
-              "
-            >
-              <span id="demo-loading-placeholder" style="color: #888; font-family: monospace">Loading terminal demo...</span>
-            </div>
-          </div>
-
-          <div style="margin-top: 20px; display: grid; gap: 10px">
-            <div style="color: #666; margin-bottom: 5px" data-i18n="start_api">
-              # Start API server
-            </div>
-            <div
-              style="
-                background: #f4f6f8;
-                padding: 12px;
-                border-radius: 12px;
-                font-family: monospace;
-                border: 1px solid #e2e8f0;
-              "
-            >
-              <span style="color: #667eea">$</span> sagellm serve --port 8000 --backend ascend
-            </div>
-          </div>
-
-          <div style="margin-top: 28px; text-align: left">
-            <a
-              href="https://github.com/intellistream"
-              class="cta-button"
-              style="
-                text-decoration: none;
-                background: #667eea;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 10px;
-                margin: 0 10px 0 0;
-                font-weight: 500;
-              "
-              data-i18n="cta_docs"
-              >📚 Documentation</a
-            >
-            <a
-              href="https://github.com/intellistream"
-              class="cta-button"
-              style="
-                text-decoration: none;
-                background: #0f172a;
-                color: white;
-                padding: 10px 20px;
-                border-radius: 10px;
-                margin: 0;
-                font-weight: 500;
-              "
-              data-i18n="cta_github"
-              >💻 GitHub</a
-            >
-          </div>
-        </div>
-
-        <div class="section quickstart-section">
-          <div class="section-kicker" data-i18n="quickstart_kicker">Launch</div>
-          <h2 id="quickstart-title">🚀 Quick Start (v0.5)</h2>
-          <p id="quickstart-description" style="margin-bottom: 0">
-            Three commands to first token.
-          </p>
-
-          <div class="quickstart-card">
-            <div class="quickstart-steps">
-              <div class="quickstart-step">
-                <div id="quickstart-step-install" class="quickstart-step-title">📦 1. Pip Install</div>
-                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-install-command">pip install isagellm</span></span>
-              </div>
-
-              <div class="quickstart-step">
-                <div id="quickstart-step-setup" class="quickstart-step-title">🔧 2. Setup Backend</div>
-                <span class="quickstart-command"><span id="quickstart-setup-comment" style="color: #94a3b8"># Install CUDA, Ascend, or CPU backend automatically</span></span>
-                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-setup-command">sagellm install cuda</span> <span id="quickstart-setup-hint" style="color: #94a3b8"># or ascend / cpu</span></span>
-              </div>
-
-              <div class="quickstart-step">
-                <div id="quickstart-step-run" class="quickstart-step-title">⚡ 3. Run Inference</div>
-                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-run-command">sagellm run -p "Hello AI" --backend cuda</span></span>
-              </div>
-            </div>
-
-            <div class="quickstart-note">
-              <strong id="quickstart-smart-title">💡 Smart Detection:</strong>
-              <span id="quickstart-smart-detection"
-                >v0.5 automatically detects if you're missing dependencies for your hardware and
-                suggests the correct
-                <code><span id="quickstart-smart-command">sagellm install</span></code>
-                command.</span
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <h2 data-i18n="workstation_title">🖥️ SageLLM Workstation</h2>
-        <p data-i18n="workstation_desc">
-          面向本地部署场景的统一工作台界面，集中呈现会话、模型与基础运行信息。
-        </p>
-
-        <div class="workstation-layout">
-          <div class="workstation-shell">
-            <div class="workstation-window">
-              <div class="workstation-topbar">
-                <div class="workstation-dots">
-                  <span></span><span></span><span></span>
-                </div>
-                <div style="font-size: 0.9em; font-weight: 600">SageLLM Workstation</div>
-                <div class="workstation-pill" data-i18n="workstation_status">Overview</div>
-              </div>
-
-              <div class="workstation-body">
-                <div class="workstation-side">
-                  <div style="font-weight: 700; color: #1e293b" data-i18n="workstation_panel_title">
-                    实时指标面板
-                  </div>
-                  <div style="color: #64748b; font-size: 0.86em; margin-top: 4px" data-i18n="workstation_panel_desc">
-                    对话状态、模型信息与性能趋势同屏展示
-                  </div>
-
-                  <div class="metric-stack">
-                    <div class="metric-mini">
-                      <span data-i18n="workstation_metric_1_label">流式吞吐</span>
-                      <strong>18.6 tok/s</strong>
-                      <div class="metric-bar"><span class="metric-fill" style="width: 64%"></span></div>
-                    </div>
-                    <div class="metric-mini">
-                      <span data-i18n="workstation_metric_2_label">首 token 时延</span>
-                      <strong>326 ms</strong>
-                      <div class="metric-bar"><span class="metric-fill" style="width: 42%"></span></div>
-                    </div>
-                    <div class="metric-mini">
-                      <span data-i18n="workstation_metric_3_label">设备利用率</span>
-                      <strong>72%</strong>
-                      <div class="metric-bar"><span class="metric-fill" style="width: 72%"></span></div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="workstation-chat">
-                  <div class="chat-row user">
-                    <div class="chat-bubble" data-i18n="workstation_user_prompt">
-                      帮我概括一下当前服务状态。
-                    </div>
-                  </div>
-
-                  <div class="chat-row assistant">
-                    <div class="chat-bubble">
-                      <span class="typing-line" data-i18n="workstation_reply_line1"
-                        >当前模型已加载，可通过统一入口发起会话请求。</span
-                      >
-                    </div>
-                  </div>
-
-                  <div class="chat-row assistant">
-                    <div class="chat-bubble">
-                      <span class="typing-line delay" data-i18n="workstation_reply_line2"
-                        >界面同时展示模型信息、基础指标与对话记录。</span
-                      >
-                    </div>
-                  </div>
-
-                  <div class="workstation-input">
-                    <span style="color: #94a3b8">💬</span>
-                    <span style="color: #64748b" data-i18n="workstation_input_hint"
-                      >输入问题并实时查看流式输出…</span
-                    >
-                    <span class="send-btn" data-i18n="workstation_send">发送</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="workstation-copy">
-            <div class="arch-card">
-              <strong data-i18n="workstation_card_title">产品结构</strong>
-              <ul class="bullets">
-                <li data-i18n="workstation_bullet_1">左侧展示基础运行指标</li>
-                <li data-i18n="workstation_bullet_2">中部保留统一会话窗口</li>
-                <li data-i18n="workstation_bullet_3">顶部集中呈现模型与页面状态</li>
-              </ul>
-            </div>
-
-            <div class="workstation-note" data-i18n="workstation_note">
-              适用于本地化部署场景的推理工作台展示界面。
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- Leaderboard Section -->
       <div class="leaderboard-section" id="leaderboard">
         <div class="leaderboard-heading">
           <div>
-            <div class="leaderboard-eyebrow" id="leaderboard-eyebrow">Benchmark Atlas</div>
+            <div class="leaderboard-eyebrow" id="leaderboard-eyebrow">vLLM Benchmark</div>
             <h2 id="leaderboard-title">Performance Leaderboard</h2>
             <p id="leaderboard-description">
-              Use apples-to-apples comparisons to validate real serving performance across multiple LLM inference engines and hardware targets.
+              Built from vLLM benchmark artifacts to compare real serving performance across engines under aligned model, hardware, precision, and workload settings.
             </p>
           </div>
           <div class="leaderboard-schema-pill">
@@ -1422,13 +1204,16 @@
             Loaded 0 entries • Showing 0 entries
           </p>
 
+          <div id="leaderboard-hard-constraints" class="hard-constraints-panel" aria-live="polite">
+            <!-- Populated by JS -->
+          </div>
+
           <div id="leaderboard-overview" class="leaderboard-overview">
             <!-- Populated by JS -->
           </div>
 
           <p id="leaderboard-hint" class="leaderboard-hint">
-            Use the filters below to align hardware, model, precision, and workload before judging
-            engine deltas.
+            Align the scope first, then read the gap.
           </p>
 
           <!-- Filters -->
@@ -1461,14 +1246,6 @@
               <label id="filter-workload-label" for="filter-workload">Workload</label>
               <select id="filter-workload">
                 <option value="all">All</option>
-                <option value="Q1">Q1 – Short QA</option>
-                <option value="Q2">Q2 – Long Summarization</option>
-                <option value="Q3">Q3 – Code Generation</option>
-                <option value="Q4">Q4 – Multi-turn Reasoning</option>
-                <option value="Q5">Q5 – Stress: Short Concurrent</option>
-                <option value="Q6">Q6 – Stress: Long Concurrent</option>
-                <option value="Q7">Q7 – Chain-of-Thought</option>
-                <option value="Q8">Q8 – Mixed Batch</option>
               </select>
             </div>
             <div class="filter-group">
@@ -1479,100 +1256,16 @@
             </div>
           </div>
 
-          <details class="query-explainer">
-            <summary>
-              <div class="query-explainer-copy">
-                <span id="query-explainer-title" class="query-explainer-title">What do Q1-Q8 mean?</span>
-                <span id="query-explainer-subtitle" class="query-explainer-subtitle">Expand the benchmark query menu to see what each workload is testing.</span>
-              </div>
-              <span class="query-explainer-icon">+</span>
-            </summary>
-            <div class="query-grid">
-              <div class="query-item open">
-                <button class="query-item-button" type="button" aria-expanded="true">
-                  <strong id="query-q1-title">Q1 · Short QA</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q1-desc">Single-turn short factual prompts used to measure low-latency answer generation.</p>
-                </div>
-              </div>
-              <div class="query-item">
-                <button class="query-item-button" type="button" aria-expanded="false">
-                  <strong id="query-q2-title">Q2 · Long Summarization</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q2-desc">Long-context summarization prompts that stress prefill efficiency and sustained decoding.</p>
-                </div>
-              </div>
-              <div class="query-item">
-                <button class="query-item-button" type="button" aria-expanded="false">
-                  <strong id="query-q3-title">Q3 · Code Generation</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q3-desc">Code and tool-oriented generation prompts that expose structure-following and longer output behavior.</p>
-                </div>
-              </div>
-              <div class="query-item">
-                <button class="query-item-button" type="button" aria-expanded="false">
-                  <strong id="query-q4-title">Q4 · Multi-turn Reasoning</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q4-desc">Dialogue-style reasoning prompts that test stability across multi-turn context accumulation.</p>
-                </div>
-              </div>
-              <div class="query-item">
-                <button class="query-item-button" type="button" aria-expanded="false">
-                  <strong id="query-q5-title">Q5 · Stress: Short Concurrent</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q5-desc">High-concurrency short requests used to reveal scheduler overhead and throughput under pressure.</p>
-                </div>
-              </div>
-              <div class="query-item">
-                <button class="query-item-button" type="button" aria-expanded="false">
-                  <strong id="query-q6-title">Q6 · Stress: Long Concurrent</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q6-desc">High-concurrency long prompts used to stress memory, batching, and long-request fairness.</p>
-                </div>
-              </div>
-              <div class="query-item">
-                <button class="query-item-button" type="button" aria-expanded="false">
-                  <strong id="query-q7-title">Q7 · Chain-of-Thought</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q7-desc">Long-form reasoning prompts that amplify token-by-token latency and deep inference quality tradeoffs.</p>
-                </div>
-              </div>
-              <div class="query-item">
-                <button class="query-item-button" type="button" aria-expanded="false">
-                  <strong id="query-q8-title">Q8 · Mixed Batch</strong>
-                  <span class="query-item-icon">+</span>
-                </button>
-                <div class="query-item-panel">
-                  <p id="query-q8-desc">Mixed-shape request batches used to test how well the engine handles heterogeneous serving traffic.</p>
-                </div>
-              </div>
-            </div>
-          </details>
-
           <div class="compare-controls">
             <label class="toggle-card" for="toggle-same-scope">
               <input id="toggle-same-scope" type="checkbox" />
               <span id="toggle-same-scope-title">Same model + hardware only</span>
-              <small id="toggle-same-scope-desc">Automatically lock onto the most complete apples-to-apples scope under the current filters, including workload, precision, and topology.</small>
+              <small id="toggle-same-scope-desc">Keep only the closest apples-to-apples slice.</small>
             </label>
             <label class="toggle-card" for="toggle-hide-incomplete">
               <input id="toggle-hide-incomplete" type="checkbox" checked />
               <span id="toggle-hide-incomplete-title">Hide sparse benchmark rows</span>
-              <small id="toggle-hide-incomplete-desc">Show only groups where at least two engines appear together by default, so single-sided results do not dominate the main comparison view.</small>
+              <small id="toggle-hide-incomplete-desc">Keep the main table focused on real comparisons.</small>
             </label>
           </div>
 
@@ -1614,221 +1307,69 @@
         </div>
       </div>
 
-      <div class="section" id="architecture">
-        <h2 data-i18n="arch_title">🏗️ System Architecture</h2>
-        <p data-i18n="arch_desc">
-          Layered design with protocol-first approach, CPU-first development, and PD separation for
-          optimal performance.
-        </p>
+      <div class="launchpad-grid" style="margin-top: 28px">
+        <div class="demo-section">
+          <div class="section-kicker" data-i18n="demo_kicker">Quick View</div>
+          <h2 data-i18n="demo_title">⚡ Live Trace</h2>
+          <p data-i18n="demo_desc">A short serving trace for the default path.</p>
 
-        <div class="arch-diagram">
-          <div class="arch-diagram-header">
-            <div id="arch-diagram-kicker" class="arch-diagram-kicker">Current Stack</div>
-            <div id="arch-diagram-note" class="arch-diagram-note">
-              Unified entry, routed execution, layered runtime, protocol-first foundation.
-            </div>
-          </div>
-
-          <div class="arch-stack">
-            <div class="arch-layer arch-layer-top">
-              <div id="arch-entry-label" class="arch-layer-label">Entry Layer</div>
-              <h3 id="arch-entry-title">Clients, CLI, Benchmark, and Gateway</h3>
-              <p id="arch-entry-desc">
-                Users can enter through the unified <code>sagellm</code> CLI, OpenAI-compatible
-                REST gateway, SDKs, or benchmark clients.
-              </p>
-              <div class="arch-row">
-                <div class="arch-mini">
-                  <strong id="arch-entry-mini1-title">Unified Entry</strong>
-                  <span id="arch-entry-mini1-desc"><code>sagellm run</code>, <code>sagellm chat</code>, <code>sagellm serve</code></span>
-                </div>
-                <div class="arch-mini">
-                  <strong id="arch-entry-mini2-title">Open Interfaces</strong>
-                  <span id="arch-entry-mini2-desc">OpenAI-compatible HTTP API, streaming responses, benchmark endpoints</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="arch-arrow">↓</div>
-
-            <div class="arch-layer arch-layer-control">
-              <div id="arch-control-label" class="arch-layer-label">Control Layer</div>
-              <h3 id="arch-control-title">Control Plane for Routing, Scheduling, and Lifecycle</h3>
-              <p id="arch-control-desc">
-                The control plane selects engines, applies scheduling policy, tracks health, and
-                keeps multi-engine execution manageable.
-              </p>
-              <div class="arch-row">
-                <div class="arch-mini">
-                  <strong id="arch-control-mini1-title">Routing</strong>
-                  <span id="arch-control-mini1-desc">RequestRouter, engine selection, fail-fast health checks</span>
-                </div>
-                <div class="arch-mini">
-                  <strong id="arch-control-mini2-title">Scheduling</strong>
-                  <span id="arch-control-mini2-desc">FIFO, priority, SLO-aware policy hooks, lifecycle management</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="arch-arrow">↓</div>
-
-            <div class="arch-layer arch-layer-core">
-              <div id="arch-core-label" class="arch-layer-label">Execution Layer</div>
-              <h3 id="arch-core-title">Core Engine Runtime</h3>
-              <p id="arch-core-desc">
-                The core runtime owns model execution, worker orchestration, PD separation, metrics,
-                and the internal execution path for native SageLLM inference.
-              </p>
-              <div class="arch-row">
-                <div class="arch-mini">
-                  <strong id="arch-core-mini1-title">Runtime Units</strong>
-                  <span id="arch-core-mini1-desc">LLMEngine, ModelRunner, Worker, runtime plugins, metrics collection</span>
-                </div>
-                <div class="arch-mini">
-                  <strong id="arch-core-mini2-title">Inference Semantics</strong>
-                  <span id="arch-core-mini2-desc">Prefill/decode split, batch execution, KV-aware generation path</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="arch-arrow">↓</div>
-
-            <div class="arch-fanout">
-              <div class="arch-fanout-card">
-                <strong id="arch-fanout-backend-title">Backend</strong>
-                <span id="arch-fanout-backend-desc">CPU, CUDA, Ascend device abstraction, memory, stream, and kernel boundary.</span>
-              </div>
-              <div class="arch-fanout-card">
-                <strong id="arch-fanout-comm-title">Comm</strong>
-                <span id="arch-fanout-comm-desc">Distributed transport primitives, topology, collectives, and point-to-point communication.</span>
-              </div>
-              <div class="arch-fanout-card">
-                <strong id="arch-fanout-kv-title">KV Cache</strong>
-                <span id="arch-fanout-kv-desc">Allocation, eviction, migration, and prefix-aware cache management across inference steps.</span>
-              </div>
-              <div class="arch-fanout-card">
-                <strong id="arch-fanout-comp-title">Compression</strong>
-                <span id="arch-fanout-comp-desc">Quantization, sparsity, speculative and acceleration-oriented algorithm modules.</span>
-              </div>
-            </div>
-
-            <div class="arch-arrow">↓</div>
-
-            <div class="arch-layer arch-layer-foundation">
-              <div id="arch-foundation-label" class="arch-layer-label">Protocol Foundation</div>
-              <h3 id="arch-foundation-title">Shared Types, Errors, Metrics, and IDs</h3>
-              <p id="arch-foundation-desc">
-                Protocol-first governance keeps request schemas, error codes, metrics fields, and
-                tracing identifiers consistent across the stack.
-              </p>
-            </div>
-          </div>
-
-          <div class="arch-footnotes">
-            <div class="arch-footnote">
-              <strong id="arch-footnote1-title">Request Flow</strong>
-              <span id="arch-footnote1-desc">Client → Gateway or CLI → Control Plane → Core Engine → Backend / KV / Comm.</span>
-            </div>
-            <div class="arch-footnote">
-              <strong id="arch-footnote2-title">Design Rule</strong>
-              <span id="arch-footnote2-desc">Lower layers never depend on higher layers; third-party compare logic stays in benchmark, not core runtime.</span>
-            </div>
-            <div class="arch-footnote">
-              <strong id="arch-footnote3-title">Operational Focus</strong>
-              <span id="arch-footnote3-desc">CPU-first defaults, Ascend/CUDA acceleration, observability, and fail-fast behavior.</span>
-            </div>
-          </div>
-        </div>
-
-        <div
-          style="
-            margin-top: 30px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
-          "
-        >
           <div
-            style="
-              background: #f7fafc;
-              padding: 20px;
-              border-radius: 10px;
-              border-left: 4px solid #667eea;
-            "
+            class="demo-container"
+            style="border: 1px solid #333; border-radius: 8px; overflow: hidden; background: #000"
           >
-            <h4 style="margin: 0 0 10px; color: #2d3748" data-i18n="arch_pd_title">
-              ✅ PD Separation
-            </h4>
-            <p style="margin: 0; color: #4a5568; font-size: 0.9em" data-i18n="arch_pd_desc">
-              Prefill and Decode phases run independently for optimal resource utilization
-            </p>
-          </div>
-          <div
-            style="
-              background: #f7fafc;
-              padding: 20px;
-              border-radius: 10px;
-              border-left: 4px solid #48bb78;
-            "
-          >
-            <h4 style="margin: 0 0 10px; color: #2d3748" data-i18n="arch_cpu_title">
-              ✅ CPU-First
-            </h4>
-            <p style="margin: 0; color: #4a5568; font-size: 0.9em" data-i18n="arch_cpu_desc">
-              All components work on CPU by default, GPU/NPU are optional accelerators
-            </p>
-          </div>
-          <div
-            style="
-              background: #f7fafc;
-              padding: 20px;
-              border-radius: 10px;
-              border-left: 4px solid #ed8936;
-            "
-          >
-            <h4 style="margin: 0 0 10px; color: #2d3748" data-i18n="arch_obs_title">
-              ✅ Observable
-            </h4>
-            <p style="margin: 0; color: #4a5568; font-size: 0.9em" data-i18n="arch_obs_desc">
-              Full metrics tracing with trace_id, request_id, timestamps at every layer
-            </p>
-          </div>
-        </div>
-      </div>
+            <div class="demo-title-bar" id="demo-title-bar">📺 vllm-hust run --backend ascend</div>
 
-      <div class="features">
-        <div class="feature-card">
-          <h3 data-i18n="feat_perf_title">🔬 Scientific Discovery Focus</h3>
-          <p data-i18n="feat_perf_desc">
-            Built to serve science-facing large models and agent workloads where reasoning quality,
-            long context, and stable iteration matter more than generic demo traffic.
-          </p>
-        </div>
-        <div class="feature-card">
-          <h3 data-i18n="feat_openai_title">🇨🇳 Domestic Hardware Native</h3>
-          <p>
-            <span data-i18n="feat_openai_desc_prefix"
-              >Designed around Ascend and other domestic compute targets first, while keeping</span
+            <div
+              id="demo-player"
+              style="
+                width: 100%;
+                min-height: 320px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #000;
+              "
             >
-            <code>/v1/chat/completions</code>
-            <span data-i18n="feat_openai_desc_suffix"
-              >style interfaces available for integration and evaluation.</span
-            >
-          </p>
+              <span id="demo-loading-placeholder" style="color: #888; font-family: monospace">Loading terminal demo...</span>
+            </div>
+          </div>
         </div>
-        <div class="feature-card">
-          <h3 data-i18n="feat_enterprise_title">📊 Compare to Improve</h3>
-          <p data-i18n="feat_enterprise_desc">
-            Benchmarking, leaderboard views, and engine-to-engine comparisons exist to measure gaps,
-            guide optimization, and prove progress on real workloads.
-          </p>
+
+        <div class="section quickstart-section">
+          <div class="section-kicker" data-i18n="quickstart_kicker">Launch</div>
+          <h2 id="quickstart-title">🚀 Quick Start</h2>
+          <p id="quickstart-description" style="margin-bottom: 0">Three commands.</p>
+
+          <div class="quickstart-card">
+            <div class="quickstart-steps">
+              <div class="quickstart-step">
+                <div id="quickstart-step-install" class="quickstart-step-title">📦 1. Pip Install</div>
+                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-install-command">pip install ivllm-hust</span></span>
+              </div>
+
+              <div class="quickstart-step">
+                <div id="quickstart-step-setup" class="quickstart-step-title">🔧 2. Setup Backend</div>
+                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-setup-command">vllm-hust install cuda</span> <span id="quickstart-setup-hint" style="color: #94a3b8"># or ascend / cpu</span></span>
+              </div>
+
+              <div class="quickstart-step">
+                <div id="quickstart-step-run" class="quickstart-step-title">⚡ 3. Run Inference</div>
+                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-run-command">vllm-hust run -p "Hello AI" --backend cuda</span></span>
+              </div>
+            </div>
+
+            <div class="quickstart-note">
+              <strong id="quickstart-smart-title">💡 Note:</strong>
+              <span id="quickstart-smart-detection">Pick the backend that matches your hardware.</span>
+            </div>
+          </div>
         </div>
       </div>
 
       <footer>
         <p>
-          <strong>sageLLM</strong>
-          <span data-i18n="footer_line1">- Built by IntelliStream Team</span>
+          <strong>vllm-hust</strong>
+          <span data-i18n="footer_line1">- An upstream-compatible vLLM fork by IntelliStream Team</span>
         </p>
         <p style="margin-top: 10px; font-size: 0.9em; opacity: 0.8" data-i18n="footer_line2">
           Optimized for domestic computing ecosystems 🇨🇳
@@ -1839,39 +1380,39 @@
     <script>
       const I18N = {
         en: {
-          title: "sageLLM - Modular LLM Inference for Domestic Computing Power",
-          release_banner_title: "🎉 sageLLM 0.5 is now available",
+          title: "vllm-hust - Modular LLM Inference for Domestic Computing Power",
+          release_banner_title: "vllm-hust Overview",
           release_banner_message: "",
-          badge_perf: "🔬 Scientific Discovery LLMs",
-          badge_ascend: "🇨🇳 Domestic Hardware First",
-          badge_private: "📊 Benchmark-Driven Compare",
-          subtitle: "Built for scientific discovery models, optimized for domestic hardware, and benchmarked against alternative engines.",
-          demo_kicker: "Live Path",
-          demo_title: "⚡ Live Inference Demo",
+          badge_perf: "",
+          badge_ascend: "🇨🇳 Domestic Hardware",
+          badge_private: "📊 Benchmark First",
+          subtitle: "Upstream-compatible vLLM serving, measured on real benchmark workloads.",
+          demo_kicker: "Quick View",
+          demo_title: "⚡ Live Trace",
           demo_desc:
-            "Real-time streaming response powered by sageLLM engine (CPU/CUDA/Ascend backends available).",
-          demo_title_bar: "📺 sagellm run --backend ascend",
+            "A short serving trace for the default path.",
+          demo_title_bar: "📺 vllm-hust run --backend ascend",
           demo_loading_placeholder: "Loading terminal demo...",
           start_api: "# Start API server",
           cta_docs: "📚 Documentation",
           cta_github: "💻 GitHub",
 
           quickstart_kicker: "Launch",
-          quickstart_title: "🚀 Quick Start (v0.5)",
-          quickstart_description: "Three commands to first token.",
+          quickstart_title: "🚀 Quick Start",
+          quickstart_description: "Three commands.",
           quickstart_step_install: "📦 1. Pip Install",
           quickstart_step_setup: "🔧 2. Setup Backend",
           quickstart_step_run: "⚡ 3. Run Inference",
           quickstart_setup_comment: "# Install CUDA, Ascend, or CPU backend automatically",
           quickstart_setup_hint: "# or ascend / cpu",
-          quickstart_smart_title: "💡 Smart Detection:",
+          quickstart_smart_title: "💡 Note:",
           quickstart_smart_detection:
-            "If your current machine is missing dependencies, sageLLM points you to the right sagellm install command.",
+            "Pick the backend that matches your hardware.",
 
-          leaderboard_eyebrow: "Benchmark Atlas",
+          leaderboard_eyebrow: "vLLM Benchmark",
           leaderboard_title: "Performance Leaderboard",
           leaderboard_description:
-            "Use apples-to-apples comparisons to validate real serving performance across multiple LLM inference engines and hardware targets.",
+            "Built from vLLM benchmark artifacts to compare real serving performance across engines under aligned model, hardware, precision, and workload settings.",
           leaderboard_schema_label: "Data model",
           tab_single_chip: "Single Node · Single Accelerator",
           tab_multi_chip: "Single Node · Multi Accelerator",
@@ -1879,26 +1420,15 @@
           leaderboard_loading_text: "Loading leaderboard data...",
           leaderboard_error_title: "Failed to Load Data",
           leaderboard_error_text: "Please refresh the page or check your internet connection.",
+          hard_constraints_title: "Hard Constraints",
+          hard_constraints_subtitle: "Mandatory benchmark targets, with current and previous-run comparison.",
+          hard_constraints_no_data: "No hard-constraint records under current filters.",
           leaderboard_hint:
-            "Align hardware, model, precision, and workload first, then compare engine deltas.",
-          query_explainer_title: "What do Q1-Q8 mean?",
-          query_explainer_subtitle: "Expand the benchmark query menu to see what each workload is testing.",
-          query_q1_title: "Q1 · Short QA",
-          query_q1_desc: "Single-turn short factual prompts used to measure low-latency answer generation.",
-          query_q2_title: "Q2 · Long Summarization",
-          query_q2_desc: "Long-context summarization prompts that stress prefill efficiency and sustained decoding.",
-          query_q3_title: "Q3 · Code Generation",
-          query_q3_desc: "Code and tool-oriented generation prompts that expose structure-following and longer output behavior.",
-          query_q4_title: "Q4 · Multi-turn Reasoning",
-          query_q4_desc: "Dialogue-style reasoning prompts that test stability across multi-turn context accumulation.",
-          query_q5_title: "Q5 · Stress: Short Concurrent",
-          query_q5_desc: "High-concurrency short requests used to reveal scheduler overhead and throughput under pressure.",
-          query_q6_title: "Q6 · Stress: Long Concurrent",
-          query_q6_desc: "High-concurrency long prompts used to stress memory, batching, and long-request fairness.",
-          query_q7_title: "Q7 · Chain-of-Thought",
-          query_q7_desc: "Long-form reasoning prompts that amplify token-by-token latency and deep inference quality tradeoffs.",
-          query_q8_title: "Q8 · Mixed Batch",
-          query_q8_desc: "Mixed-shape request batches used to test how well the engine handles heterogeneous serving traffic.",
+            "Align the scope first, then read the gap.",
+          query_explainer_title: "vLLM Benchmark Overview",
+          query_explainer_subtitle: "This leaderboard is built from vLLM benchmark artifacts and compares engines under the same model, hardware, precision, and serving workload settings.",
+          query_source_title: "Serving Scenarios And Workloads",
+          query_source_desc: "Results are sourced from vLLM benchmark runs such as vllm bench serve and vllm bench sweep serve_workload. The workload selector reflects benchmark scenario names, datasets, and request-rate or concurrency settings.",
           filter_engine_label: "Engine",
           filter_hardware_label: "Hardware",
           filter_model_label: "Model",
@@ -1907,10 +1437,10 @@
           filter_precision_label: "Precision",
           toggle_same_scope_title: "Only show same model and hardware",
           toggle_same_scope_desc:
-            "Lock the view to the most complete comparable slice under the current filters, including workload, precision, and config shape.",
+            "Keep only the closest apples-to-apples slice.",
           toggle_hide_incomplete_title: "Hide sparse benchmark rows",
           toggle_hide_incomplete_desc:
-            "Show only groups where at least two engines exist, so single-sided results do not clutter the main view.",
+            "Keep the main table focused on real comparisons.",
           table_head_engine: "Engine / Version",
           table_head_workload: "Workload",
           table_head_hardware: "Hardware",
@@ -1922,138 +1452,136 @@
           leaderboard_empty_title: "No Results Found",
           leaderboard_empty_text: "Try adjusting your filters to see more data.",
 
-          workstation_title: "🖥️ SageLLM Workstation",
+          workstation_title: "🖥️ AGI4S Serving Console",
           workstation_desc:
-            "A unified local workspace that presents conversation, model selection, and basic runtime information together.",
+            "A reference operator view for chat, tool-calling, model status, and serving metrics in one loop.",
           workstation_status: "Overview",
-          workstation_panel_title: "Live Metrics Panel",
-          workstation_panel_desc: "Conversation state, model info, and performance trends in one view",
+          workstation_panel_title: "Serving Metrics Panel",
+          workstation_panel_desc: "Scenario status, model selection, and latency-throughput signals in one view",
           workstation_metric_1_label: "Streaming Throughput",
           workstation_metric_2_label: "TTFT",
           workstation_metric_3_label: "Device Utilization",
-          workstation_user_prompt: "Summarize the current service status.",
+          workstation_user_prompt: "Summarize the current AGI4S serving status.",
           workstation_reply_line1:
-            "The active model is ready and requests can be sent through a unified entry point.",
+            "The target model is online and serving through a vLLM-compatible entry point.",
           workstation_reply_line2:
-            "Model information, basic metrics, and conversation history are shown together.",
-          workstation_input_hint: "Type a question and watch the stream in real time...",
+            "The console tracks model choice, runtime signals, and AGI4S interaction flow together.",
+          workstation_input_hint: "Inspect prompts, tool calls, and streaming output in real time...",
           workstation_send: "Send",
-          workstation_card_title: "Product structure",
-          workstation_bullet_1: "Basic runtime metrics on the left panel.",
-          workstation_bullet_2: "A unified conversation window in the center.",
-          workstation_bullet_3: "Model and page status grouped in the header.",
-          workstation_note: "A workstation-style interface for local inference deployment.",
+          workstation_card_title: "Console Focus",
+          workstation_bullet_1: "Surface serving metrics for long-context, tool-calling, and concurrency-sensitive runs.",
+          workstation_bullet_2: "Keep the operator in the same loop as chat, agent, and evaluation traffic.",
+          workstation_bullet_3: "Expose model, backend, and scenario state without leaving the serving console.",
+          workstation_note: "A reference surface for operating vllm-hust in domestic hardware and AGI4S deployment scenarios.",
 
-          arch_title: "🏗️ System Architecture",
+          arch_title: "🏗️ Actual vLLM Runtime And Optimization Mapping",
           arch_desc:
-            "Layered design with protocol-first approach, CPU-first development, and PD separation for optimal performance.",
-          arch_diagram_kicker: "Current Stack",
+            "This section describes the actual serving runtime shape in upstream vLLM and shows where our 9 optimization subtasks land. The subtasks are optimization slices over real runtime subsystems, not invented product modules.",
+          arch_diagram_kicker: "Runtime Chain",
           arch_diagram_note:
-            "Unified entry, routed execution, layered runtime, protocol-first foundation.",
+            "The main serving path in vLLM V1 is API Server -> Engine Core -> Executor And Workers -> Model Runner And Kernels, with KV management, multimodal, structured output, and benchmark observability cutting across the stack.",
           arch_entry_label: "Entry Layer",
-          arch_entry_title: "Clients, CLI, Benchmark, and Gateway",
+          arch_entry_title: "LLM, AsyncLLM, OpenAI-Compatible API Server",
           arch_entry_desc:
-            "Users can enter through the unified sagellm CLI, OpenAI-compatible REST gateway, SDKs, or benchmark clients.",
-          arch_entry_mini1_title: "Unified Entry",
-          arch_entry_mini1_desc: "sagellm run, sagellm chat, sagellm serve",
-          arch_entry_mini2_title: "Open Interfaces",
-          arch_entry_mini2_desc: "OpenAI-compatible HTTP API, streaming responses, benchmark endpoints",
+            "Requests enter through upstream-style offline and online entrypoints, where tokenization, request parsing, multimodal loading, and streaming response handling begin.",
+          arch_entry_mini1_title: "Primary Paths",
+          arch_entry_mini1_desc: "Python LLM API, AsyncLLM client path, and OpenAI-compatible serving entrypoints",
+          arch_entry_mini2_title: "Ingress Work",
+          arch_entry_mini2_desc: "Input processing, tokenization, multimodal preprocessing, request normalization, and benchmark traffic generation",
           arch_control_label: "Control Layer",
-          arch_control_title: "Control Plane for Routing, Scheduling, and Lifecycle",
+          arch_control_title: "Engine Core, Scheduler, And KV Cache Manager",
           arch_control_desc:
-            "The control plane selects engines, applies scheduling policy, tracks health, and keeps multi-engine execution manageable.",
-          arch_control_mini1_title: "Routing",
-          arch_control_mini1_desc: "RequestRouter, engine selection, fail-fast health checks",
-          arch_control_mini2_title: "Scheduling",
-          arch_control_mini2_desc: "FIFO, priority, SLO-aware policy hooks, lifecycle management",
+            "The engine core owns request scheduling, token budgeting, prefix caching decisions, KV block allocation, structured-output coordination, and step-by-step execution control.",
+          arch_control_mini1_title: "Scheduling Core",
+          arch_control_mini1_desc: "Continuous batching, chunked prefill, speculative decode scheduling, priority policy, and request lifecycle management",
+          arch_control_mini2_title: "State Core",
+          arch_control_mini2_desc: "KV cache manager, prefix caching, block tables, cache isolation, and long-context memory accounting",
           arch_core_label: "Execution Layer",
-          arch_core_title: "Core Engine Runtime",
+          arch_core_title: "Executor, Workers, Model Runner, Attention, And Kernels",
           arch_core_desc:
-            "The core runtime owns model execution, worker orchestration, PD separation, metrics, and the internal path for native SageLLM inference.",
-          arch_core_mini1_title: "Runtime Units",
-          arch_core_mini1_desc: "LLMEngine, ModelRunner, Worker, runtime plugins, metrics collection",
-          arch_core_mini2_title: "Inference Semantics",
-          arch_core_mini2_desc: "Prefill/decode split, batch execution, KV-aware generation path",
-          arch_fanout_backend_title: "Backend",
+            "Real performance work lands in executor and worker orchestration, model-runner input preparation, attention backends, quantization paths, multimodal processors, and hardware-specific kernels or plugins.",
+          arch_core_mini1_title: "Execution Objects",
+          arch_core_mini1_desc: "Multiprocess executor, GPU workers, DP coordinator, model runner, sampler, and distributed runtime glue",
+          arch_core_mini2_title: "Optimization Hooks",
+          arch_core_mini2_desc: "Attention backend registry, custom ops, quantization layers, multimodal processing, tracing, and plugin extension points",
+          arch_fanout_backend_title: "KV And Prefix Cache",
           arch_fanout_backend_desc:
-            "CPU, CUDA, Ascend device abstraction, memory, stream, and kernel boundary.",
-          arch_fanout_comm_title: "Comm",
+            "Prefix caching, hybrid KV cache groups, KV offload, and block lifecycle are cross-cutting memory subsystems rather than a separate external product layer.",
+          arch_fanout_comm_title: "Multimodal And Structured Output",
           arch_fanout_comm_desc:
-            "Distributed transport primitives, topology, collectives, and point-to-point communication.",
-          arch_fanout_kv_title: "KV Cache",
+            "Multimodal processors, tool-calling, reasoning parsers, and structured-output backends cut through input processing, scheduling, and decoding.",
+          arch_fanout_kv_title: "Backend And Kernel Selection",
           arch_fanout_kv_desc:
-            "Allocation, eviction, migration, and prefix-aware cache management across inference steps.",
-          arch_fanout_comp_title: "Compression",
+            "Attention backend selection, quantized kernels, fused operators, and hardware plugins determine what is actually fast on each platform.",
+          arch_fanout_comp_title: "Observability And Benchmarking",
           arch_fanout_comp_desc:
-            "Quantization, sparsity, speculative and acceleration-oriented algorithm modules.",
-          arch_foundation_label: "Protocol Foundation",
-          arch_foundation_title: "Shared Types, Errors, Metrics, and IDs",
+            "Metrics, traces, and vLLM benchmark artifacts are the evidence layer for deciding whether a fork-side optimization is worth keeping.",
+          arch_foundation_label: "Fork Strategy",
+          arch_foundation_title: "Merge-Safe Extension Points First",
           arch_foundation_desc:
-            "Protocol-first governance keeps request schemas, error codes, metrics fields, and tracing identifiers consistent across the stack.",
-          arch_footnote1_title: "Request Flow",
+            "We should prefer platform interfaces, backend registries, worker or model-runner overrides, config gates, and plugin-style integration before touching shared hot paths.",
+          arch_footnote1_title: "Architecture Source",
           arch_footnote1_desc:
-            "Client → Gateway or CLI → Control Plane → Core Engine → Backend / KV / Comm.",
-          arch_footnote2_title: "Design Rule",
+            "This summary follows vLLM V1 architecture and design docs: API server, engine core, scheduler, KV cache manager, executor, worker, and model runner.",
+          arch_footnote2_title: "Mapping Rule",
           arch_footnote2_desc:
-            "Lower layers never depend on higher layers; third-party compare logic stays in benchmark, not core runtime.",
-          arch_footnote3_title: "Operational Focus",
+            "The 9 subtasks from the implementation plan map onto these runtime subsystems as optimization targets, not as claims that upstream vLLM already ships those task modules explicitly.",
+          arch_footnote3_title: "Validation Rule",
           arch_footnote3_desc:
-            "CPU-first defaults, Ascend/CUDA acceleration, observability, and fail-fast behavior.",
+            "Every optimization should be judged by vLLM benchmark artifacts plus scenario-level serving evidence such as long context, tool-calling, structured output, and multi-node runs.",
 
-          arch_pd_title: "✅ PD Separation",
+          arch_pd_title: "✅ Upstream First",
           arch_pd_desc:
-            "Prefill and Decode phases run independently for optimal resource utilization",
-          arch_cpu_title: "✅ CPU-First",
-          arch_cpu_desc: "All components work on CPU by default, GPU/NPU are optional accelerators",
-          arch_obs_title: "✅ Observable",
+            "Start from upstream vLLM behavior and only add focused changes where extension points are insufficient.",
+          arch_cpu_title: "✅ Hardware Enablement",
+          arch_cpu_desc: "Prioritize domestic accelerator bring-up, capability gaps, and safe fallbacks instead of broad fork-only rewrites.",
+          arch_obs_title: "✅ Scenario Validation",
           arch_obs_desc:
-            "Full metrics tracing with trace_id, request_id, timestamps at every layer",
+            "Use benchmark outputs and real serving scenarios to verify whether an optimization is actually useful.",
 
-          feat_perf_title: "🔬 Scientific Discovery Focus",
+          feat_perf_title: "🔬 AGI4S Serving Focus",
           feat_perf_desc:
-            "Built to serve science-facing large models and agent workloads where reasoning quality, long context, and stable iteration matter more than generic demo traffic.",
-          feat_openai_title: "🇨🇳 Domestic Hardware Native",
-          feat_openai_desc_prefix: "Designed around Ascend and other domestic compute targets first, while keeping",
-          feat_openai_desc_suffix: "style interfaces available for integration and evaluation.",
-          feat_enterprise_title: "📊 Compare to Improve",
+            "Built for AGI4S workloads where long context, reasoning stability, structured output, and tool-calling behavior matter more than generic demo traffic.",
+          feat_openai_title: "🇨🇳 Domestic Hardware Enablement",
+          feat_openai_desc_prefix: "Start from upstream vLLM and extend it for Ascend and other domestic compute targets while keeping",
+          feat_openai_desc_suffix: "compatible serving interfaces available for integration, evaluation, and migration.",
+          feat_enterprise_title: "📊 Benchmark-Guided Optimization",
           feat_enterprise_desc:
-            "Benchmarking, leaderboard views, and engine-to-engine comparisons exist to measure gaps, guide optimization, and prove progress on real workloads.",
+            "Use vLLM benchmark artifacts, leaderboard comparisons, and serving traces to identify bottlenecks and validate optimization progress on real workloads.",
 
-          footer_line1: "sageLLM - Built by IntelliStream Team",
+          footer_line1: "vllm-hust - An upstream-compatible vLLM fork by IntelliStream Team",
           footer_line2: "Optimized for domestic computing ecosystems 🇨🇳",
           toggle_text: "中文",
         },
         zh: {
-          title: "sageLLM - 面向国产算力生态的模块化推理引擎",
-          release_banner_title: "🎉 sageLLM 0.5 正式发布",
+          title: "vllm-hust - 面向国产算力生态的模块化推理引擎",
+          release_banner_title: "vllm-hust 项目概览",
           release_banner_message: "",
-          badge_perf: "🔬 面向科学发现大模型",
-          badge_ascend: "🇨🇳 面向国产硬件优先",
-          badge_private: "📊 以对比驱动优化",
-          subtitle: "服务科学发现大模型，优先面向国产硬件，并通过与其他引擎的对比持续验证与优化。",
-          demo_kicker: "实时路径",
-          demo_title: "⚡ 实时推理演示",
-          demo_desc: "基于 sageLLM 引擎的实时流式输出（支持 CPU/CUDA 后端）。",
-          demo_title_bar: "📺 sagellm run --backend ascend",
+          badge_perf: "",
+          badge_ascend: "🇨🇳 国产硬件",
+          badge_private: "📊 基准优先",
+          subtitle: "保持上游兼容的 vLLM 服务路径，用真实 benchmark 结果说话。",
+          demo_kicker: "快速查看",
+          demo_title: "⚡ 运行轨迹",
+          demo_desc: "默认服务路径的简短演示。",
+          demo_title_bar: "📺 vllm-hust run --backend ascend",
           demo_loading_placeholder: "正在加载终端演示...",
           start_api: "# 启动 API 服务",
           cta_docs: "📚 文档",
           cta_github: "💻 GitHub",
-
-          quickstart_kicker: "启动路径",
-          quickstart_title: "🚀 快速开始 (v0.5)",
-          quickstart_description: "三条命令，直接出首 token。",
-          quickstart_step_install: "📦 1. 安装包",
+          quickstart_kicker: "启动",
+          quickstart_title: "🚀 快速开始",
+          quickstart_description: "三条命令。",
+          quickstart_step_install: "📦 1. 安装",
           quickstart_step_setup: "🔧 2. 配置后端",
-          quickstart_step_run: "⚡ 3. 启动推理",
+          quickstart_step_run: "⚡ 3. 运行",
           quickstart_setup_comment: "# 自动安装 CUDA、Ascend 或 CPU 后端",
           quickstart_setup_hint: "# 或 ascend / cpu",
-          quickstart_smart_title: "💡 智能检测：",
-          quickstart_smart_detection: "如果当前机器缺少依赖，sageLLM 会直接提示合适的 sagellm install 命令。",
-
-          leaderboard_eyebrow: "Benchmark Atlas",
+          quickstart_smart_title: "💡 提示：",
+          quickstart_smart_detection: "选择与你的硬件匹配的后端即可。",
+          leaderboard_eyebrow: "vLLM Benchmark",
           leaderboard_title: "性能排行榜",
-          leaderboard_description: "通过严格同条件对比，验证多种推理引擎在不同硬件目标上的真实服务性能。",
+          leaderboard_description: "基于 vLLM benchmark 产物，在同模型、同硬件、同精度、同 workload 下直接比较引擎表现。",
           leaderboard_schema_label: "数据模型",
           tab_single_chip: "单机单卡",
           tab_multi_chip: "单机多卡",
@@ -2061,35 +1589,66 @@
           leaderboard_loading_text: "正在加载 leaderboard 数据...",
           leaderboard_error_title: "数据加载失败",
           leaderboard_error_text: "请刷新页面或检查网络连接。",
-          leaderboard_hint: "先对齐硬件、模型、精度与 workload，再判断不同引擎之间的差距。",
-          query_explainer_title: "Q1-Q8 分别代表什么？",
-          query_explainer_subtitle: "点击展开 benchmark query 菜单，查看每类 workload 具体在测什么。",
-          query_q1_title: "Q1 · 短问答",
-          query_q1_desc: "单轮、短事实型问题，用来观察低时延回答生成能力。",
-          query_q2_title: "Q2 · 长摘要",
-          query_q2_desc: "长上下文摘要任务，主要考察 prefill 效率和持续解码能力。",
-          query_q3_title: "Q3 · 代码生成",
-          query_q3_desc: "面向代码与工具调用的生成任务，用来暴露结构遵循和长输出行为。",
-          query_q4_title: "Q4 · 多轮推理",
-          query_q4_desc: "对话式推理任务，用于测试多轮上下文累积下的稳定性。",
-          query_q5_title: "Q5 · 压测：短并发",
-          query_q5_desc: "高并发短请求，主要观察调度开销与压力下的吞吐表现。",
-          query_q6_title: "Q6 · 压测：长并发",
-          query_q6_desc: "高并发长请求，主要考察显存、批处理和长请求公平性。",
-          query_q7_title: "Q7 · 思维链",
-          query_q7_desc: "长链路推理任务，会放大逐 token 时延和深度推理质量之间的权衡。",
-          query_q8_title: "Q8 · 混合批次",
-          query_q8_desc: "不同形状请求混合成批，用来测试引擎处理异构服务流量的能力。",
+          hard_constraints_title: "硬约束达成",
+          hard_constraints_subtitle: "强制 benchmark 目标，并展示当前结果与上次结果对比。",
+          hard_constraints_no_data: "当前筛选条件下没有硬约束记录。",
+          leaderboard_hint: "先对齐范围，再看差距。",
+          query_explainer_title: "vLLM Benchmark Overview",
+          query_explainer_subtitle: "",
+          query_source_title: "",
+          query_source_desc: "",
           filter_engine_label: "引擎",
           filter_hardware_label: "硬件",
           filter_model_label: "模型",
           filter_version_label: "版本",
           filter_workload_label: "工作负载",
+          arch_title: "🏗️ vLLM 实际运行时架构与优化映射",
+          arch_desc: "这一节描述的是上游 vLLM 的真实服务运行时形态，并给出我们 9 个优化子任务落在哪些真实子系统上。这里的子任务是对真实运行时的优化切面，不是人为发明的新产品模块。",
+          arch_diagram_kicker: "运行时主链路",
+          arch_diagram_note: "vLLM V1 的主服务链路是 API Server -> Engine Core -> Executor 与 Workers -> Model Runner 与 Kernels，KV 管理、多模态、结构化输出和 benchmark 可观测性横切整条链路。",
+          arch_entry_label: "入口层",
+          arch_entry_title: "LLM、AsyncLLM 与 OpenAI 兼容 API Server",
+          arch_entry_desc: "请求通过接近上游的离线与在线入口进入系统，首先发生的是分词、请求解析、多模态加载以及流式返回处理。",
+          arch_entry_mini1_title: "主入口",
+          arch_entry_mini1_desc: "Python LLM API、AsyncLLM 客户端路径，以及 OpenAI 兼容服务入口",
+          arch_entry_mini2_title: "入口工作",
+          arch_entry_mini2_desc: "输入处理、tokenization、多模态预处理、请求归一化，以及 benchmark 流量生成",
+          arch_control_label: "控制层",
+          arch_control_title: "Engine Core、Scheduler 与 KV Cache Manager",
+          arch_control_desc: "Engine Core 负责请求调度、token 预算、prefix caching 判定、KV block 分配、结构化输出协同，以及逐步执行控制。",
+          arch_control_mini1_title: "调度核心",
+          arch_control_mini1_desc: "持续批处理、chunked prefill、推测解码调度、优先级策略与请求生命周期管理",
+          arch_control_mini2_title: "状态核心",
+          arch_control_mini2_desc: "KV cache manager、prefix caching、block table、cache isolation 与长上下文内存核算",
+          arch_core_label: "执行层",
+          arch_core_title: "Executor、Workers、Model Runner、Attention 与 Kernels",
+          arch_core_desc: "真正的性能优化主要落在 executor 和 worker 编排、model runner 输入准备、attention backend、量化路径、多模态 processor，以及硬件相关 kernel 或 plugin 上。",
+          arch_core_mini1_title: "执行对象",
+          arch_core_mini1_desc: "multiprocess executor、GPU worker、DP coordinator、model runner、sampler 与分布式运行时胶水层",
+          arch_core_mini2_title: "优化挂点",
+          arch_core_mini2_desc: "attention backend registry、custom op、量化层、多模态处理、tracing 与 plugin 扩展点",
+          arch_fanout_backend_title: "KV 与 Prefix Cache",
+          arch_fanout_backend_desc: "Prefix caching、hybrid KV cache group、KV offload 与 block 生命周期是横切式内存子系统，不是外置的一层产品模块。",
+          arch_fanout_comm_title: "多模态与结构化输出",
+          arch_fanout_comm_desc: "多模态 processor、tool-calling、reasoning parser 与 structured-output backend 横跨输入处理、调度与解码路径。",
+          arch_fanout_kv_title: "后端与 Kernel 选择",
+          arch_fanout_kv_desc: "Attention backend 选择、量化 kernel、融合算子与硬件 plugin 共同决定某个平台上什么路径真正快。",
+          arch_fanout_comp_title: "可观测与 Benchmark",
+          arch_fanout_comp_desc: "Metrics、trace 与 vLLM benchmark 产物构成证据层，用来决定一个 fork 侧优化是否值得保留。",
+          arch_foundation_label: "Fork 策略",
+          arch_foundation_title: "优先选择可合并的扩展点",
+          arch_foundation_desc: "应当优先使用 platform interface、backend registry、worker 或 model-runner override、config gate 与 plugin 式集成，再考虑修改共享热路径。",
+          arch_footnote1_title: "架构来源",
+          arch_footnote1_desc: "这里的总结遵循 vLLM V1 的架构与设计文档，包括 API server、engine core、scheduler、KV cache manager、executor、worker 与 model runner。",
+          arch_footnote2_title: "映射原则",
+          arch_footnote2_desc: "实施方案中的 9 个子任务，是映射到这些真实运行时子系统上的优化目标，并不意味着上游 vLLM 已经按任务书形式显式提供这些模块。",
+          arch_footnote3_title: "验证原则",
+          arch_footnote3_desc: "每一项优化都应由 vLLM benchmark 产物和场景级服务证据共同判断，包括长上下文、工具调用、结构化输出与多机场景。",
           filter_precision_label: "精度",
           toggle_same_scope_title: "只看同模型同硬件",
-          toggle_same_scope_desc: "自动锁定当前筛选下最完整的可比分组，并同时约束 workload、precision 和配置形态。",
+          toggle_same_scope_desc: "只保留最接近的同条件对比。",
           toggle_hide_incomplete_title: "隐藏缺少对比的数据",
-          toggle_hide_incomplete_desc: "默认只显示至少两个引擎同时存在的分组，避免单边结果把主视图冲乱。",
+          toggle_hide_incomplete_desc: "让主表聚焦真正可比的数据。",
           table_head_engine: "引擎 / 版本",
           table_head_workload: "工作负载",
           table_head_hardware: "硬件",
@@ -2101,92 +1660,92 @@
           leaderboard_empty_title: "没有匹配结果",
           leaderboard_empty_text: "调整筛选条件后再试。",
 
-          workstation_title: "🖥️ SageLLM Workstation",
+          workstation_title: "🖥️ AGI4S 服务控制台",
           workstation_desc:
-            "面向本地部署场景的统一工作台界面，集中呈现会话、模型与基础运行信息。",
+            "一个面向 AGI4S 服务运维的参考界面，把对话、工具调用、模型状态和服务指标放在同一个闭环里。",
           workstation_status: "概览",
-          workstation_panel_title: "实时指标面板",
-          workstation_panel_desc: "对话状态、模型信息与性能趋势同屏展示",
+          workstation_panel_title: "服务指标面板",
+          workstation_panel_desc: "场景状态、模型选择和吞吐时延信号同屏展示",
           workstation_metric_1_label: "流式吞吐",
           workstation_metric_2_label: "首 token 时延",
           workstation_metric_3_label: "设备利用率",
-          workstation_user_prompt: "帮我概括一下当前服务状态。",
-          workstation_reply_line1: "当前模型已加载，可通过统一入口发起会话请求。",
-          workstation_reply_line2: "界面同时展示模型信息、基础指标与对话记录。",
-          workstation_input_hint: "输入问题并实时查看流式输出…",
+          workstation_user_prompt: "帮我概括一下当前 AGI4S 服务状态。",
+          workstation_reply_line1: "目标模型已经上线，并通过兼容 vLLM 的统一入口提供服务。",
+          workstation_reply_line2: "控制台会把模型选择、运行信号和 AGI4S 交互链路放在一起观察。",
+          workstation_input_hint: "实时查看 prompt、工具调用和流式输出…",
           workstation_send: "发送",
-          workstation_card_title: "产品结构",
-          workstation_bullet_1: "左侧展示基础运行指标",
-          workstation_bullet_2: "中部保留统一会话窗口",
-          workstation_bullet_3: "顶部集中呈现模型与页面状态",
-          workstation_note: "适用于本地化部署场景的推理工作台展示界面。",
+          workstation_card_title: "控制台关注点",
+          workstation_bullet_1: "优先暴露长上下文、工具调用和并发敏感场景的服务指标",
+          workstation_bullet_2: "让运维、对话和评测流量处于同一个观测闭环",
+          workstation_bullet_3: "集中展示模型、后端和场景状态，减少切换成本",
+          workstation_note: "这是一个面向国产算力与 AGI4S 部署场景的 vllm-hust 参考控制台。",
 
-          arch_title: "🏗️ 系统架构",
-          arch_desc: "分层设计，遵循协议优先、CPU 优先、PD 分离原则，实现最优性能。",
-          arch_diagram_kicker: "当前栈",
-          arch_diagram_note: "统一入口、控制平面路由、分层运行时，以及协议优先的底座。",
-          arch_entry_label: "入口层",
-          arch_entry_title: "Clients、CLI、Benchmark 与 Gateway",
-          arch_entry_desc: "用户可以从统一的 sagellm CLI、OpenAI 兼容 REST 网关、SDK 或 benchmark 客户端进入系统。",
-          arch_entry_mini1_title: "统一入口",
-          arch_entry_mini1_desc: "sagellm run、sagellm chat、sagellm serve",
-          arch_entry_mini2_title: "开放接口",
-          arch_entry_mini2_desc: "OpenAI 兼容 HTTP API、流式响应与 benchmark endpoint",
-          arch_control_label: "控制层",
-          arch_control_title: "负责路由、调度与生命周期的 Control Plane",
-          arch_control_desc: "控制平面负责选择引擎、应用调度策略、跟踪健康状态，并管理多引擎执行。",
-          arch_control_mini1_title: "路由",
-          arch_control_mini1_desc: "RequestRouter、引擎选择、fail-fast 健康检查",
-          arch_control_mini2_title: "调度",
-          arch_control_mini2_desc: "FIFO、优先级、SLO-aware 策略钩子与生命周期管理",
-          arch_core_label: "执行层",
-          arch_core_title: "核心推理运行时",
-          arch_core_desc: "核心运行时负责模型执行、worker 编排、PD 分离、指标采集，以及 SageLLM 原生推理路径。",
-          arch_core_mini1_title: "运行单元",
-          arch_core_mini1_desc: "LLMEngine、ModelRunner、Worker、运行时插件与指标采集",
-          arch_core_mini2_title: "推理语义",
-          arch_core_mini2_desc: "Prefill/Decode 分离、批执行与 KV 感知生成路径",
-          arch_fanout_backend_title: "Backend",
-          arch_fanout_backend_desc: "CPU、CUDA、Ascend 的设备抽象、内存、流与 kernel 边界。",
-          arch_fanout_comm_title: "Comm",
-          arch_fanout_comm_desc: "分布式传输原语、拓扑、collective 与点对点通信。",
-          arch_fanout_kv_title: "KV Cache",
-          arch_fanout_kv_desc: "分配、驱逐、迁移，以及跨推理步骤的 prefix-aware cache 管理。",
-          arch_fanout_comp_title: "Compression",
-          arch_fanout_comp_desc: "量化、稀疏、投机与推理加速相关的算法模块。",
-          arch_foundation_label: "协议底座",
-          arch_foundation_title: "共享类型、错误码、指标字段与 ID",
-          arch_foundation_desc: "协议优先保证整条链路中的请求 schema、错误码、指标字段和 tracing 标识保持一致。",
-          arch_footnote1_title: "请求路径",
-          arch_footnote1_desc: "Client → Gateway 或 CLI → Control Plane → Core Engine → Backend / KV / Comm。",
-          arch_footnote2_title: "设计约束",
-          arch_footnote2_desc: "低层不能反向依赖高层；第三方引擎对比逻辑留在 benchmark，不回灌 core runtime。",
-          arch_footnote3_title: "运行重点",
-          arch_footnote3_desc: "CPU-first 默认、Ascend/CUDA 加速、可观测性，以及 fail-fast 行为。",
+          arch_title: "🏗️ 当前工程重点",
+          arch_desc: "这一节总结的是 vllm-hust 当前投入的工程方向，而不是一张冻结不变的实现架构图。",
+          arch_diagram_kicker: "工程工作流",
+          arch_diagram_note: "优先保持上游可合并性，补齐国产算力能力，面向 AGI4S 服务场景做优化，并用 benchmark 结果验证。",
+          arch_entry_label: "用户侧入口",
+          arch_entry_title: "API、CLI 与评测入口",
+          arch_entry_desc: "服务入口尽量保持与上游 vLLM 一致，同时提供稳定的 CLI、API 和评测接入方式。",
+          arch_entry_mini1_title: "服务接口",
+          arch_entry_mini1_desc: "OpenAI 兼容接口、CLI 流程，以及便于集成的请求入口",
+          arch_entry_mini2_title: "评测输入",
+          arch_entry_mini2_desc: "vLLM benchmark workload、可复现实验和场景级验证输入",
+          arch_control_label: "服务行为",
+          arch_control_title: "调度与策略调优",
+          arch_control_desc: "重点放在 batching、时延控制、路由和真实服务场景下的稳定性，而不是抽象出一套全新控制面。",
+          arch_control_mini1_title: "场景选择",
+          arch_control_mini1_desc: "后端选择、健康检查、请求整形和 workload 感知分发",
+          arch_control_mini2_title: "运行策略",
+          arch_control_mini2_desc: "持续批处理、并发控制以及面向时延的调优",
+          arch_core_label: "运行时适配",
+          arch_core_title: "上游 vLLM 加定向扩展",
+          arch_core_desc: "当前工作主要表现为围绕上游 vLLM 的后端适配、受控 patch 和扩展点增强，而不是另起一套运行时。",
+          arch_core_mini1_title: "适配点",
+          arch_core_mini1_desc: "backend selector、worker、plugin、config gate、指标与 tracing",
+          arch_core_mini2_title: "场景重点",
+          arch_core_mini2_desc: "长上下文、工具调用、结构化输出、推理能力，以及持续演进的多模态路径",
+          arch_fanout_backend_title: "国产算力补齐",
+          arch_fanout_backend_desc: "围绕昇腾等国产加速器补齐能力缺口，同时为不支持路径保留清晰回退。",
+          arch_fanout_comm_title: "服务稳定性",
+          arch_fanout_comm_desc: "重点处理长上下文、多轮和多机场景里暴露出来的稳定性与回归问题。",
+          arch_fanout_kv_title: "场景优化",
+          arch_fanout_kv_desc: "围绕 AGI4S 工作负载持续优化，包括工具调用、结构化输出、推理和内存敏感路径。",
+          arch_fanout_comp_title: "Benchmark 验证",
+          arch_fanout_comp_desc: "通过 vLLM benchmark 产物和场景级复跑判断一项改动是否值得保留。",
+          arch_foundation_label: "工程基线",
+          arch_foundation_title: "兼容性、指标与可复现性",
+          arch_foundation_desc: "所有改动都应尽量保持可比较、可 benchmark、可向上游收敛。",
+          arch_footnote1_title: "这一节的含义",
+          arch_footnote1_desc: "这里展示的是当前重点投入方向，不是和代码目录一一对应的严格模块图。",
+          arch_footnote2_title: "改动原则",
+          arch_footnote2_desc: "优先保留上游兼容接口，把国产算力或 AGI4S 特定工作放在清晰扩展点后面。",
+          arch_footnote3_title: "验证原则",
+          arch_footnote3_desc: "性能和行为结论都应由 benchmark 产物和场景级服务结果支撑。",
 
-          arch_pd_title: "✅ PD 分离",
-          arch_pd_desc: "Prefill 和 Decode 阶段独立运行，实现资源最优利用",
-          arch_cpu_title: "✅ CPU 优先",
-          arch_cpu_desc: "所有组件默认支持 CPU，GPU/NPU 为可选加速器",
-          arch_obs_title: "✅ 可观测",
-          arch_obs_desc: "每层都有完整的 metrics 追踪（trace_id、request_id、时间戳）",
+          arch_pd_title: "✅ 上游优先",
+          arch_pd_desc: "先遵循上游 vLLM 行为，再在确有必要时补充局部扩展。",
+          arch_cpu_title: "✅ 硬件使能",
+          arch_cpu_desc: "优先解决国产算力 bring-up、能力缺口和安全回退，而不是做大范围 fork-only 重写。",
+          arch_obs_title: "✅ 场景验证",
+          arch_obs_desc: "通过 benchmark 结果和真实服务场景，判断某项优化是否真正有价值。",
 
-          feat_perf_title: "🔬 面向科学发现",
-          feat_perf_desc: "围绕科学发现类大模型与智能体工作负载构建，更关注推理质量、长上下文和稳定迭代，而不是通用演示流量。",
-          feat_openai_title: "🇨🇳 国产硬件原生优先",
-          feat_openai_desc_prefix: "系统优先围绕昇腾等国产算力设计，同时保留",
-          feat_openai_desc_suffix: "风格接口，便于集成与评测。",
-          feat_enterprise_title: "📊 通过对比持续改进",
-          feat_enterprise_desc: "benchmark、leaderboard 与引擎对比不是额外功能，而是用来定位差距、指导优化、验证进展的方法。",
+          feat_perf_title: "🔬 面向 AGI4S 服务场景",
+          feat_perf_desc: "围绕 AGI4S 工作负载构建，更关注长上下文、推理稳定性、结构化输出和工具调用，而不是通用演示流量。",
+          feat_openai_title: "🇨🇳 国产算力使能",
+          feat_openai_desc_prefix: "从上游 vLLM 出发，为昇腾等国产算力扩展能力，同时保持",
+          feat_openai_desc_suffix: "兼容的服务接口，便于集成、评测和迁移。",
+          feat_enterprise_title: "📊 Benchmark 驱动优化",
+          feat_enterprise_desc: "用 vLLM benchmark 产物、leaderboard 对比和服务 trace 来定位瓶颈，并验证真实工作负载上的优化进展。",
 
-          footer_line1: "- IntelliStream 团队",
+          footer_line1: "- IntelliStream 团队维护的上游兼容 vLLM fork",
           footer_line2: "面向国产算力生态优化 🇨🇳",
           toggle_text: "English",
         },
       };
 
       function detectDefaultLang() {
-        const stored = localStorage.getItem("sagellm_lang");
+        const stored = localStorage.getItem("vllm-hust_lang");
         if (stored === "zh" || stored === "en") return stored;
         const nav = (navigator.language || "en").toLowerCase();
         return nav.startsWith("zh") ? "zh" : "en";
@@ -2235,22 +1794,8 @@
           "leaderboard-hint": dict.leaderboard_hint,
           "query-explainer-title": dict.query_explainer_title,
           "query-explainer-subtitle": dict.query_explainer_subtitle,
-          "query-q1-title": dict.query_q1_title,
-          "query-q1-desc": dict.query_q1_desc,
-          "query-q2-title": dict.query_q2_title,
-          "query-q2-desc": dict.query_q2_desc,
-          "query-q3-title": dict.query_q3_title,
-          "query-q3-desc": dict.query_q3_desc,
-          "query-q4-title": dict.query_q4_title,
-          "query-q4-desc": dict.query_q4_desc,
-          "query-q5-title": dict.query_q5_title,
-          "query-q5-desc": dict.query_q5_desc,
-          "query-q6-title": dict.query_q6_title,
-          "query-q6-desc": dict.query_q6_desc,
-          "query-q7-title": dict.query_q7_title,
-          "query-q7-desc": dict.query_q7_desc,
-          "query-q8-title": dict.query_q8_title,
-          "query-q8-desc": dict.query_q8_desc,
+          "query-source-title": dict.query_source_title,
+          "query-source-desc": dict.query_source_desc,
           "filter-engine-label": dict.filter_engine_label,
           "filter-hardware-label": dict.filter_hardware_label,
           "filter-model-label": dict.filter_model_label,
@@ -2326,10 +1871,10 @@
           releaseBannerMessage.style.display = hasMessage ? "block" : "none";
         }
 
-        window.sagellmPageI18n = I18N;
-        window.sagellmCurrentLang = lang;
-        window.dispatchEvent(new CustomEvent("sagellm:langchange", { detail: { lang } }));
-        localStorage.setItem("sagellm_lang", lang);
+        window["vllm-hustPageI18n"] = I18N;
+        window["vllm-hustCurrentLang"] = lang;
+        window.dispatchEvent(new CustomEvent("vllm-hust:langchange", { detail: { lang } }));
+        localStorage.setItem("vllm-hust_lang", lang);
       }
 
       function initQueryAccordion() {
@@ -2363,7 +1908,7 @@
         const btn = document.getElementById("langToggle");
         if (btn) {
           btn.addEventListener("click", () => {
-            const current = localStorage.getItem("sagellm_lang") || initial;
+            const current = localStorage.getItem("vllm-hust_lang") || initial;
             setLang(current === "zh" ? "en" : "zh");
           });
         }
@@ -2388,7 +1933,7 @@
           playerElement.innerHTML = "";
 
           // Create Player
-          AsciinemaPlayer.create("./demos/sagellm-inference.cast", playerElement, {
+          AsciinemaPlayer.create("./demos/vllm-hust-inference.cast", playerElement, {
             // Formatting
             cols: 100, // Match recording width
             rows: 24, // Match recording height

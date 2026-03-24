@@ -28,6 +28,7 @@ Schema accepts both:
 | `model`           | object       | model metadata                            |
 | `workload`        | object       | workload shape                            |
 | `metrics`         | object       | benchmark metrics                         |
+| `constraints`     | object       | mandatory hard-constraint context + metrics |
 | `versions`        | object       | component versions                        |
 | `environment`     | object       | runtime env                               |
 | `metadata`        | object       | provenance and reproducibility            |
@@ -45,6 +46,28 @@ Schema accepts both:
 - Required: `ttft_ms`, `throughput_tps`, `peak_mem_mb`, `error_rate`
 - Optional: `prefix_hit_rate`, `tbt_ms`, `tpot_ms`, KV/evict metrics
 - Numeric values are non-negative (`error_rate` in `[0,1]`)
+
+### `constraints` (Hard constraints)
+
+- Required `scenario_source = "vllm-benchmark"`
+- Required `accountable_scope`:
+  - `domestic_chip_class`
+  - `representative_model_band` (fixed to `7B-13B`)
+  - `representative_business_scenario`
+  - `baseline_engine`
+- Required `constraints.metrics`:
+  - `single_chip_effective_utilization_pct`
+  - `typical_throughput_ratio_vs_baseline`
+  - `typical_ttft_reduction_pct_vs_baseline`
+  - `typical_tpot_reduction_pct_vs_baseline`
+  - `long_context_length`
+  - `long_context_throughput_stable`
+  - `long_context_ttft_p95_ms`, `long_context_ttft_p99_ms`
+  - `long_context_tpot_p95_ms`, `long_context_tpot_p99_ms`
+  - `long_context_ttft_p95_stable`, `long_context_ttft_p99_stable`
+  - `long_context_tpot_p95_stable`, `long_context_tpot_p99_stable`
+  - `unit_token_cost_reduction_pct`
+  - `multi_tenant_high_utilization`
 
 ### `cluster`
 

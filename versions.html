@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sageLLM - Versions</title>
+    <title>vllm-hust - Versions</title>
     <style>
         * {
             margin: 0;
@@ -156,35 +156,35 @@
 <body>
     <div class="container">
         <header>
-            <h1>🚀 sageLLM</h1>
-            <p>Package Versions & Installation Guide</p>
+            <h1>🚀 vllm-hust</h1>
+            <p>Upstream-compatible vLLM packages for domestic hardware and AGI4S serving</p>
         </header>
 
         <div class="install-section">
-            <h2>📥 Quick Installation</h2>
-            <pre><code># Install full stack (recommended)
-pip install isagellm
+            <h2>📥 Installation Entry</h2>
+            <pre><code># Install the default serving stack
+pip install ivllm-hust
 
-# Or install specific packages
-pip install isagellm-core isagellm-backend</code></pre>
+# Or install the packages you need for your serving path
+pip install ivllm-hust-core ivllm-hust-backend</code></pre>
         </div>
 
         <div class="version-card">
-            <h2>📦 Core Packages</h2>
+            <h2>📦 Runtime Packages</h2>
             <div class="package-grid" id="core-packages"></div>
-            <p class="loading-note" id="core-loading">Loading package versions...</p>
+            <p class="loading-note" id="core-loading">Loading vllm-hust runtime package versions...</p>
         </div>
 
         <div class="version-card">
-            <h2>🏗️ Infrastructure Packages</h2>
+            <h2>🏗️ Extension Packages</h2>
             <div class="package-grid" id="infra-packages"></div>
-            <p class="loading-note" id="infra-loading">Loading package versions...</p>
+            <p class="loading-note" id="infra-loading">Loading backend and integration package versions...</p>
         </div>
 
         <div class="update-info">
             <p>Last Updated: <span id="versions-updated-at">-</span></p>
             <p>Website: <a href="https://vllm-hust.sage.org.ai" style="color: white;">vllm-hust.sage.org.ai</a></p>
-            <p>Maintained by IntelliStream Team</p>
+            <p>Maintained by IntelliStream Team for vLLM-compatible serving on domestic hardware</p>
         </div>
     </div>
     <script src="./assets/versions-page.js"></script>

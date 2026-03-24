@@ -8,33 +8,34 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
 
 ### Changed
+- 继续清理内部文档与生成脚本中的历史旧命名和旧 workload 代号：同步更新 `.github` 说明、`LICENSE` 注释、demo 生成脚本、示例数据、README 和部署文档，统一到 `vllm-hust`、vLLM benchmark 与 AGI4S 服务场景口径。
 - 刷新 website leaderboard 到固定 `vllm-ascend v0.11.0` 基线的正式 compare 快照（`formal_compare_20260318_vllm_ascend_0110_fixlog`）：同步 `data/leaderboard_single.json`、`data/leaderboard_compare.json` 与 `data/last_updated.json`。
 - 刷新 website leaderboard 到 `formal_compare_20260316_ascend_slotfix_postprefix` 的 publish-ready 快照：同步 `data/leaderboard_single.json`、`data/leaderboard_compare.json`、`data/leaderboard_multi.json` 与 `data/last_updated.json`，确保页面展示使用本轮 slot-fix 后的正式 compare 数据。
-- 刷新 website leaderboard 快照到最新 Ascend formal compare 产物（`sagellm` vs `vllm`，profile=`vllm_random`）：同步更新 `data/leaderboard_single.json`、`data/leaderboard_compare.json` 与 `data/last_updated.json`，确保官网展示使用最新 publish-ready 数据。
-- Leaderboard 现在优先消费 benchmark 发布的 `leaderboard_compare.json`，在同 scope 下直接展示标准化的 `sageLLM vs vLLM` head-to-head gap；若线上快照尚未刷新到该文件，则前端回退到已有 entry 数据做只读比较，而不是手工修补 website JSON。
+- 刷新 website leaderboard 快照到最新 Ascend formal compare 产物（`vllm-hust` vs `vllm`，profile=`vllm_random`）：同步更新 `data/leaderboard_single.json`、`data/leaderboard_compare.json` 与 `data/last_updated.json`，确保官网展示使用最新 publish-ready 数据。
+- Leaderboard 现在优先消费 benchmark 发布的 `leaderboard_compare.json`，在同 scope 下直接展示标准化的 `vllm-hust vs vLLM` head-to-head gap；若线上快照尚未刷新到该文件，则前端回退到已有 entry 数据做只读比较，而不是手工修补 website JSON。
 - `scripts/aggregate_results.py` 现兼容 benchmark 的 `leaderboard-export-manifest/v2`，并会离线同步生成 `leaderboard_compare.json`，使 website compatibility cache 与 benchmark publish 输出保持一致。
-- 官网首页暂时移除了长征 Windows 下载区块与对应 manifest 拉取逻辑，避免继续暴露当前返回 404 的公开下载入口；SageLLM Workstation 展示区保持不变。
+- 官网首页暂时移除了长征 Windows 下载区块与对应 manifest 拉取逻辑，避免继续暴露当前返回 404 的公开下载入口；vllm-hust Workstation 展示区保持不变。
 - Leaderboard 数据流现在明确收口到 HF snapshot 主路径：前端 `assets/hf-data-loader.js` 只读取 `leaderboard_single.json`、`leaderboard_multi.json` 与 `last_updated.json`，不再递归扫描 HF dataset 内部分散的 per-entry 文件。
-- `scripts/aggregate_results.py` 现改为离线兼容聚合工具，只消费 `sagellm-benchmark` 标准导出的 `leaderboard_manifest.json` + `*_leaderboard.json`，并对每条 entry 执行 website schema 校验；website 不再理解 compare 原始目录结构或 `data/results/**` 历史布局。
+- `scripts/aggregate_results.py` 现改为离线兼容聚合工具，只消费标准 benchmark 导出的 `leaderboard_manifest.json` + `*_leaderboard.json`，并对每条 entry 执行 website schema 校验；website 不再理解 compare 原始目录结构或 `data/results/**` 历史布局。
 - 官网 Hugging Face 数据同步与长征发布同步 workflow 现在只允许写入 `main-dev`，并停用旧的 `main -> main-dev` 自动回灌流程，避免自动任务继续绕过 `main-dev` 直接污染 `main`。
 - `.gitignore` 现在默认忽略本地 `.env` / `.env.local` / `.env.*` 配置文件，同时保留 `.env.example` / `.env.template` 模板文件可提交，避免网站同步脚本或本地凭证被误提交。
 - 官网首页下载区块的 DOM / i18n 标识已从 `qinglu_*` 统一清理为 `changzheng_*`，避免品牌改名后继续保留旧内部命名。
 - 移除 legacy 的 `downloads/qinglu/windows/` 静态下载页、`data/qinglu_release.json` 与旧同步脚本，统一只保留长征下载链路。
 - Hugging Face 自动拉取 workflow 已重命名为 `sync-changzheng-hf-release.yml`，并改为同步 `changzheng/windows` 发布目录。
 - 长征 Desktop 下载清单与同步脚本中的文档仓库链接已切换到新远程 `intellistream/changzheng-desktop`，避免官网继续指向已改名的旧仓库地址。
-- `hooks/pre-push` 默认不再因检测到发布凭证而自动发布；只有显式使用 `git push -o sagellm-publish origin main-dev` 或 `SAGELLM_PUBLISH_ON_PUSH=1 git push origin main-dev` 时才会触发发布。
+- `hooks/pre-push` 默认不再因检测到发布凭证而自动发布；只有显式使用 `git push -o vllm-hust-publish origin main-dev` 或 `VLLM_HUST_PUBLISH_ON_PUSH=1 git push origin main-dev` 时才会触发发布。
 - `hooks/post-commit` 默认不再在每次提交后自动 bump 版本；普通 `git push` 也不再触发 PyPI 版本冲突检查，只有显式发布时才会处理版本号。
 - 青炉下载链路改为“qinglu-desktop 先上传到 Hugging Face dataset，website 再定时拉取到静态目录”，降低 website 对桌面仓库工作区的直接依赖。
 
-- 同步 2026-03-09 A100 单机 `sagellm vs vllm` live compare 结果到 leaderboard 数据源，新增 `deepseek-ai/DeepSeek-R1-Distill-Qwen-7B` 的 `sagellm` 与 `vllm` 两条单机记录，并刷新 `data/last_updated.json`。
+- 同步 2026-03-09 A100 单机 `vllm-hust vs vllm` live compare 结果到 leaderboard 数据源，新增 `deepseek-ai/DeepSeek-R1-Distill-Qwen-7B` 的 `vllm-hust` 与 `vllm` 两条单机记录，并刷新 `data/last_updated.json`。
 - 重构 leaderboard 展示布局，新增顶部引擎对比摘要卡片、更聚焦的主表指标，以及“只看同模型同硬件 / 隐藏缺少对比的数据”开关与 coverage 提示，使不同引擎的延迟与吞吐差异更易读。
 - 首页与 leaderboard 动态内容补齐中英双语切换，覆盖摘要卡片、对比提示、详情面板、版本构建表、复制按钮与最近更新时间，确保整页语言切换一致。
 - 精简首页首屏文案，移除发布横幅中的长段说明，并将 Quick Start 引导压缩为一句动作导向提示，减少首屏阅读负担。
 - 进一步收敛首页信息层级：移除首屏 release banner，仅保留简洁 hero 定位语与更短的 Quick Start 辅助文案，减少视觉噪音与重复解释。
 - 将首页前半段重组为更清晰的 launchpad 双栏布局：左侧 live demo，右侧紧凑 quickstart，减少连续大卡片堆叠带来的拥挤感，并继续压缩首屏说明文字。
 - 首页叙事主轴调整为“科学发现大模型 + 国产硬件优先”，并将 benchmark / leaderboard / 引擎对比明确降级为验证与优化方法，而非产品主目标。
-- leaderboard 过滤区新增可点击展开的 Q1-Q8 query 说明菜单，明确每类 workload 的测试意图，避免用户只看到代号而无法理解 benchmark 语义。
-- Q1-Q8 query 说明菜单升级为二级 accordion：点击单个 query 单独展开并自动收起其他项，降低一次性信息展开带来的视觉干扰。
+- leaderboard 过滤区曾新增可点击展开的 benchmark workload query 说明菜单，明确每类 workload 的测试意图，避免用户只看到代号而无法理解 benchmark 语义。
+- benchmark workload query 说明菜单曾升级为二级 accordion：点击单个 query 单独展开并自动收起其他项，降低一次性信息展开带来的视觉干扰。
 
 ### Fixed
 
@@ -52,7 +53,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- 首页新增 **SageLLM Workstation 动画预览区块**，用于展示已验证的 workstation → gateway → engine 交互形态，适配启动会与官网演示场景
+- 首页新增 **vllm-hust Workstation 动画预览区块**，用于展示已验证的 workstation → gateway → engine 交互形态，适配启动会与官网演示场景
 - 首页新增 **青炉 Desktop 下载区块**，并增加 `data/qinglu_release.json` 作为官网桌面发布入口的数据源
 - 新增 `downloads/qinglu/windows/index.html` 公开下载页，以及 `scripts/sync_qinglu_release.py`，用于把 `qinglu-desktop` 的 Windows 安装包同步到 public website 静态目录
 
@@ -62,15 +63,15 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - workstation 展示区改为更克制的纯产品展示样式，弱化动画感与宣传感，突出界面结构与基础信息布局
 - 青炉下载链路由“官网 + 外部 release”调整为“官网首页摘要 + 官网静态下载页直出安装包”，并在 manifest 中预留真实 `.msi/.exe` / SHA256 列表字段
 
-- **[#14 #15 + sagellm#26 #28] Leaderboard MVP（Schema-first）**
+- **[#14 #15 + vllm-hust#26 #28] Leaderboard MVP（Schema-first）**
   - 新增并冻结 MVP 数据契约：`data/schemas/leaderboard_v1.schema.json`（兼容单条 entry 与 entry 列表）
   - 补齐最小多机展示数据：`data/leaderboard_multi.json`（1 条 multi-node 样例）
   - 首页 Leaderboard 区块新增数据模型标识，确保展示与 schema 来源一致
 
 ### Changed
 
-- Leaderboard 前端支持多引擎展示：新增 `Engine` 筛选器，版本聚合/排序/去重改为 engine-aware（`engine + engine_version`），并对非 `sagellm` 引擎显示通用 `Engine Versions` 面板。
-- `data/schemas/leaderboard_v1.schema.json` 扩展可选字段 `engine` / `engine_version`（entry 与 metadata），保持历史 `sagellm_version` 数据兼容。
+- Leaderboard 前端支持多引擎展示：新增 `Engine` 筛选器，版本聚合/排序/去重改为 engine-aware（`engine + engine_version`），并对非 `vllm-hust` 引擎显示通用 `Engine Versions` 面板。
+- `data/schemas/leaderboard_v1.schema.json` 扩展可选字段 `engine` / `engine_version`（entry 与 metadata），保持历史旧字段数据兼容。
 
 - `data/validate_schema.py` 升级为可一次校验多个文件，支持 object/array 两种 payload，输出统一 pass/fail 摘要
 - `data/FIELD_SPECIFICATION.md`、`data/VALIDATION_RULES.md` 收敛为 MVP 规范，字段与网站展示列一一对应
@@ -107,7 +108,7 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - 新增 `data/last_updated.json` 作为 website 数据同步时间标记
 - 新增 workflow 守护校验：`validate-sync-workflow.yml`，防止 `sync-hf-data.yml` 回退到 `self-hosted` 或错误 dispatch
   type
-- Leaderboard 筛选新增 `Version` 下拉，自动拉取 `isagellm` 在 PyPI 上 `>=0.5.0.0` 的全部版本号用于过滤
+- Leaderboard 筛选新增 `Version` 下拉，自动拉取 `ivllm-hust` 在 PyPI 上 `>=0.5.0.0` 的全部版本号用于过滤
 - 首页与 README 新增 v0.5 发布意义说明文案（工程可用性）
 - 新增统一版本元数据源 `data/version_meta.json`，集中维护首页发布文案、Quick Start 文案与包版本清单
 - 新增首页元数据加载器 `assets/version-meta-loader.js` 与版本页渲染器 `assets/versions-page.js`
@@ -121,31 +122,31 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Leaderboard `Component Versions` 的版本对比逻辑调整：历史 benchmark 版本（低于 PyPI latest）显示为 `historical`，仅当
   benchmark 版本高于 PyPI latest 时标记 `⚠ mismatch`，避免所有历史结果都被误报不一致
-- Workload 筛选改为 benchmark query 风格（`Q1`~`Q8`）并支持动态补充 legacy workload
+- Workload 筛选改为 benchmark workload 风格并支持动态补充 legacy workload
 - Leaderboard 筛选恢复 `All` 选项，支持按 `hardware/model/workload/precision` 任意组合过滤
 - `sync-hf-data.yml` 的 `repository_dispatch` 事件类型改为 `benchmark-data-updated`（与 benchmark 发布流程一致）
 - 修复 `sync-hf-data.yml` 被误回滚到 `self-hosted` runner 的问题，恢复为 `ubuntu-latest` 并启用 `contents: write`
-- 修复 agent 指令中的命令错误（sage-dev gh → sagellm-dev gh）
+- 修复 agent 指令中的命令错误（旧 issue 工具说明已迁移到标准 `gh` 流程）
 - 修复页面中重复渲染两个 Performance Leaderboard 的问题（冲突残留导致重复 DOM）
 - HF Data Loader 增加前端缓存（sessionStorage, TTL=5min），减少刷新时全量递归拉取导致的慢加载
 - 移除 `index.html` 中脚本 URL 的硬编码版本参数，避免固定版本号带来的维护和认知问题
-- 前端缓存 key 升级到 `sagellm_hf_leaderboard_cache_v2`，避免旧会话缓存导致看不到 Q1~Q8 / 新数据
-- 前端缓存 key 再升级到 `sagellm_hf_leaderboard_cache_v3`，强制失效已缓存的旧少量数据
+- 前端缓存 key 升级到 `vllm_hust_hf_leaderboard_cache_v2`，避免旧会话缓存导致看不到新 workload / 新数据
+- 前端缓存 key 再升级到 `vllm_hust_hf_leaderboard_cache_v3`，强制失效已缓存的旧少量数据
 - HF Data Loader 增加 `last_updated` marker 校验：marker 变化时强制刷新数据，避免同步后继续命中旧缓存
 - Leaderboard 主表新增 `Workload` 列，`all workloads` 模式下按 `Workload → Version` 排序，避免同版本多 workload
   混在一起难以识别
 - Leaderboard 主表第一列版本号改为合并显示：连续相同版本仅首行显示版本编号，减少重复视觉噪音
 - Leaderboard 主表移除 `Release Date` 独立列，改为在版本单元格中显示 `vX.Y.Z (release_date)`
 - 趋势对比仅在单 workload 视图下启用；`all workloads` 视图禁用跨 workload 的趋势计算，避免误导
-- `Component Versions` 面板改为显示 `sageLLM + benchmark + 各组件` 完整版本，并标注来源为 `entry.versions`
+- `Component Versions` 面板改为显示 `vllm-hust + benchmark + 各组件` 完整版本，并标注来源为 `entry.versions`
 - `Component Versions` 面板重构为双源展示：`benchmark metadata` 与 `PyPI latest` 对比，并对不一致版本显式告警
 - HF Data Loader 增加幂等键去重（`version+workload+model+hardware+precision+config`）并保留最新 `submitted_at`
   记录，降低重复上传导致的重复行和趋势噪音
-- 修正命令名称：所有地方统一使用 `sagellm`（无连字符），包括演示动画和页面命令示例
+- 修正命令名称：所有地方统一使用 `vllm-hust`，包括演示动画和页面命令示例
 - 修正架构图层级：KV Cache 从 L2 改为 L1（与 Backend/Comm 同级）
 - 移除首页文案中的“3x 吞吐提升”表述，避免不准确性能宣称。
 - 首页发布 banner 从 v0.4 宣传语更新为 v0.5 工程可用性说明文案
-- Quick Start 区块从 v0.4 口径升级为 v0.5 口径，并统一示例命令为 `sagellm`
+- Quick Start 区块从 v0.4 口径升级为 v0.5 口径，并统一示例命令为 `vllm-hust`
 - `versions.html` 全量包版本与 PyPI 链接更新到最新 0.5.x 发布版本
 - `versions.html` 从硬编码版本卡片改为动态读取 `version_meta.json` 渲染
 - `README.md` 顶部发布文案与 Quick Start 区块改为由 `sync_version_meta.py` 按 `version_meta.json` 自动同步（单一来源）

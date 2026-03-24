@@ -17,40 +17,24 @@
     const WORKLOAD_LABELS = {
         en: {
             all: 'All',
-            Q1: 'Q1 – Short QA',
-            Q2: 'Q2 – Long Summarization',
-            Q3: 'Q3 – Code Generation',
-            Q4: 'Q4 – Multi-turn Reasoning',
-            Q5: 'Q5 – Stress: Short Concurrent',
-            Q6: 'Q6 – Stress: Long Concurrent',
-            Q7: 'Q7 – Chain-of-Thought',
-            Q8: 'Q8 – Mixed Batch',
             Other: 'Other',
         },
         zh: {
             all: '全部',
-            Q1: 'Q1 – 短问答',
-            Q2: 'Q2 – 长摘要',
-            Q3: 'Q3 – 代码生成',
-            Q4: 'Q4 – 多轮推理',
-            Q5: 'Q5 – 压测：短并发',
-            Q6: 'Q6 – 压测：长并发',
-            Q7: 'Q7 – 思维链',
-            Q8: 'Q8 – 混合批次',
             Other: '其他',
         },
     };
 
     const ENGINE_LABELS = {
         en: {
-            sagellm: 'sageLLM',
+            'vllm-hust': 'vllm-hust',
             vllm: 'vLLM',
             'vllm-ascend': 'vLLM Ascend',
             sglang: 'SGLang',
             unknown: 'Unknown',
         },
         zh: {
-            sagellm: 'sageLLM',
+            'vllm-hust': 'vllm-hust',
             vllm: 'vLLM',
             'vllm-ascend': 'vLLM Ascend',
             sglang: 'SGLang',
@@ -69,6 +53,20 @@
             statsComparisonRows: 'comparison rows across',
             statsCompleteGroups: 'complete groups',
             quickCompare: 'Quick Compare',
+            hardConstraintsTitle: 'Hard Constraints',
+            hardConstraintsSubtitle: 'Mandatory targets from benchmark snapshots (current run and regression vs previous submission).',
+            hardConstraintsNoData: 'No hard-constraint records under current filters.',
+            pass: 'PASS',
+            fail: 'FAIL',
+            current: 'Current',
+            target: 'Target',
+            previous: 'Previous',
+            delta: 'Delta',
+            scope: 'Scope',
+            constraint1: 'C1 Single-chip effective utilization >= 90%',
+            constraint2: 'C2 Typical scenes: throughput >= 2x and TTFT/TPOT reduction > 20%',
+            constraint3: 'C3 Context >= 32K with stable throughput and stable TTFT/TPOT P95/P99',
+            constraint4: 'C4 Single business scenario token cost down >= 30% and high multi-tenant utilization',
             lastUpdated: 'Last updated',
             noComparableTitle: 'No comparable rows in the current view.',
             noComparableHidden: 'The current filters only expose sparse groups. Turn off "Hide sparse benchmark rows" if you want to inspect single-engine rows.',
@@ -188,6 +186,20 @@
             statsComparisonRows: '条对比记录，覆盖',
             statsCompleteGroups: '个完整分组',
             quickCompare: '快速对比',
+            hardConstraintsTitle: '硬约束达成',
+            hardConstraintsSubtitle: '基于 benchmark 快照的强制目标判定（展示当前结果及相对上次提交的回归变化）。',
+            hardConstraintsNoData: '当前筛选条件下没有硬约束记录。',
+            pass: '达标',
+            fail: '未达标',
+            current: '当前',
+            target: '目标',
+            previous: '上次',
+            delta: '变化',
+            scope: '范围',
+            constraint1: 'C1 单芯片有效算力 >= 90%',
+            constraint2: 'C2 典型场景：吞吐 >= 2x 且 TTFT/TPOT 降幅 > 20%',
+            constraint3: 'C3 上下文 >= 32K 且吞吐稳定、TTFT/TPOT P95/P99 稳定',
+            constraint4: 'C4 单一业务场景单位 token 成本下降 >= 30%，且多租户高利用率',
             lastUpdated: '最近更新',
             noComparableTitle: '当前视图没有可直接对比的数据。',
             noComparableHidden: '当前筛选下只剩稀疏分组。如果你想查看单引擎结果，可以关闭“隐藏缺少对比的数据”。',
@@ -322,7 +334,7 @@
 
     // Initialize on DOM ready
     document.addEventListener('DOMContentLoaded', init);
-    window.addEventListener('sagellm:langchange', () => {
+    window.addEventListener('vllm-hust:langchange', () => {
         renderFilters();
         renderViewControls();
         renderTable();
@@ -408,51 +420,11 @@
 
     function getWorkloadId(entry) {
         const direct = entry.workload?.name || entry.workload_name || entry.metadata?.workload;
-        const normalizedDirect = normalizeWorkloadId(direct);
-        if (normalizedDirect) {
-            return normalizedDirect;
+        if (typeof direct === 'string' && direct.trim()) {
+            return direct.trim();
         }
 
         return 'Other';
-    }
-
-    function normalizeWorkloadId(value) {
-        if (!value) {
-            return null;
-        }
-
-        const raw = String(value).trim();
-        if (!raw) {
-            return null;
-        }
-
-        if (/^Q[1-8]$/i.test(raw)) {
-            return raw.toUpperCase();
-        }
-
-        const normalized = raw.toLowerCase().replace(/[^a-z0-9]+/g, '_');
-        const aliasMap = {
-            short: 'Q1',
-            short_qa: 'Q1',
-            short_input: 'Q1',
-            long: 'Q2',
-            long_summarization: 'Q2',
-            long_input: 'Q2',
-            code: 'Q3',
-            code_generation: 'Q3',
-            multi_turn: 'Q4',
-            multi_turn_reasoning: 'Q4',
-            stress: 'Q5',
-            stress_short: 'Q5',
-            stress_test: 'Q5',
-            stress_long: 'Q6',
-            cot: 'Q7',
-            chain_of_thought: 'Q7',
-            mixed: 'Q8',
-            mixed_batch: 'Q8',
-        };
-
-        return aliasMap[normalized] || null;
     }
 
     function getWorkloadLabel(workloadId) {
@@ -492,7 +464,7 @@
     }
 
     function getCurrentLang() {
-        return (window.sagellmCurrentLang || document.documentElement.lang || 'en').startsWith('zh') ? 'zh' : 'en';
+        return (window['vllm-hustCurrentLang'] || document.documentElement.lang || 'en').startsWith('zh') ? 'zh' : 'en';
     }
 
     function t(key) {
@@ -805,13 +777,8 @@
         const hardwareOptions = getUniqueValues(data, d => d.hardware.chip_model);
         const modelOptions = getUniqueValues(data, d => d.model.name);
         const versionOptions = getVersionOptions(data);
-        const dynamicWorkloads = getUniqueValues(data, d => getWorkloadId(d));
-        const workloadOptions = ['all', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8'];
-        dynamicWorkloads.forEach(workload => {
-            if (!workloadOptions.includes(workload)) {
-                workloadOptions.push(workload);
-            }
-        });
+        const dynamicWorkloads = getUniqueValues(data, d => getWorkloadId(d)).sort((a, b) => a.localeCompare(b));
+        const workloadOptions = ['all', ...dynamicWorkloads];
         const precisionOptions = getUniqueValues(data, d => d.model.precision);
 
         // Update dropdowns
@@ -878,6 +845,7 @@
         const mergedEntries = aggregateVersionBuilds(visibleEntries);
         const sortedFiltered = sortForDisplay(mergedEntries, filters.workload);
 
+        renderHardConstraints(visibleEntries, comparisonView);
         renderCoverage(comparisonView);
 
         // Show empty state if no data
@@ -965,6 +933,173 @@
             </div>
             <div class="overview-grid">
                 ${summaries.map((summary) => renderEngineSummaryCard(summary, leaders)).join('')}
+            </div>
+        `;
+    }
+
+    function buildHardConstraintScopeKey(entry) {
+        const accountable = entry?.constraints?.accountable_scope || {};
+        const representativeBusinessScenario = accountable.representative_business_scenario || 'unknown-business-scenario';
+        const baselineEngine = accountable.baseline_engine || 'unknown-baseline';
+        const model = entry?.model?.name || 'unknown-model';
+        const hardware = entry?.hardware?.chip_model || 'unknown-hardware';
+        const workload = getWorkloadId(entry) || 'Other';
+        const configType = entry?.config_type || 'unknown-config';
+        return [
+            getEngine(entry),
+            model,
+            hardware,
+            workload,
+            configType,
+            representativeBusinessScenario,
+            baselineEngine,
+        ].join('|');
+    }
+
+    function formatSignedDelta(value, suffix = '') {
+        if (!Number.isFinite(value)) {
+            return '-';
+        }
+        const prefix = value > 0 ? '+' : '';
+        return `${prefix}${value.toFixed(2)}${suffix}`;
+    }
+
+    function formatBoolean(value) {
+        if (value === true) {
+            return t('pass');
+        }
+        if (value === false) {
+            return t('fail');
+        }
+        return '-';
+    }
+
+    function renderHardConstraints(entries, comparisonView) {
+        const el = document.getElementById('leaderboard-hard-constraints');
+        if (!el) {
+            return;
+        }
+
+        const snapshot = state.compareSnapshot?.hard_constraints;
+        const scopes = Array.isArray(snapshot?.scopes) ? snapshot.scopes : [];
+        if (!scopes.length) {
+            el.innerHTML = `
+                <div class="hard-constraints-empty">${t('hardConstraintsNoData')}</div>
+            `;
+            return;
+        }
+
+        const sourceEntries = comparisonView?.visibleEntries?.length ? comparisonView.visibleEntries : entries;
+        const scopeKeys = new Set(sourceEntries.map((entry) => buildHardConstraintScopeKey(entry)));
+        const filteredScopes = scopes.filter((scope) => scopeKeys.has(scope.scope_key));
+
+        if (!filteredScopes.length) {
+            el.innerHTML = `
+                <div class="hard-constraints-empty">${t('hardConstraintsNoData')}</div>
+            `;
+            return;
+        }
+
+        const passCount = filteredScopes.filter((scope) => scope?.overall_pass).length;
+        const failCount = Math.max(filteredScopes.length - passCount, 0);
+
+        el.innerHTML = `
+            <div class="hard-constraints-header">
+                <div>
+                    <h3>${t('hardConstraintsTitle')}</h3>
+                    <p>${t('hardConstraintsSubtitle')}</p>
+                </div>
+                <div class="hard-constraints-summary">
+                    <span class="hc-badge pass">${t('pass')}: ${passCount}</span>
+                    <span class="hc-badge fail">${t('fail')}: ${failCount}</span>
+                </div>
+            </div>
+            <div class="hard-constraints-grid">
+                ${filteredScopes.map((scope) => renderHardConstraintScopeCard(scope)).join('')}
+            </div>
+        `;
+    }
+
+    function renderHardConstraintScopeCard(scope) {
+        const latest = scope?.latest || {};
+        const previous = scope?.previous || {};
+        const evaluation = latest?.evaluation || {};
+        const checks = evaluation?.checks || {};
+        const metrics = evaluation?.metrics || {};
+        const deltas = scope?.metric_deltas || {};
+        const accountable = latest?.accountable_scope || {};
+
+        const c1Current = Number.isFinite(metrics.single_chip_effective_utilization_pct)
+            ? `${metrics.single_chip_effective_utilization_pct.toFixed(2)}%`
+            : '-';
+        const c2Current = [
+            Number.isFinite(metrics.typical_throughput_ratio_vs_baseline)
+                ? `TPS x${metrics.typical_throughput_ratio_vs_baseline.toFixed(2)}`
+                : 'TPS x-',
+            Number.isFinite(metrics.typical_ttft_reduction_pct_vs_baseline)
+                ? `TTFT ${metrics.typical_ttft_reduction_pct_vs_baseline.toFixed(2)}%`
+                : 'TTFT -',
+            Number.isFinite(metrics.typical_tpot_reduction_pct_vs_baseline)
+                ? `TPOT ${metrics.typical_tpot_reduction_pct_vs_baseline.toFixed(2)}%`
+                : 'TPOT -',
+        ].join(' · ');
+        const c3Current = [
+            Number.isFinite(metrics.long_context_length)
+                ? `CTX ${Math.round(metrics.long_context_length)}`
+                : 'CTX -',
+            `THR ${formatBoolean(metrics.long_context_throughput_stable)}`,
+            `TTFT P95 ${formatBoolean(metrics.long_context_ttft_p95_stable)}`,
+            `TTFT P99 ${formatBoolean(metrics.long_context_ttft_p99_stable)}`,
+            `TPOT P95 ${formatBoolean(metrics.long_context_tpot_p95_stable)}`,
+            `TPOT P99 ${formatBoolean(metrics.long_context_tpot_p99_stable)}`,
+        ].join(' · ');
+        const c4Current = [
+            Number.isFinite(metrics.unit_token_cost_reduction_pct)
+                ? `Cost ${metrics.unit_token_cost_reduction_pct.toFixed(2)}%`
+                : 'Cost -',
+            `Tenant ${formatBoolean(metrics.multi_tenant_high_utilization)}`,
+        ].join(' · ');
+
+        const statusClass = scope?.overall_pass ? 'pass' : 'fail';
+
+        return `
+            <article class="hard-constraint-card ${statusClass}">
+                <div class="hard-constraint-card-head">
+                    <strong>${getEngineLabel(latest?.engine || scope?.scope?.engine || 'unknown')}</strong>
+                    <span class="hc-status ${statusClass}">${scope?.overall_pass ? t('pass') : t('fail')}</span>
+                </div>
+                <p class="hard-constraint-scope">
+                    ${t('scope')}: ${scope?.scope?.model || '-'} • ${scope?.scope?.hardware || '-'} • ${scope?.scope?.workload || '-'}
+                </p>
+                <p class="hard-constraint-scope-meta">
+                    scenario=${accountable?.representative_business_scenario || '-'} · baseline=${accountable?.baseline_engine || '-'}
+                </p>
+                <div class="hard-constraint-rows">
+                    ${renderHardConstraintRow(t('constraint1'), checks.effective_utilization_ge_90, c1Current, '>= 90%', formatSignedDelta(deltas.single_chip_effective_utilization_pct, ' pp'))}
+                    ${renderHardConstraintRow(t('constraint2'), checks.typical_scene_ge_2x_and_ttft_tpot_reduction_gt_20, c2Current, 'TPS >= 2x, TTFT > 20%, TPOT > 20%', [
+                        `TPS ${formatSignedDelta(deltas.typical_throughput_ratio_vs_baseline)}`,
+                        `TTFT ${formatSignedDelta(deltas.typical_ttft_reduction_pct_vs_baseline, ' pp')}`,
+                        `TPOT ${formatSignedDelta(deltas.typical_tpot_reduction_pct_vs_baseline, ' pp')}`,
+                    ].join(' · '))}
+                    ${renderHardConstraintRow(t('constraint3'), checks.long_context_ge_32k_and_p95_p99_stable, c3Current, 'CTX >= 32K + stability checks', '-')}
+                    ${renderHardConstraintRow(t('constraint4'), checks.single_business_cost_down_ge_30_and_multi_tenant_high_utilization, c4Current, 'Cost >= 30% + high tenant utilization', `Cost ${formatSignedDelta(deltas.unit_token_cost_reduction_pct, ' pp')}`)}
+                </div>
+                <p class="hard-constraint-commit">${t('current')}: ${latest?.git_commit || latest?.entry_id || '-'} · ${t('previous')}: ${previous?.git_commit || previous?.entry_id || '-'}</p>
+            </article>
+        `;
+    }
+
+    function renderHardConstraintRow(label, passed, currentValue, targetValue, deltaValue) {
+        const statusClass = passed ? 'pass' : 'fail';
+        return `
+            <div class="hard-constraint-row">
+                <div class="hc-row-title">${label}</div>
+                <div class="hc-row-meta">
+                    <span>${t('current')}: ${currentValue}</span>
+                    <span>${t('target')}: ${targetValue}</span>
+                    <span>${t('delta')}: ${deltaValue}</span>
+                    <span class="hc-row-status ${statusClass}">${passed ? t('pass') : t('fail')}</span>
+                </div>
             </div>
         `;
     }

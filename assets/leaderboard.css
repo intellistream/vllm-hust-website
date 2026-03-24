@@ -90,6 +90,157 @@
     margin-top: 12px;
 }
 
+.hard-constraints-panel {
+    margin: 12px 0 20px;
+    padding: 18px;
+    border-radius: 20px;
+    border: 1px solid #dbe7f3;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+}
+
+.hard-constraints-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.hard-constraints-header h3 {
+    margin: 0;
+    color: #0f172a;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+}
+
+.hard-constraints-header p {
+    margin: 4px 0 0;
+    color: #475569;
+    font-size: 0.9rem;
+}
+
+.hard-constraints-summary {
+    display: inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.hc-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border: 1px solid transparent;
+}
+
+.hc-badge.pass {
+    color: #166534;
+    background: #ecfdf5;
+    border-color: #86efac;
+}
+
+.hc-badge.fail {
+    color: #991b1b;
+    background: #fef2f2;
+    border-color: #fecaca;
+}
+
+.hard-constraints-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 12px;
+}
+
+.hard-constraint-card {
+    border-radius: 16px;
+    padding: 12px;
+    border: 1px solid #dbe7f3;
+    background: #ffffff;
+}
+
+.hard-constraint-card.pass {
+    border-color: #86efac;
+}
+
+.hard-constraint-card.fail {
+    border-color: #fecaca;
+}
+
+.hard-constraint-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.hc-status,
+.hc-row-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 8px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 700;
+}
+
+.hc-status.pass,
+.hc-row-status.pass {
+    color: #166534;
+    background: #ecfdf5;
+}
+
+.hc-status.fail,
+.hc-row-status.fail {
+    color: #991b1b;
+    background: #fef2f2;
+}
+
+.hard-constraint-scope,
+.hard-constraint-scope-meta,
+.hard-constraint-commit {
+    margin: 6px 0 0;
+    font-size: 0.82rem;
+    color: #475569;
+    line-height: 1.45;
+}
+
+.hard-constraint-rows {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.hard-constraint-row {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 8px;
+    background: #f8fafc;
+}
+
+.hc-row-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.hc-row-meta {
+    margin-top: 6px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #334155;
+}
+
+.hard-constraints-empty {
+    color: #64748b;
+    font-size: 0.9rem;
+    padding: 6px 2px;
+}
+
 .leaderboard-overview {
     display: grid;
     gap: 18px;

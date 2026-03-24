@@ -1,5 +1,5 @@
 <!--
-  Asciinema Player Integration Template (SageLLM)
+    Asciinema Player Integration Template (vllm-hust)
 
   Dependencies:
   - asciinema-player css (CDN)
@@ -13,7 +13,7 @@
 <div class="demo-container" style="border: 1px solid #333; border-radius: 8px; overflow: hidden; background: #000;">
     <!-- Title Bar -->
     <div style="padding: 12px 16px; border-bottom: 1px solid #333; background: rgba(255,255,255,0.05); color: #fff;">
-        <span style="font-family: monospace;">📺 Live Demo: SageLLM Inference Engine</span>
+        <span style="font-family: monospace;">📺 Live Demo: vllm-hust Serving Engine</span>
     </div>
 
     <!-- Player Element -->
@@ -38,7 +38,7 @@
             playerElement.innerHTML = '';
 
             // Create Player
-            AsciinemaPlayer.create('/assets/sagellm-inference.cast', playerElement, {
+            AsciinemaPlayer.create('/demos/vllm-hust-inference.cast', playerElement, {
                 // Formatting
                 cols: 100,
                 rows: 24,

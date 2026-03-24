@@ -42,7 +42,7 @@
         setCode('quickstart-install-command', quickstart.install_command);
         setCode('quickstart-setup-command', quickstart.setup_command);
         setCode('quickstart-run-command', quickstart.run_command);
-        setCode('quickstart-smart-command', quickstart.smart_command || 'sagellm install');
+        setCode('quickstart-smart-command', quickstart.smart_command || 'vllm-hust install');
         setCode('quickstart-setup-hint', quickstart.setup_hint);
     }
 

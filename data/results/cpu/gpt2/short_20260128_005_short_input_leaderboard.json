@@ -1,6 +1,7 @@
 {
   "entry_id": "2908b9e8-9376-4c5b-888f-a6e1ae007966",
-  "sagellm_version": "0.3.0.3",
+  "engine": "vllm-hust",
+  "engine_version": "0.3.0.3",
   "config_type": "multi_gpu",
   "hardware": {
     "vendor": "NVIDIA",
@@ -66,12 +67,12 @@
   },
   "metadata": {
     "submitted_at": "2026-01-28T08:53:09.986456+00:00",
-    "submitter": "sagellm-benchmark automated run",
+    "submitter": "vllm-hust benchmark automated run",
     "data_source": "automated-benchmark",
-    "reproducible_cmd": "sagellm-benchmark run --workload short --backend cpu --model gpt2",
+    "reproducible_cmd": "vllm bench serve --workload short --backend cpu --model gpt2",
     "git_commit": null,
     "release_date": "2026-01-28",
-    "changelog_url": "https://github.com/intellistream/sagellm/blob/main/CHANGELOG.md",
+    "changelog_url": "https://github.com/intellistream/vllm-hust/blob/main/CHANGELOG.md",
     "notes": "Benchmark run: short_input",
     "verified": false
   }

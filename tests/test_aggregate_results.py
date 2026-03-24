@@ -29,7 +29,7 @@ def _valid_entry() -> dict:
             "quantization": "None",
         },
         "workload": {
-            "name": "Q1",
+            "name": "short",
             "input_length": 32,
             "output_length": 64,
             "batch_size": 1,
@@ -49,6 +49,34 @@ def _valid_entry() -> dict:
             "evict_count": 0,
             "evict_ms": 0.0,
             "spec_accept_rate": 0.0,
+        },
+        "constraints": {
+            "scenario_source": "vllm-benchmark",
+            "accountable_scope": {
+                "domestic_chip_class": "Huawei Ascend 910B",
+                "representative_model_band": "7B-13B",
+                "representative_business_scenario": "multi-turn-dialogue",
+                "baseline_engine": "vllm",
+                "owner_confirmed": True,
+            },
+            "metrics": {
+                "single_chip_effective_utilization_pct": 91.2,
+                "typical_throughput_ratio_vs_baseline": 2.12,
+                "typical_ttft_reduction_pct_vs_baseline": 22.4,
+                "typical_tpot_reduction_pct_vs_baseline": 21.1,
+                "long_context_length": 32768,
+                "long_context_throughput_stable": True,
+                "long_context_ttft_p95_ms": 45.0,
+                "long_context_ttft_p99_ms": 58.0,
+                "long_context_tpot_p95_ms": 12.0,
+                "long_context_tpot_p99_ms": 16.0,
+                "long_context_ttft_p95_stable": True,
+                "long_context_ttft_p99_stable": True,
+                "long_context_tpot_p95_stable": True,
+                "long_context_tpot_p99_stable": True,
+                "unit_token_cost_reduction_pct": 31.5,
+                "multi_tenant_high_utilization": True,
+            },
         },
         "cluster": None,
         "versions": {
@@ -82,13 +110,13 @@ def _valid_entry() -> dict:
             "engine": "engine-a",
             "engine_version": "1.2.3",
             "hardware_family": "cuda",
-            "reproducible_cmd": "sagellm-benchmark compare --target sagellm=http://127.0.0.1:8901/v1",
+            "reproducible_cmd": "vllm bench serve --endpoint http://127.0.0.1:8901/v1 --model Qwen/Qwen2.5-0.5B-Instruct",
             "git_commit": None,
             "release_date": "2026-03-14",
             "changelog_url": "https://example.com/changelog",
-            "notes": "Benchmark run: Q1",
+            "notes": "Benchmark run: short",
             "verified": True,
-            "idempotency_key": "engine-a|1.2.3|q1|qwen-qwen2.5-0.5b-instruct|fp16|a100|1|1|single_gpu",
+            "idempotency_key": "engine-a|1.2.3|short|qwen-qwen2.5-0.5b-instruct|fp16|a100|1|1|single_gpu",
         },
         "canonical_path": "canonical/test_leaderboard.json",
     }
@@ -99,7 +127,7 @@ def test_aggregate_results_from_standard_manifest(tmp_path: Path) -> None:
     script = website_root / "scripts" / "aggregate_results.py"
     source_dir = tmp_path / "benchmark_outputs"
     source_dir.mkdir()
-    artifact = source_dir / "Q1_leaderboard.json"
+    artifact = source_dir / "short_leaderboard.json"
     artifact.write_text(json.dumps(_valid_entry(), indent=2) + "\n", encoding="utf-8")
     manifest = source_dir / "leaderboard_manifest.json"
     manifest.write_text(
@@ -114,10 +142,10 @@ def test_aggregate_results_from_standard_manifest(tmp_path: Path) -> None:
                             "idempotency_key"
                         ],
                         "canonical_path": _valid_entry()["canonical_path"],
-                        "leaderboard_artifact": "Q1_leaderboard.json",
-                        "canonical_artifact": "Q1.canonical.json",
+                        "leaderboard_artifact": "short_leaderboard.json",
+                        "canonical_artifact": "short.canonical.json",
                         "engine": "engine-a",
-                        "workload": "Q1",
+                        "workload": "short",
                         "config_type": "single_gpu",
                         "category": "single",
                     }
@@ -153,7 +181,7 @@ def test_aggregate_results_from_standard_manifest(tmp_path: Path) -> None:
         (output_dir / "leaderboard_single.json").read_text(encoding="utf-8")
     )
     assert len(single_payload) == 1
-    assert single_payload[0]["workload"]["name"] == "Q1"
+    assert single_payload[0]["workload"]["name"] == "short"
 
 
 def test_aggregate_results_fails_on_invalid_schema(tmp_path: Path) -> None:
@@ -179,7 +207,7 @@ def test_aggregate_results_fails_on_invalid_schema(tmp_path: Path) -> None:
                         "leaderboard_artifact": "bad_leaderboard.json",
                         "canonical_artifact": "bad.canonical.json",
                         "engine": "engine-a",
-                        "workload": "Q1",
+                        "workload": "short",
                         "config_type": "single_gpu",
                         "category": "single",
                     }

@@ -1,90 +1,90 @@
 {
   "release": {
-    "headline_zh": "🎉 sageLLM 0.5 正式发布",
-    "message_zh": "v0.5 的发布标志着 sageLLM 从“功能可用”进入“工程可用”阶段：命令入口统一、推理链路更完整、安装与依赖管理更稳定、发布与版本治理更可靠。",
-    "core_feature_zh": "v0.5 新增并强化了统一 CLI 入口、OpenAI 兼容服务链路、智能安装与依赖校验机制，以及面向多仓库的发布与版本一致性治理能力。"
+    "headline_zh": "vllm-hust 项目概览",
+    "message_zh": "vllm-hust 围绕上游 vLLM 展开，聚焦国产算力适配、AGI4S 服务场景和 benchmark 驱动验证。",
+    "core_feature_zh": "当前重点包括保持上游兼容接口、补齐国产硬件能力、优化真实服务场景，并通过 benchmark 结果持续验证。"
   },
   "quickstart": {
-    "title_zh": "🚀 Quick Start (v0.5)",
-    "description_zh": "v0.5 标志着 sageLLM 进入工程可用阶段：链路更完整、安装发布更稳定、版本治理更可靠。",
+    "title_zh": "🚀 Quick Start",
+    "description_zh": "使用统一入口快速安装、配置后端并启动服务。",
     "install_step_label_zh": "📦 1. Pip Install",
     "setup_step_label_zh": "🔧 2. Setup Backend",
     "run_step_label_zh": "⚡ 3. Run Inference",
-    "smart_detection_zh": "v0.5 automatically detects if you're missing dependencies for your hardware and suggests the correct sagellm install command.",
-    "smart_command": "sagellm install",
-    "install_command": "pip install isagellm",
-    "setup_command": "sagellm install cuda",
-    "run_command": "sagellm run -p \"Hello AI\" --backend cuda",
+    "smart_detection_zh": "会根据目标硬件提示合适的 vllm-hust 安装与后端配置入口。",
+    "smart_command": "vllm-hust install",
+    "install_command": "pip install ivllm-hust",
+    "setup_command": "vllm-hust install cuda",
+    "run_command": "vllm-hust run -p \"Hello AI\" --backend cuda",
     "setup_hint": "# or ascend / cpu"
   },
   "packages": [
     {
-      "name": "sagellm (umbrella)",
-      "repo": "https://github.com/intellistream/sagellm",
-      "pypi_name": "isagellm",
+      "name": "vllm-hust",
+      "repo": "https://github.com/intellistream/vllm-hust",
+      "pypi_name": "ivllm-hust",
       "version": "0.5.4.70",
       "group": "core"
     },
     {
-      "name": "sagellm-protocol",
-      "repo": "https://github.com/intellistream/sagellm-protocol",
-      "pypi_name": "isagellm-protocol",
+      "name": "vllm-hust-protocol",
+      "repo": "https://github.com/intellistream/vllm-hust-protocol",
+      "pypi_name": "ivllm-hust-protocol",
       "version": "0.5.4.16",
       "group": "core"
     },
     {
-      "name": "sagellm-backend",
-      "repo": "https://github.com/intellistream/sagellm-backend",
-      "pypi_name": "isagellm-backend",
+      "name": "vllm-hust-backend",
+      "repo": "https://github.com/intellistream/vllm-hust-backend",
+      "pypi_name": "ivllm-hust-backend",
       "version": "0.5.4.17",
       "group": "core"
     },
     {
-      "name": "sagellm-core",
-      "repo": "https://github.com/intellistream/sagellm-core",
-      "pypi_name": "isagellm-core",
+      "name": "vllm-hust-core",
+      "repo": "https://github.com/intellistream/vllm-hust-core",
+      "pypi_name": "ivllm-hust-core",
       "version": "0.5.4.26",
       "group": "core"
     },
     {
-      "name": "sagellm-control-plane",
-      "repo": "https://github.com/intellistream/sagellm-control-plane",
-      "pypi_name": "isagellm-control-plane",
+      "name": "vllm-hust-control-plane",
+      "repo": "https://github.com/intellistream/vllm-hust-control-plane",
+      "pypi_name": "ivllm-hust-control-plane",
       "version": "0.5.4.14",
       "group": "infrastructure"
     },
     {
-      "name": "sagellm-gateway",
-      "repo": "https://github.com/intellistream/sagellm-gateway",
-      "pypi_name": "isagellm-gateway",
+      "name": "vllm-hust-gateway",
+      "repo": "https://github.com/intellistream/vllm-hust-gateway",
+      "pypi_name": "ivllm-hust-gateway",
       "version": "0.5.4.14",
       "group": "infrastructure"
     },
     {
-      "name": "sagellm-kv-cache",
-      "repo": "https://github.com/intellistream/sagellm-kv-cache",
-      "pypi_name": "isagellm-kv-cache",
+      "name": "vllm-hust-kv-cache",
+      "repo": "https://github.com/intellistream/vllm-hust-kv-cache",
+      "pypi_name": "ivllm-hust-kv-cache",
       "version": "0.5.4.15",
       "group": "infrastructure"
     },
     {
-      "name": "sagellm-comm",
-      "repo": "https://github.com/intellistream/sagellm-comm",
-      "pypi_name": "isagellm-comm",
+      "name": "vllm-hust-comm",
+      "repo": "https://github.com/intellistream/vllm-hust-comm",
+      "pypi_name": "ivllm-hust-comm",
       "version": "0.5.4.15",
       "group": "infrastructure"
     },
     {
-      "name": "sagellm-compression",
-      "repo": "https://github.com/intellistream/sagellm-compression",
-      "pypi_name": "isagellm-compression",
+      "name": "vllm-hust-compression",
+      "repo": "https://github.com/intellistream/vllm-hust-compression",
+      "pypi_name": "ivllm-hust-compression",
       "version": "0.5.4.12",
       "group": "infrastructure"
     },
     {
-      "name": "sagellm-benchmark",
-      "repo": "https://github.com/intellistream/sagellm-benchmark",
-      "pypi_name": "isagellm-benchmark",
+      "name": "vllm-hust-benchmark",
+      "repo": "https://github.com/intellistream/vllm-hust-benchmark",
+      "pypi_name": "ivllm-hust-benchmark",
       "version": "0.5.4.14",
       "group": "infrastructure"
     }

@@ -6,19 +6,19 @@
 | -------- | ----------------------------------------- |
 | 仓库名   | vllm-hust-website                           |
 | 可见性   | **Public** (公开仓库)                     |
-| 主要职责 | sageLLM 公开展示网站 - 演示材料和营销页面 |
+| 主要职责 | vllm-hust 公开展示网站 - 演示材料和营销页面 |
 
 ## 🚫 Python 环境约束（强制）
 
 - 永远不要创建 `.venv` 或 `venv`，也不要建议用户创建。
 - 永远不要执行 `python -m venv`、`uv venv`、`virtualenv`、`source .venv/bin/activate` 等命令。
 - 所有测试、lint、脚本执行必须复用当前已配置的 conda 环境。
-- 如需运行 Python 命令，优先使用当前已激活的 conda 环境或显式使用 `conda run -n sagellm ...`。
+- 如需运行 Python 命令，优先使用当前已激活的 conda 环境或显式使用 `conda run -n vllm-hust ...`。
 - 如果脚本默认要求创建 virtualenv，必须跳过该步骤并继续使用现有 conda 环境。
 
 ## 🎯 仓库定位
 
-**这是 sageLLM 项目唯一的公开仓库**，用于：
+**这是 vllm-hust 项目的公开展示仓库**，用于：
 
 1. **展示推理速度**：通过 asciinema 终端录屏展示实时推理
 1. **营销材料**：功能特性、架构优势、使用场景
@@ -37,7 +37,7 @@
 vllm-hust-website/
 ├── index.html              # 主页（渐变背景 + asciinema 播放器）
 ├── demos/                  # 终端录屏文件
-│   └── sagellm-inference.cast
+│   └── vllm-hust-inference.cast
 ├── assets/                 # 图片、CSS、视频等
 ├── README.md               # 仓库说明
 ├── LICENSE                 # MIT 许可证
@@ -128,10 +128,10 @@ git push origin main-dev
 
 ```
 demos/
-├── sagellm-inference.cast        # 推理演示
-├── sagellm-quickstart.cast       # 快速入门
-├── sagellm-api-gateway.cast      # API 网关演示
-└── sagellm-multi-model.cast      # 多模型切换
+├── vllm-hust-inference.cast      # 推理演示
+├── vllm-hust-quickstart.cast     # 快速入门
+├── vllm-hust-api-gateway.cast    # API 网关演示
+└── vllm-hust-multi-model.cast    # 多模型切换
 ```
 
 ### 播放器配置
@@ -199,7 +199,7 @@ npx serve .
 
 | 仓库                    | 可见性  | 关系                     |
 | ----------------------- | ------- | ------------------------ |
-| `intellistream/sagellm` | Private | 核心引擎（不可引用链接） |
+| `intellistream/vllm-hust` | Public/Fork | 推理运行时主仓库 |
 | `vllm-hust-website`       | Public  | 本仓库                   |
 
 ## 开发规范
@@ -211,7 +211,7 @@ npx serve .
 
 ## 相关文档
 
-- **主文档仓库**（私有）：sagellm-docs
+- **主文档仓库**：vllm-hust-docs
 - **asciinema**: https://asciinema.org/
 - **GitHub Pages**: https://pages.github.com/
 
@@ -269,11 +269,9 @@ ______________________________________________________________________
 
 **维护者**: IntelliStream Team **许可证**: MIT License (仅限演示材料)
 
-## 🛠️ GitHub Issue 管理（sage-dev gh）
+## 🛠️ GitHub Issue 管理
 
-**从 v0.2.0 开始，所有 GitHub CLI 命令已集成到 `sage-dev` 工具。**
-
-使用 `sage-dev gh` 子命令来管理 GitHub issues，无需直接使用 gh 命令。
+优先使用标准 `gh` 命令管理 GitHub issues，避免继续传播旧工具名。
 
 ### 常用命令
 
@@ -286,32 +284,26 @@ gh issue create \
   --label "label1,label2" \
   --body "详细描述"
 
-# 未来修复后的用法：
-# sage-dev gh create sagellm-core \
-#   --title "[Feature] 新功能" \
-#   --label enhancement \
-#   --assignee username
-
 # 查看仓库的所有开放 issues
-sage-dev gh list sagellm-{repo_name}
+gh issue list --repo intellistream/{repo_name}
 
 # 为单个 issue 分配给用户
-sage-dev gh assign sagellm-{repo_name} <issue_number> <username>
+gh issue edit <issue_number> --repo intellistream/{repo_name} --add-assignee <username>
 
 # 批量分配 issues 给同一用户
-sage-dev gh assign-batch sagellm-{repo_name} <username> <issues...>
+gh issue edit <issue_number> --repo intellistream/{repo_name} --add-assignee <username>
 
 # 查看单个 issue 的详细信息
-sage-dev gh view sagellm-{repo_name} <issue_number>
+gh issue view <issue_number> --repo intellistream/{repo_name}
 ```
 
 ### 详细说明
 
-详见 `sagellm` 仓库的 copilot-instructions 中的 "GitHub Issue 管理（sage-dev gh）" 部分。
+如需批量自动化，可在后续单独维护新的 dev-hub 工具说明，但不再沿用旧的 sagellm 命名。
 
 ### ⚠️ 注意事项
 
-- 需要安装 `isagellm-dev-tools` 包
+- 需要安装与当前工作流匹配的开发工具包
 - 需要安装 GitHub CLI（`gh`）并通过认证
 
 ## Git Hooks（强制 - Mandatory）

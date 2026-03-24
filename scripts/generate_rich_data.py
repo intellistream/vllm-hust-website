@@ -80,9 +80,14 @@ MODELS = [
 ]
 
 WORKLOADS = [
-    {"name": "Q1", "type": "short_input", "prompt": 128, "output": 128},
-    {"name": "Q2", "type": "long_input", "prompt": 2048, "output": 512},
-    {"name": "Q5", "type": "pressure_test", "prompt": 512, "output": 256},
+    {"name": "short", "type": "short_input", "prompt": 128, "output": 128},
+    {"name": "sharegpt-long", "type": "long_input", "prompt": 2048, "output": 512},
+    {
+        "name": "concurrency-pressure",
+        "type": "pressure_test",
+        "prompt": 512,
+        "output": 256,
+    },
 ]
 
 PRECISIONS = ["FP16", "BF16", "INT8", "INT4"]
@@ -92,7 +97,7 @@ VERSIONS = ["0.3.2", "0.3.1", "0.3.0", "0.2.5"]
 
 def generate_base_metrics(hardware, model, workload, precision):
     """生成基础性能指标"""
-    # 基础值（单卡 FP16 Qwen2-7B short_input）
+    # 基础值（单卡 FP16 Qwen2-7B short）
     base_ttft = 45.0
     base_throughput = 80.0
     base_memory = 15360
@@ -225,10 +230,10 @@ def generate_entry(
             "submitted_at": f"2026-01-{random.randint(15, 28):02d}T10:30:00Z",
             "submitter": "IntelliStream Team",
             "data_source": "automated-benchmark",
-            "reproducible_cmd": f"sage-llm benchmark --model {model['name']} --backend {'cuda' if 'NVIDIA' in hardware['chip_model'] else 'ascend'} --precision {precision}",
+            "reproducible_cmd": f"vllm bench serve --model {model['name']} --backend {'cuda' if 'NVIDIA' in hardware['chip_model'] else 'ascend'} --precision {precision}",
             "git_commit": f"{'abcdef'[random.randint(0, 5)]}{random.randint(1, 9)}{'xyz'[random.randint(0, 2)]}{random.randint(0, 9)}abcd1234",
             "release_date": f"2026-01-{random.randint(15, 28):02d}",
-            "changelog_url": f"https://github.com/intellistream/sagellm/blob/main/CHANGELOG.md#v{version}",
+            "changelog_url": f"https://github.com/intellistream/vllm-hust/blob/main/CHANGELOG.md#v{version}",
             "notes": f"Version {version} {'优化' if not is_regression else '修复问题，性能略有下降'}",
             "verified": True,
         },

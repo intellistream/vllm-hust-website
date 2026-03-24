@@ -22,7 +22,7 @@ TEMPLATE_DIR="$PROJECT_ROOT/hooks"
 INSTALL_MODE="dev"
 SKIP_HOOKS="false"
 SKIP_CLEANUP="false"
-CLEANUP_PREFIX="${QUICKSTART_CLEANUP_PREFIX:-isagellm-website}"
+CLEANUP_PREFIX="${QUICKSTART_CLEANUP_PREFIX:-ivllm-hust-website}"
 
 show_help() {
     echo "vllm-hust-website Quick Start"
@@ -36,7 +36,7 @@ show_help() {
     echo "  ./quickstart.sh --help          显示帮助"
     echo ""
     echo "环境变量:"
-    echo "  QUICKSTART_CLEANUP_PREFIX       清理前缀（默认: isagellm-website）"
+    echo "  QUICKSTART_CLEANUP_PREFIX       清理前缀（默认: ivllm-hust-website）"
 }
 
 parse_args() {

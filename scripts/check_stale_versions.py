@@ -14,7 +14,6 @@ VERSIONS_PATH = ROOT_DIR / "versions.html"
 ALLOWLIST_PATH = ROOT_DIR / "scripts" / "stale_version_allowlist.txt"
 
 STALE_PATTERN = re.compile(r"v0\.[0-4]\b|\b0\.[0-4]\.\d+\.\d+\b")
-QUICKSTART_VERSION_PATTERN = re.compile(r"Quick Start \(v(\d+\.\d+)\)")
 
 
 def _load_allowlist_patterns() -> list[re.Pattern[str]]:
@@ -50,15 +49,6 @@ def _find_stale_references(
 
 def _load_meta() -> dict:
     return json.loads(VERSION_META_PATH.read_text(encoding="utf-8"))
-
-
-def _extract_quickstart_minor(title: str) -> str:
-    match = QUICKSTART_VERSION_PATTERN.search(title)
-    if not match:
-        raise RuntimeError(
-            "quickstart.title_zh in version_meta.json must contain 'Quick Start (vX.Y)'"
-        )
-    return match.group(1)
 
 
 def _check_consistency(meta: dict) -> list[str]:
@@ -108,21 +98,6 @@ def _check_consistency(meta: dict) -> list[str]:
 
     if "./assets/versions-page.js" not in versions_text:
         errors.append("versions.html is missing versions-page.js")
-
-    if isinstance(quickstart_title, str) and quickstart_title:
-        minor = _extract_quickstart_minor(quickstart_title)
-        umbrella_version = ""
-        for package in meta.get("packages", []):
-            if isinstance(package, dict) and package.get("pypi_name") == "isagellm":
-                version = package.get("version", "")
-                if isinstance(version, str):
-                    umbrella_version = version
-                break
-
-        if umbrella_version and not umbrella_version.startswith(f"{minor}."):
-            errors.append(
-                "quickstart.title_zh major.minor does not match isagellm package version in version_meta.json"
-            )
 
     return errors
 

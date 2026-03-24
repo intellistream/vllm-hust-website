@@ -21,6 +21,17 @@ SUPPORTED_MANIFEST_SCHEMA_VERSIONS = {
 }
 COMPARE_SNAPSHOT_SCHEMA_VERSION = "leaderboard-compare-snapshot/v1"
 
+HARD_CONSTRAINTS_SCHEMA_VERSION = "leaderboard-hard-constraints/v1"
+
+HARD_CONSTRAINT_THRESHOLDS = {
+    "single_chip_effective_utilization_pct": 90.0,
+    "typical_throughput_ratio_vs_baseline": 2.0,
+    "typical_ttft_reduction_pct_vs_baseline": 20.0,
+    "typical_tpot_reduction_pct_vs_baseline": 20.0,
+    "long_context_length": 32768,
+    "unit_token_cost_reduction_pct": 30.0,
+}
+
 
 def load_schema(schema_path: Path) -> dict[str, Any]:
     return json.loads(schema_path.read_text(encoding="utf-8"))
@@ -129,6 +140,263 @@ def build_compare_engine_summary(entry: dict[str, Any]) -> dict[str, Any]:
             ),
             "error_rate": float(metrics.get("error_rate") or 0.0),
         },
+    }
+
+
+def parse_entry_timestamp(entry: dict[str, Any]) -> int:
+    metadata = entry.get("metadata") or {}
+    for field in ("submitted_at", "release_date"):
+        raw = metadata.get(field)
+        if isinstance(raw, str) and raw:
+            try:
+                return int(
+                    datetime.fromisoformat(raw.replace("Z", "+00:00")).timestamp()
+                )
+            except ValueError:
+                continue
+    return 0
+
+
+def safe_float(value: Any) -> float | None:
+    try:
+        if value is None:
+            return None
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def safe_bool(value: Any) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    return None
+
+
+def build_hard_constraint_scope_key(entry: dict[str, Any]) -> str:
+    constraints = entry.get("constraints") or {}
+    accountable_scope = constraints.get("accountable_scope") or {}
+    model = str((entry.get("model") or {}).get("name") or "unknown-model")
+    hardware = str(
+        (entry.get("hardware") or {}).get("chip_model") or "unknown-hardware"
+    )
+    workload = extract_workload_name(entry)
+    config_type = str(entry.get("config_type") or "unknown-config")
+    representative_business_scenario = str(
+        accountable_scope.get("representative_business_scenario")
+        or "unknown-business-scenario"
+    )
+    baseline_engine = str(
+        accountable_scope.get("baseline_engine") or "unknown-baseline"
+    )
+    return "|".join(
+        [
+            str(entry.get("engine") or "unknown-engine"),
+            model,
+            hardware,
+            workload,
+            config_type,
+            representative_business_scenario,
+            baseline_engine,
+        ]
+    )
+
+
+def evaluate_hard_constraints(entry: dict[str, Any]) -> dict[str, Any]:
+    constraints = entry.get("constraints") or {}
+    metrics = constraints.get("metrics") or {}
+
+    utilization = safe_float(metrics.get("single_chip_effective_utilization_pct"))
+    throughput_ratio = safe_float(metrics.get("typical_throughput_ratio_vs_baseline"))
+    ttft_reduction = safe_float(metrics.get("typical_ttft_reduction_pct_vs_baseline"))
+    tpot_reduction = safe_float(metrics.get("typical_tpot_reduction_pct_vs_baseline"))
+    long_context_length = safe_float(metrics.get("long_context_length"))
+    long_context_throughput_stable = safe_bool(
+        metrics.get("long_context_throughput_stable")
+    )
+    long_context_ttft_p95_stable = safe_bool(
+        metrics.get("long_context_ttft_p95_stable")
+    )
+    long_context_ttft_p99_stable = safe_bool(
+        metrics.get("long_context_ttft_p99_stable")
+    )
+    long_context_tpot_p95_stable = safe_bool(
+        metrics.get("long_context_tpot_p95_stable")
+    )
+    long_context_tpot_p99_stable = safe_bool(
+        metrics.get("long_context_tpot_p99_stable")
+    )
+    unit_token_cost_reduction = safe_float(metrics.get("unit_token_cost_reduction_pct"))
+    multi_tenant_high_utilization = safe_bool(
+        metrics.get("multi_tenant_high_utilization")
+    )
+
+    checks = {
+        "effective_utilization_ge_90": (
+            utilization is not None
+            and utilization
+            >= HARD_CONSTRAINT_THRESHOLDS["single_chip_effective_utilization_pct"]
+        ),
+        "typical_scene_ge_2x_and_ttft_tpot_reduction_gt_20": (
+            throughput_ratio is not None
+            and throughput_ratio
+            >= HARD_CONSTRAINT_THRESHOLDS["typical_throughput_ratio_vs_baseline"]
+            and ttft_reduction is not None
+            and ttft_reduction
+            > HARD_CONSTRAINT_THRESHOLDS["typical_ttft_reduction_pct_vs_baseline"]
+            and tpot_reduction is not None
+            and tpot_reduction
+            > HARD_CONSTRAINT_THRESHOLDS["typical_tpot_reduction_pct_vs_baseline"]
+        ),
+        "long_context_ge_32k_and_p95_p99_stable": (
+            long_context_length is not None
+            and long_context_length >= HARD_CONSTRAINT_THRESHOLDS["long_context_length"]
+            and long_context_throughput_stable is True
+            and long_context_ttft_p95_stable is True
+            and long_context_ttft_p99_stable is True
+            and long_context_tpot_p95_stable is True
+            and long_context_tpot_p99_stable is True
+        ),
+        "single_business_cost_down_ge_30_and_multi_tenant_high_utilization": (
+            unit_token_cost_reduction is not None
+            and unit_token_cost_reduction
+            >= HARD_CONSTRAINT_THRESHOLDS["unit_token_cost_reduction_pct"]
+            and multi_tenant_high_utilization is True
+        ),
+    }
+
+    return {
+        "checks": checks,
+        "overall_pass": all(checks.values()),
+        "metrics": {
+            "single_chip_effective_utilization_pct": utilization,
+            "typical_throughput_ratio_vs_baseline": throughput_ratio,
+            "typical_ttft_reduction_pct_vs_baseline": ttft_reduction,
+            "typical_tpot_reduction_pct_vs_baseline": tpot_reduction,
+            "long_context_length": long_context_length,
+            "long_context_throughput_stable": long_context_throughput_stable,
+            "long_context_ttft_p95_ms": safe_float(
+                metrics.get("long_context_ttft_p95_ms")
+            ),
+            "long_context_ttft_p99_ms": safe_float(
+                metrics.get("long_context_ttft_p99_ms")
+            ),
+            "long_context_tpot_p95_ms": safe_float(
+                metrics.get("long_context_tpot_p95_ms")
+            ),
+            "long_context_tpot_p99_ms": safe_float(
+                metrics.get("long_context_tpot_p99_ms")
+            ),
+            "long_context_ttft_p95_stable": long_context_ttft_p95_stable,
+            "long_context_ttft_p99_stable": long_context_ttft_p99_stable,
+            "long_context_tpot_p95_stable": long_context_tpot_p95_stable,
+            "long_context_tpot_p99_stable": long_context_tpot_p99_stable,
+            "unit_token_cost_reduction_pct": unit_token_cost_reduction,
+            "multi_tenant_high_utilization": multi_tenant_high_utilization,
+        },
+        "thresholds": HARD_CONSTRAINT_THRESHOLDS,
+    }
+
+
+def summarize_hard_constraint_entry(entry: dict[str, Any]) -> dict[str, Any]:
+    metadata = entry.get("metadata") or {}
+    constraints = entry.get("constraints") or {}
+    evaluated = evaluate_hard_constraints(entry)
+    return {
+        "entry_id": str(entry.get("entry_id") or ""),
+        "engine": str(entry.get("engine") or metadata.get("engine") or "unknown"),
+        "engine_version": str(
+            entry.get("engine_version") or metadata.get("engine_version") or "unknown"
+        ),
+        "submitted_at": metadata.get("submitted_at"),
+        "git_commit": metadata.get("git_commit"),
+        "scenario_source": constraints.get("scenario_source"),
+        "accountable_scope": constraints.get("accountable_scope"),
+        "evaluation": evaluated,
+    }
+
+
+def compute_metric_delta(current: float | None, previous: float | None) -> float | None:
+    if current is None or previous is None:
+        return None
+    return round(current - previous, 4)
+
+
+def build_hard_constraint_snapshot(entries: list[dict[str, Any]]) -> dict[str, Any]:
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for entry in entries:
+        key = build_hard_constraint_scope_key(entry)
+        grouped.setdefault(key, []).append(entry)
+
+    scopes_payload: list[dict[str, Any]] = []
+    for scope_key, scope_entries in grouped.items():
+        ordered = sorted(scope_entries, key=parse_entry_timestamp, reverse=True)
+        latest = ordered[0]
+        previous = ordered[1] if len(ordered) > 1 else None
+        latest_summary = summarize_hard_constraint_entry(latest)
+        previous_summary = (
+            summarize_hard_constraint_entry(previous) if previous else None
+        )
+
+        latest_metrics = latest_summary["evaluation"]["metrics"]
+        previous_metrics = (
+            previous_summary["evaluation"]["metrics"] if previous_summary else {}
+        )
+        metric_deltas = {
+            "single_chip_effective_utilization_pct": compute_metric_delta(
+                latest_metrics.get("single_chip_effective_utilization_pct"),
+                previous_metrics.get("single_chip_effective_utilization_pct"),
+            ),
+            "typical_throughput_ratio_vs_baseline": compute_metric_delta(
+                latest_metrics.get("typical_throughput_ratio_vs_baseline"),
+                previous_metrics.get("typical_throughput_ratio_vs_baseline"),
+            ),
+            "typical_ttft_reduction_pct_vs_baseline": compute_metric_delta(
+                latest_metrics.get("typical_ttft_reduction_pct_vs_baseline"),
+                previous_metrics.get("typical_ttft_reduction_pct_vs_baseline"),
+            ),
+            "typical_tpot_reduction_pct_vs_baseline": compute_metric_delta(
+                latest_metrics.get("typical_tpot_reduction_pct_vs_baseline"),
+                previous_metrics.get("typical_tpot_reduction_pct_vs_baseline"),
+            ),
+            "unit_token_cost_reduction_pct": compute_metric_delta(
+                latest_metrics.get("unit_token_cost_reduction_pct"),
+                previous_metrics.get("unit_token_cost_reduction_pct"),
+            ),
+        }
+
+        constraints = latest.get("constraints") or {}
+        scope = {
+            "engine": str(latest.get("engine") or "unknown"),
+            "model": str((latest.get("model") or {}).get("name") or "unknown-model"),
+            "hardware": str(
+                (latest.get("hardware") or {}).get("chip_model") or "unknown-hardware"
+            ),
+            "workload": extract_workload_name(latest),
+            "config_type": str(latest.get("config_type") or "unknown-config"),
+            "accountable_scope": constraints.get("accountable_scope"),
+        }
+
+        scopes_payload.append(
+            {
+                "scope_key": scope_key,
+                "scope": scope,
+                "latest": latest_summary,
+                "previous": previous_summary,
+                "metric_deltas": metric_deltas,
+                "overall_pass": bool(latest_summary["evaluation"]["overall_pass"]),
+            }
+        )
+
+    scopes_payload.sort(key=lambda item: str(item.get("scope_key") or ""))
+    total = len(scopes_payload)
+    pass_count = sum(1 for item in scopes_payload if item.get("overall_pass"))
+    return {
+        "schema_version": HARD_CONSTRAINTS_SCHEMA_VERSION,
+        "generated_at": datetime.now(UTC).isoformat(),
+        "scope_count": total,
+        "pass_count": pass_count,
+        "fail_count": max(total - pass_count, 0),
+        "scopes": scopes_payload,
     }
 
 
@@ -290,6 +558,7 @@ def build_compare_snapshot(entries: list[dict[str, Any]]) -> dict[str, Any]:
 
     groups_payload.sort(key=lambda item: str(item.get("scope_key") or ""))
     preferred_pairs.sort(key=lambda item: str(item.get("scope_key") or ""))
+    hard_constraints = build_hard_constraint_snapshot(entries)
     return {
         "schema_version": COMPARE_SNAPSHOT_SCHEMA_VERSION,
         "generated_at": datetime.now(UTC).isoformat(),
@@ -297,6 +566,7 @@ def build_compare_snapshot(entries: list[dict[str, Any]]) -> dict[str, Any]:
         "preferred_pair_count": len(preferred_pairs),
         "groups": groups_payload,
         "preferred_pairs": preferred_pairs,
+        "hard_constraints": hard_constraints,
     }
 
 

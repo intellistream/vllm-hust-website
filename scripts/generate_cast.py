@@ -8,7 +8,7 @@ import urllib.request
 from pathlib import Path
 
 
-PROMPT = "\u001b[1;32muser@sagellm\u001b[0m:\u001b[1;34m~\u001b[0m$ "
+PROMPT = "\u001b[1;32muser@vllm-hust\u001b[0m:\u001b[1;34m~\u001b[0m$ "
 
 
 def _http_get(url: str) -> str:
@@ -60,12 +60,12 @@ def create_cast_file(filename: str, *, base_url: str, model: str, port: int) -> 
     health_body = _safe_get(f"{base_url}/health").strip()
     models_body = _safe_get(f"{base_url}/v1/models").strip()
 
-    type_command("pip install isagellm")
-    newline("Requirement already satisfied: isagellm")
+    type_command("pip install ivllm-hust")
+    newline("Requirement already satisfied: ivllm-hust")
     newline()
 
-    type_command(f"sagellm serve --backend cpu --model {model} --port {port}")
-    newline("🌐 Starting sageLLM Gateway...")
+    type_command(f"vllm-hust serve --backend cpu --model {model} --port {port}")
+    newline("🌐 Starting vllm-hust Gateway...")
     newline(f"📦 Model: {model}")
     newline("🖥️  Backend: cpu")
     newline(f"✅ OpenAI-compatible API ready at http://localhost:{port}")
@@ -89,9 +89,9 @@ def create_cast_file(filename: str, *, base_url: str, model: str, port: int) -> 
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Generate a website cast from a live SageLLM service"
+        description="Generate a website cast from a live vllm-hust service"
     )
-    parser.add_argument("output", nargs="?", default="demos/sagellm-inference.cast")
+    parser.add_argument("output", nargs="?", default="demos/vllm-hust-inference.cast")
     parser.add_argument("--base-url", default="http://localhost:8080")
     parser.add_argument("--model", default="sshleifer/tiny-gpt2")
     parser.add_argument("--port", type=int, default=8888)
