@@ -58,11 +58,11 @@ _该区块由 `data/version_meta.json` 驱动，运行 `python scripts/sync_vers
 {
 	"enabled": true,
 	"mode": "embed",
-	"workstation_url": "https://a100.example.com/workstation/",
-	"backend_url": "https://a100.example.com:8080",
-	"docs_url": "./docs/DEPLOY.md",
-	"label_zh": "A100 工作站",
-	"label_en": "A100 Workstation"
+	"workstation_url": "https://ws.sage.org.ai",
+	"backend_url": "https://api.sage.org.ai",
+	"docs_url": "./docs/CLOUDFLARE_SETUP.md",
+	"label_zh": "Sage A100 工作站",
+	"label_en": "Sage A100 Workstation"
 }
 ```
 
@@ -71,6 +71,12 @@ _该区块由 `data/version_meta.json` 驱动，运行 `python scripts/sync_vers
 - `website` 是静态站点，不代理 workstation API；要展示远端控制台，需要 workstation 自己对外可访问。
 - 若 website 走 HTTPS，则 workstation 也必须走 HTTPS，否则浏览器会阻止 iframe 混合内容。
 - 如果生产环境要限制可嵌入来源，请在 workstation 侧配置 `APP_FRAME_ANCESTORS`。
+
+推荐的 `sage.org.ai` 域名拆分：
+
+- `vllm-hust.sage.org.ai`：GitHub Pages 静态官网
+- `ws.sage.org.ai`：A100 上的 `vllm-hust-workstation`
+- `api.sage.org.ai`：A100 上的 `vllm-hust` OpenAI 兼容接口
 
 ## Architecture And Planning Notes
 

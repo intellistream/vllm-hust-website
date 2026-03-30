@@ -54,9 +54,9 @@ Settings → Pages → Custom domain:
 3. 为 workstation 配置：
 
 ```dotenv
-VLLM_HUST_BASE_URL=https://a100.example.com:8080
-APP_BRAND_NAME=vLLM-HUST A100 Workstation
-APP_FRAME_ANCESTORS=https://intellistream.github.io https://vllm-hust.sage.org.ai
+VLLM_HUST_BASE_URL=http://127.0.0.1:8080
+APP_BRAND_NAME=Sage A100 Workstation
+APP_FRAME_ANCESTORS=https://sage.org.ai https://vllm-hust.sage.org.ai
 ```
 
 4. 把公开可访问的 workstation 地址写入 `data/workstation_embed.json`
@@ -65,17 +65,23 @@ APP_FRAME_ANCESTORS=https://intellistream.github.io https://vllm-hust.sage.org.a
 {
   "enabled": true,
   "mode": "embed",
-  "workstation_url": "https://a100.example.com/workstation/",
-  "backend_url": "https://a100.example.com:8080",
-  "docs_url": "./docs/DEPLOY.md",
-  "label_zh": "A100 工作站",
-  "label_en": "A100 Workstation"
+  "workstation_url": "https://ws.sage.org.ai",
+  "backend_url": "https://api.sage.org.ai",
+  "docs_url": "./docs/CLOUDFLARE_SETUP.md",
+  "label_zh": "Sage A100 工作站",
+  "label_en": "Sage A100 Workstation"
 }
 ```
 
 如果你不想在首页直接嵌 iframe，可以把 `mode` 改成 `link`，首页会保留“打开 Workstation”入口，但不在站内渲染远端页面。
 
 > 注意：GitHub Pages 页面如果是 HTTPS，而 workstation 还是 HTTP，浏览器会阻止混合内容，iframe 不会显示。
+
+对 `sage.org.ai` 的推荐拆分：
+
+- `vllm-hust.sage.org.ai` 保留给 GitHub Pages 官网
+- `ws.sage.org.ai` 走 Cloudflare Tunnel 到 `http://127.0.0.1:3001`
+- `api.sage.org.ai` 走 Cloudflare Tunnel 到 `http://127.0.0.1:8080`
 
 ______________________________________________________________________
 
