@@ -325,9 +325,9 @@
             'multi-node': { engine: '', hardware: '', model: '', version: '', workload: '', precision: '' }
         },
         viewOptions: {
-            'single-chip': { sameScopeOnly: false, hideIncompleteGroups: true },
-            'multi-chip': { sameScopeOnly: false, hideIncompleteGroups: true },
-            'multi-node': { sameScopeOnly: false, hideIncompleteGroups: true }
+            'single-chip': { sameScopeOnly: false, hideIncompleteGroups: false },
+            'multi-chip': { sameScopeOnly: false, hideIncompleteGroups: false },
+            'multi-node': { sameScopeOnly: false, hideIncompleteGroups: false }
         },
         expandedRows: new Set()
     };
