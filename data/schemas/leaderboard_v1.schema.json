@@ -17,7 +17,7 @@
   "$defs": {
     "versionOrNA": {
       "type": "string",
-      "pattern": "^(\\d+\\.\\d+\\.\\d+(\\.\\d+)?|N/A)$"
+      "pattern": "^(\\d+\\.\\d+[\\w.\\-+]*|N/A)$"
     },
     "entry": {
       "type": "object",
@@ -51,15 +51,30 @@
         },
         "config_type": {
           "type": "string",
-          "enum": ["single_gpu", "multi_gpu", "multi_node"]
+          "enum": [
+            "single_gpu",
+            "multi_gpu",
+            "multi_node"
+          ]
         },
         "hardware": {
           "type": "object",
-          "required": ["vendor", "chip_model", "chip_count"],
+          "required": [
+            "vendor",
+            "chip_model",
+            "chip_count"
+          ],
           "properties": {
             "vendor": {
               "type": "string",
-              "enum": ["Intel", "AMD", "NVIDIA", "Huawei", "Unknown", "Other"]
+              "enum": [
+                "Intel",
+                "AMD",
+                "NVIDIA",
+                "Huawei",
+                "Unknown",
+                "Other"
+              ]
             },
             "chip_model": {
               "type": "string"
@@ -72,80 +87,232 @@
               "type": "string"
             },
             "chips_per_node": {
-              "type": ["integer", "null"],
+              "type": [
+                "integer",
+                "null"
+              ],
               "minimum": 1
             },
             "intra_node_interconnect": {
-              "type": ["string", "null"]
+              "type": [
+                "string",
+                "null"
+              ]
             },
             "memory_per_chip_gb": {
-              "type": ["number", "null"],
+              "type": [
+                "number",
+                "null"
+              ],
               "minimum": 0
             },
             "total_memory_gb": {
-              "type": ["number", "null"],
+              "type": [
+                "number",
+                "null"
+              ],
               "minimum": 0
             }
           },
           "anyOf": [
-            { "required": ["interconnect"] },
-            { "required": ["intra_node_interconnect"] }
+            {
+              "required": [
+                "interconnect"
+              ]
+            },
+            {
+              "required": [
+                "intra_node_interconnect"
+              ]
+            }
           ],
           "additionalProperties": true
         },
         "model": {
           "type": "object",
-          "required": ["name", "parameters", "precision"],
+          "required": [
+            "name",
+            "parameters",
+            "precision"
+          ],
           "properties": {
-            "name": { "type": "string" },
-            "parameters": { "type": "string" },
+            "name": {
+              "type": "string"
+            },
+            "parameters": {
+              "type": "string"
+            },
             "precision": {
               "type": "string",
-              "enum": ["FP32", "FP16", "BF16", "INT8", "INT4", "FP8"]
+              "enum": [
+                "FP32",
+                "FP16",
+                "BF16",
+                "INT8",
+                "INT4",
+                "FP8",
+                "fp32",
+                "fp16",
+                "bf16",
+                "int8",
+                "int4",
+                "fp8"
+              ]
             },
-            "quantization": { "type": ["string", "null"] }
+            "quantization": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
           },
           "additionalProperties": true
         },
         "workload": {
           "type": "object",
-          "required": ["name", "input_length", "output_length"],
+          "required": [
+            "name",
+            "input_length",
+            "output_length"
+          ],
           "properties": {
-            "name": { "type": "string" },
-            "input_length": { "type": "integer", "minimum": 1 },
-            "output_length": { "type": "integer", "minimum": 1 },
-            "batch_size": { "type": ["integer", "null"], "minimum": 1 },
-            "concurrent_requests": { "type": ["integer", "null"], "minimum": 1 },
-            "dataset": { "type": ["string", "null"] }
+            "name": {
+              "type": "string"
+            },
+            "input_length": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "output_length": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "batch_size": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "concurrent_requests": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 1
+            },
+            "dataset": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
           },
           "additionalProperties": true
         },
         "metrics": {
           "type": "object",
-          "required": ["ttft_ms", "throughput_tps", "peak_mem_mb", "error_rate"],
+          "required": [
+            "ttft_ms",
+            "throughput_tps",
+            "peak_mem_mb",
+            "error_rate"
+          ],
           "properties": {
-            "ttft_ms": { "type": "number", "minimum": 0 },
-            "tbt_ms": { "type": ["number", "null"], "minimum": 0 },
-            "tpot_ms": { "type": ["number", "null"], "minimum": 0 },
-            "throughput_tps": { "type": "number", "minimum": 0 },
-            "peak_mem_mb": { "type": "integer", "minimum": 0 },
-            "error_rate": { "type": "number", "minimum": 0, "maximum": 1 },
-            "prefix_hit_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 },
-            "kv_used_tokens": { "type": ["integer", "null"], "minimum": 0 },
-            "kv_used_bytes": { "type": ["integer", "null"], "minimum": 0 },
-            "evict_count": { "type": ["integer", "null"], "minimum": 0 },
-            "evict_ms": { "type": ["number", "null"], "minimum": 0 },
-            "spec_accept_rate": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+            "ttft_ms": {
+              "type": "number",
+              "minimum": 0
+            },
+            "tbt_ms": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "tpot_ms": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "throughput_tps": {
+              "type": "number",
+              "minimum": 0
+            },
+            "peak_mem_mb": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "error_rate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "prefix_hit_rate": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            },
+            "kv_used_tokens": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "kv_used_bytes": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "evict_count": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "evict_ms": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "spec_accept_rate": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "minimum": 0,
+              "maximum": 1
+            }
           },
           "additionalProperties": true
         },
         "constraints": {
           "type": "object",
-          "required": ["scenario_source", "accountable_scope", "metrics"],
+          "required": [
+            "scenario_source",
+            "accountable_scope",
+            "metrics"
+          ],
           "properties": {
             "scenario_source": {
               "type": "string",
-              "enum": ["vllm-benchmark"]
+              "enum": [
+                "vllm-benchmark"
+              ]
             },
             "accountable_scope": {
               "type": "object",
@@ -156,15 +323,33 @@
                 "baseline_engine"
               ],
               "properties": {
-                "domestic_chip_class": { "type": "string" },
+                "domestic_chip_class": {
+                  "type": "string"
+                },
                 "representative_model_band": {
                   "type": "string",
-                  "enum": ["7B-13B"]
+                  "enum": [
+                    "7B-13B"
+                  ]
                 },
-                "representative_business_scenario": { "type": "string" },
-                "baseline_engine": { "type": "string" },
-                "owner_confirmed": { "type": ["boolean", "null"] },
-                "notes": { "type": ["string", "null"] }
+                "representative_business_scenario": {
+                  "type": "string"
+                },
+                "baseline_engine": {
+                  "type": "string"
+                },
+                "owner_confirmed": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "notes": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
               },
               "additionalProperties": true
             },
@@ -190,25 +375,112 @@
               ],
               "properties": {
                 "single_chip_effective_utilization_pct": {
-                  "type": "number",
+                  "type": [
+                    "number",
+                    "null"
+                  ],
                   "minimum": 0,
                   "maximum": 100
                 },
-                "typical_throughput_ratio_vs_baseline": { "type": "number", "minimum": 0 },
-                "typical_ttft_reduction_pct_vs_baseline": { "type": "number", "minimum": 0 },
-                "typical_tpot_reduction_pct_vs_baseline": { "type": "number", "minimum": 0 },
-                "long_context_length": { "type": "integer", "minimum": 1 },
-                "long_context_throughput_stable": { "type": "boolean" },
-                "long_context_ttft_p95_ms": { "type": "number", "minimum": 0 },
-                "long_context_ttft_p99_ms": { "type": "number", "minimum": 0 },
-                "long_context_tpot_p95_ms": { "type": "number", "minimum": 0 },
-                "long_context_tpot_p99_ms": { "type": "number", "minimum": 0 },
-                "long_context_ttft_p95_stable": { "type": "boolean" },
-                "long_context_ttft_p99_stable": { "type": "boolean" },
-                "long_context_tpot_p95_stable": { "type": "boolean" },
-                "long_context_tpot_p99_stable": { "type": "boolean" },
-                "unit_token_cost_reduction_pct": { "type": "number", "minimum": 0 },
-                "multi_tenant_high_utilization": { "type": "boolean" }
+                "typical_throughput_ratio_vs_baseline": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "typical_ttft_reduction_pct_vs_baseline": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "typical_tpot_reduction_pct_vs_baseline": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "long_context_length": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 1
+                },
+                "long_context_throughput_stable": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "long_context_ttft_p95_ms": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "long_context_ttft_p99_ms": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "long_context_tpot_p95_ms": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "long_context_tpot_p99_ms": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "long_context_ttft_p95_stable": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "long_context_ttft_p99_stable": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "long_context_tpot_p95_stable": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "long_context_tpot_p99_stable": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "unit_token_cost_reduction_pct": {
+                  "type": [
+                    "number",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "multi_tenant_high_utilization": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
               },
               "additionalProperties": true
             }
@@ -217,22 +489,67 @@
         },
         "cluster": {
           "oneOf": [
-            { "type": "null" },
+            {
+              "type": "null"
+            },
             {
               "type": "object",
-              "required": ["node_count", "comm_backend", "topology_type"],
+              "required": [
+                "node_count",
+                "comm_backend",
+                "topology_type"
+              ],
               "properties": {
-                "node_count": { "type": "integer", "minimum": 2 },
-                "comm_backend": { "type": "string" },
-                "inter_node_network": { "type": ["string", "null"] },
-                "network_bandwidth_gbps": { "type": ["integer", "null"], "minimum": 0 },
-                "topology_type": { "type": "string" },
+                "node_count": {
+                  "type": "integer",
+                  "minimum": 2
+                },
+                "comm_backend": {
+                  "type": "string"
+                },
+                "inter_node_network": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "network_bandwidth_gbps": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "minimum": 0
+                },
+                "topology_type": {
+                  "type": "string"
+                },
                 "parallelism": {
-                  "type": ["object", "null"],
+                  "type": [
+                    "object",
+                    "null"
+                  ],
                   "properties": {
-                    "tensor_parallel": { "type": ["integer", "null"], "minimum": 1 },
-                    "pipeline_parallel": { "type": ["integer", "null"], "minimum": 1 },
-                    "data_parallel": { "type": ["integer", "null"], "minimum": 1 }
+                    "tensor_parallel": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 1
+                    },
+                    "pipeline_parallel": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 1
+                    },
+                    "data_parallel": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ],
+                      "minimum": 1
+                    }
                   },
                   "additionalProperties": true
                 }
@@ -243,62 +560,204 @@
         },
         "versions": {
           "type": "object",
-          "required": ["protocol", "backend", "core"],
+          "required": [
+            "protocol",
+            "backend",
+            "core"
+          ],
           "properties": {
-            "protocol": { "$ref": "#/$defs/versionOrNA" },
-            "backend": { "$ref": "#/$defs/versionOrNA" },
-            "core": { "$ref": "#/$defs/versionOrNA" },
-            "control_plane": { "$ref": "#/$defs/versionOrNA" },
-            "gateway": { "$ref": "#/$defs/versionOrNA" },
-            "kv_cache": { "$ref": "#/$defs/versionOrNA" },
-            "comm": { "$ref": "#/$defs/versionOrNA" },
-            "compression": { "$ref": "#/$defs/versionOrNA" },
-            "benchmark": { "$ref": "#/$defs/versionOrNA" }
+            "protocol": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "backend": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "core": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "control_plane": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "gateway": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "kv_cache": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "comm": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "compression": {
+              "$ref": "#/$defs/versionOrNA"
+            },
+            "benchmark": {
+              "$ref": "#/$defs/versionOrNA"
+            }
           },
           "additionalProperties": true
         },
         "environment": {
           "type": "object",
-          "required": ["os", "python_version"],
+          "required": [
+            "os",
+            "python_version"
+          ],
           "properties": {
-            "os": { "type": "string" },
-            "python_version": { "type": "string" },
-            "pytorch_version": { "type": ["string", "null"] },
-            "cuda_version": { "type": ["string", "null"] },
-            "cann_version": { "type": ["string", "null"] },
-            "driver_version": { "type": ["string", "null"] }
+            "os": {
+              "type": "string"
+            },
+            "python_version": {
+              "type": "string"
+            },
+            "pytorch_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cuda_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cann_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "driver_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
           },
           "additionalProperties": true
         },
         "kv_cache_config": {
-          "type": ["object", "null"],
+          "type": [
+            "object",
+            "null"
+          ],
           "properties": {
-            "enabled": { "type": "boolean" },
-            "eviction_policy": { "type": ["string", "null"] },
-            "budget_tokens": { "type": ["integer", "null"], "minimum": 0 },
-            "prefix_cache_enabled": { "type": ["boolean", "null"] }
+            "enabled": {
+              "type": "boolean"
+            },
+            "eviction_policy": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "budget_tokens": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "minimum": 0
+            },
+            "prefix_cache_enabled": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            }
           },
           "additionalProperties": true
         },
         "metadata": {
           "type": "object",
-          "required": ["submitted_at", "submitter", "data_source"],
+          "required": [
+            "submitted_at",
+            "submitter",
+            "data_source"
+          ],
           "properties": {
-            "submitted_at": { "type": "string", "format": "date-time" },
-            "submitter": { "type": "string" },
-            "data_source": { "type": "string" },
-            "engine": { "type": ["string", "null"] },
-            "engine_version": { "type": ["string", "null"] },
-            "reproducible_cmd": { "type": ["string", "null"] },
-            "git_commit": { "type": ["string", "null"] },
-            "release_date": { "type": ["string", "null"], "format": "date" },
-            "changelog_url": { "type": ["string", "null"] },
-            "notes": { "type": ["string", "null"] },
-            "verified": { "type": ["boolean", "null"] }
-            ,"idempotency_key": { "type": ["string", "null"] }
-            ,"canonical_artifact_id": { "type": ["string", "null"] }
-            ,"canonical_artifact_kind": { "type": ["string", "null"] }
-            ,"manifest_source": { "type": ["string", "null"] }
+            "submitted_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "submitter": {
+              "type": "string"
+            },
+            "data_source": {
+              "type": "string"
+            },
+            "engine": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "engine_version": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reproducible_cmd": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "git_commit": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "release_date": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "format": "date"
+            },
+            "changelog_url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "verified": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "idempotency_key": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "canonical_artifact_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "canonical_artifact_kind": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "manifest_source": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
           },
           "additionalProperties": true
         }
