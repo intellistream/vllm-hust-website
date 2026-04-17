@@ -5,30 +5,10 @@
  * 支持实时更新，无需后端服务
  */
 
-// ── Runtime repo override ──────────────────────────────────────────────────
-// Priority (highest to lowest):
-//   1. URL param  ?hf_repo=owner/name  (also ?hf_branch=main)
-//   2. <meta name="hf-repo" content="owner/name"> in the HTML <head>
-//   3. Default value below
-function _resolveHFConfigOverride(key, defaultValue) {
-    try {
-        const params = new URLSearchParams(window.location.search);
-        const urlKey = key === 'repo' ? 'hf_repo' : key === 'branch' ? 'hf_branch' : null;
-        if (urlKey && params.has(urlKey)) {
-            return params.get(urlKey);
-        }
-        const meta = document.querySelector(`meta[name="hf-${key}"]`);
-        if (meta && meta.content) {
-            return meta.content;
-        }
-    } catch (_e) { /* ignore */ }
-    return defaultValue;
-}
-
 const HF_CONFIG = {
-    // Hugging Face 仓库配置（可通过 URL ?hf_repo= 或 <meta name="hf-repo"> 覆盖）
-    repo: _resolveHFConfigOverride('repo', 'intellistream/vllm-hust-benchmark-results'),
-    branch: _resolveHFConfigOverride('branch', 'main'),
+    // Hugging Face 仓库配置
+    repo: 'intellistream/vllm-hust-benchmark-results',
+    branch: 'main',
 
     // 数据文件路径（在 HF repo 中的路径）
     files: {
