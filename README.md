@@ -89,24 +89,28 @@ website does not ingest raw compare directories and does not hand-edit benchmark
 
 The only supported leaderboard data chain is:
 
-1. Any benchmark pipeline that exports standard leaderboard artifacts (`leaderboard_manifest.json` + `*_leaderboard.json`)
-2. Snapshot publish to Hugging Face dataset `intellistream/llm-engine-benchmark-results`
-3. Website sync workflow fetches HF snapshot files directly:
-	- `data/leaderboard_single.json`
-	- `data/leaderboard_multi.json`
-	- `data/leaderboard_compare.json`
-	- `data/last_updated.json`
+1. Any benchmark pipeline that exports standard leaderboard artifacts (`leaderboard_manifest.json` +
+   `*_leaderboard.json`)
+1. Snapshot publish to Hugging Face dataset `intellistream/llm-engine-benchmark-results`
+1. Website sync workflow fetches HF snapshot files directly:
+   - `data/leaderboard_single.json`
+   - `data/leaderboard_multi.json`
+   - `data/leaderboard_compare.json`
+   - `data/last_updated.json`
 
-Homepage rendering consumes only those snapshot files, with `leaderboard_compare.json` providing neutral engine-vs-engine head-to-head views.
+Homepage rendering consumes only those snapshot files, with `leaderboard_compare.json` providing
+neutral engine-vs-engine head-to-head views.
 
-`leaderboard_compare.json` now also carries a mandatory hard-constraint snapshot derived from validated entries:
+`leaderboard_compare.json` now also carries a mandatory hard-constraint snapshot derived from
+validated entries:
 
 - single-chip effective utilization >= 90%
 - typical scene throughput >= 2x baseline and TTFT/TPOT reduction > 20%
 - long-context (>=32K) throughput + TTFT/TPOT P95/P99 stability
 - single-business token-cost reduction >= 30% with high multi-tenant utilization
 
-All hard-constraint records must declare `constraints.scenario_source = vllm-benchmark`, using the vLLM benchmark inheritance path as the accountable scenario and dataset source.
+All hard-constraint records must declare `constraints.scenario_source = vllm-benchmark`, using the
+vLLM benchmark inheritance path as the accountable scenario and dataset source.
 
 ## Repository Quickstart
 
