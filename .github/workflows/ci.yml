@@ -24,7 +24,11 @@ jobs:
           SKIP: ${{ github.ref == 'refs/heads/main' && 'no-commit-to-branch' || '' }}
       - name: Run unit tests
         run: pytest tests/ -v
-      - name: Verify main-protection hooks
+      - name: Verify repository hook templates
         run: |
-          grep -q "Direct commits to main are forbidden" hooks/pre-commit
-          grep -q "Direct push to main is forbidden" hooks/pre-push
+          test -f hooks/pre-commit
+          test -f hooks/pre-push
+          bash -n hooks/pre-commit
+          bash -n hooks/pre-push
+          grep -q 'ln -sf "../../hooks/pre-commit"' quickstart.sh
+          grep -q 'ln -sf "../../hooks/pre-push"' quickstart.sh
