@@ -65,13 +65,13 @@ ______________________________________________________________________
 
 - **单机样例**: [`examples/single_node_example.json`](examples/single_node_example.json)
 
-  - 硬件: NVIDIA A100-80GB (单卡)
+  - 硬件: 示例单卡 GPU 配置
   - 模型: Qwen2-7B (FP16)
   - 已通过 Schema 验证 ✅
 
 - **多机样例**: [`examples/multi_node_example.json`](examples/multi_node_example.json)
 
-  - 硬件: Huawei Ascend 910B (8 卡, 2 节点)
+  - 硬件: 示例多机 NPU 集群配置
   - 模型: Llama-3-70B (BF16)
   - 已通过 Schema 验证 ✅
 
@@ -153,7 +153,7 @@ $ python validate_schema.py examples/single_node_example.json
 
 ✅ Data structure:
    - vllm-hust version: 0.2.3.3
-   - Hardware: NVIDIA A100-80GB
+  - Hardware: sample single-node accelerator
    - Model: Qwen2-7B (7B)
    - Configuration: Single-node
 ```
@@ -169,7 +169,7 @@ $ python validate_schema.py examples/multi_node_example.json
 
 ✅ Data structure:
    - vllm-hust version: 0.2.3.3
-   - Hardware: Huawei Ascend 910B
+  - Hardware: sample multi-node accelerator cluster
    - Model: Llama-3-70B (70B)
    - Configuration: Multi-node
    - Nodes: 2

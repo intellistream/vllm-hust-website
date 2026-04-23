@@ -164,7 +164,7 @@ vLLM benchmark inheritance path as the accountable scenario and dataset source.
 ```bash
 export WEBSITE_HOST=127.0.0.1
 export WEBSITE_PORT=8000
-export WEBSITE_ROOT_DIR=/home/shuhao/vllm-hust-website
+export WEBSITE_ROOT_DIR=/path/to/vllm-hust-website
 export WEBSITE_SYSTEMD_SERVICE_NAME=vllm-hust-website
 ```
 

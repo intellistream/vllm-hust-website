@@ -4,8 +4,8 @@
     "engine_version": "0.2.3.3",
     "config_type": "multi_node",
     "hardware": {
-        "vendor": "Huawei",
-        "chip_model": "Ascend 910B",
+        "vendor": "ExampleVendor",
+        "chip_model": "Sample-NPU-64GB",
         "chip_count": 8,
         "interconnect": "HCCS",
         "chips_per_node": 4,
@@ -44,7 +44,7 @@
     "constraints": {
         "scenario_source": "vllm-benchmark",
         "accountable_scope": {
-            "domestic_chip_class": "Huawei Ascend 910B",
+            "domestic_chip_class": "sample-multi-node-accelerator-cluster",
             "representative_model_band": "7B-13B",
             "representative_business_scenario": "tool-calling-multi-turn",
             "baseline_engine": "vllm",
@@ -114,7 +114,7 @@
         "git_commit": "a1b2c3d4e5f6789012345678901234567890abcd",
         "release_date": "2026-01-27",
         "changelog_url": "https://github.com/intellistream/vllm-hust/blob/main/CHANGELOG.md#0233---2026-01-27",
-        "notes": "Multi-node performance on Huawei Ascend 910B with HCCL",
+        "notes": "Multi-node performance sample on a generic accelerator cluster with HCCL",
         "verified": true
     }
 }
