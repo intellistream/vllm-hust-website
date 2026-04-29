@@ -191,6 +191,18 @@ def test_aggregate_results_from_standard_manifest(tmp_path: Path) -> None:
     assert single_payload[0]["workload"]["name"] == "short"
     assert single_payload[0]["metadata"]["github_user"] == "octocat"
     assert single_payload[0]["metadata"]["git_commit"] == "abc123def456"
+    assert single_payload[0]["model"]["name"] == "Qwen2.5-0.5B-Instruct"
+    assert single_payload[0]["engine_version"] == "vllm-hust@abc123de"
+    assert single_payload[0]["metadata"]["engine_version"] == "vllm-hust@abc123de"
+
+    compare_payload = json.loads(
+        (output_dir / "leaderboard_compare.json").read_text(encoding="utf-8")
+    )
+    assert compare_payload["hard_constraints"]["scope_count"] == 1
+    assert (
+        compare_payload["hard_constraints"]["scopes"][0]["scope"]["model"]
+        == "Qwen2.5-0.5B-Instruct"
+    )
 
 
 def test_aggregate_results_fails_on_invalid_schema(tmp_path: Path) -> None:
