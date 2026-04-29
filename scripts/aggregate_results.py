@@ -33,44 +33,6 @@ HARD_CONSTRAINT_THRESHOLDS = {
 }
 
 
-def normalize_model_name(value: Any) -> str:
-    model_name = str(value or "unknown-model").strip()
-    if not model_name:
-        return "unknown-model"
-    return model_name.rsplit("/", 1)[-1]
-
-
-def normalize_engine_version(entry: dict[str, Any]) -> str:
-    metadata = entry.get("metadata") or {}
-    git_commit = str(metadata.get("git_commit") or "").strip()
-    github_repository = str(metadata.get("github_repository") or "").strip()
-    raw_engine_version = str(
-        entry.get("engine_version") or metadata.get("engine_version") or "unknown"
-    ).strip()
-
-    if git_commit:
-        commit_short = git_commit[:8]
-        if github_repository:
-            repo_name = github_repository.rsplit("/", 1)[-1]
-            return f"{repo_name}@{commit_short}"
-        return f"g{commit_short}"
-
-    return raw_engine_version or "unknown"
-
-
-def normalize_entry_for_snapshot(entry: dict[str, Any]) -> dict[str, Any]:
-    normalized = json.loads(json.dumps(entry))
-    model = normalized.setdefault("model", {})
-    metadata = normalized.setdefault("metadata", {})
-
-    model["name"] = normalize_model_name(model.get("name"))
-    normalized_engine_version = normalize_engine_version(normalized)
-    normalized["engine_version"] = normalized_engine_version
-    metadata["engine_version"] = normalized_engine_version
-
-    return normalized
-
-
 def load_schema(schema_path: Path) -> dict[str, Any]:
     return json.loads(schema_path.read_text(encoding="utf-8"))
 
@@ -134,7 +96,7 @@ def extract_workload_name(entry: dict[str, Any]) -> str:
 
 
 def build_compare_scope_key(entry: dict[str, Any]) -> str:
-    model = normalize_model_name((entry.get("model") or {}).get("name"))
+    model = str((entry.get("model") or {}).get("name") or "unknown-model")
     hardware = str(
         (entry.get("hardware") or {}).get("chip_model") or "unknown-hardware"
     )
@@ -161,7 +123,9 @@ def build_compare_engine_summary(entry: dict[str, Any]) -> dict[str, Any]:
     metadata = entry.get("metadata") or {}
     return {
         "engine": str(entry.get("engine") or metadata.get("engine") or "unknown"),
-        "engine_version": normalize_engine_version(entry),
+        "engine_version": str(
+            entry.get("engine_version") or metadata.get("engine_version") or "unknown"
+        ),
         "entry_id": str(entry.get("entry_id") or ""),
         "submitted_at": metadata.get("submitted_at"),
         "canonical_path": entry.get("canonical_path"),
@@ -211,7 +175,7 @@ def safe_bool(value: Any) -> bool | None:
 def build_hard_constraint_scope_key(entry: dict[str, Any]) -> str:
     constraints = entry.get("constraints") or {}
     accountable_scope = constraints.get("accountable_scope") or {}
-    model = normalize_model_name((entry.get("model") or {}).get("name"))
+    model = str((entry.get("model") or {}).get("name") or "unknown-model")
     hardware = str(
         (entry.get("hardware") or {}).get("chip_model") or "unknown-hardware"
     )
@@ -340,7 +304,9 @@ def summarize_hard_constraint_entry(entry: dict[str, Any]) -> dict[str, Any]:
     return {
         "entry_id": str(entry.get("entry_id") or ""),
         "engine": str(entry.get("engine") or metadata.get("engine") or "unknown"),
-        "engine_version": normalize_engine_version(entry),
+        "engine_version": str(
+            entry.get("engine_version") or metadata.get("engine_version") or "unknown"
+        ),
         "submitted_at": metadata.get("submitted_at"),
         "git_commit": metadata.get("git_commit"),
         "scenario_source": constraints.get("scenario_source"),
@@ -401,7 +367,7 @@ def build_hard_constraint_snapshot(entries: list[dict[str, Any]]) -> dict[str, A
         constraints = latest.get("constraints") or {}
         scope = {
             "engine": str(latest.get("engine") or "unknown"),
-            "model": normalize_model_name((latest.get("model") or {}).get("name")),
+            "model": str((latest.get("model") or {}).get("name") or "unknown-model"),
             "hardware": str(
                 (latest.get("hardware") or {}).get("chip_model") or "unknown-hardware"
             ),
@@ -495,7 +461,9 @@ def build_compare_snapshot(entries: list[dict[str, Any]]) -> dict[str, Any]:
             {
                 "scope_key": scope_key,
                 "scope": {
-                    "model": normalize_model_name((entry.get("model") or {}).get("name")),
+                    "model": str(
+                        (entry.get("model") or {}).get("name") or "unknown-model"
+                    ),
                     "hardware": str(
                         (entry.get("hardware") or {}).get("chip_model")
                         or "unknown-hardware"
@@ -650,7 +618,7 @@ def load_manifest_entries(
                     f"{artifact_path}: metadata.idempotency_key mismatch with {manifest_path}"
                 )
 
-            entries.append(normalize_entry_for_snapshot(validated))
+            entries.append(validated)
     return entries
 
 
