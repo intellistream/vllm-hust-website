@@ -19,17 +19,11 @@
 # 安装
 pip install vllm-hust
 
-# Hello World
-vllm-hust hello
-
-# 运行推理 (CPU 默认)
-vllm-hust run -p "Hello, world!" --max-tokens 32
-
-# 运行推理 (Ascend NPU)
-vllm-hust run -p "Hello AI" --backend cuda
-
 # 启动 OpenAI 兼容服务器
-vllm-hust serve --port 8000
+vllm serve Qwen/Qwen2.5-1.5B-Instruct --port 8000
+
+# 发起一次聊天请求
+vllm chat --quick "Hello AI"
 ```
 
 _该区块由 `data/version_meta.json` 驱动，运行 `python scripts/sync_version_meta.py` 自动更新。_

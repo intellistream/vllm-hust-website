@@ -65,10 +65,10 @@ def create_cast_file(filename: str, *, base_url: str, model: str, port: int) -> 
     newline("Successfully installed vllm-hust")
     newline()
 
-    type_command(f"vllm-hust serve --backend cpu --model {model} --port {port}")
+    type_command(f"vllm serve {model} --port {port}")
     newline("🌐 Starting vllm-hust Gateway...")
     newline(f"📦 Model: {model}")
-    newline("🖥️  Backend: cpu")
+    newline("🖥️  Backend: default")
     newline(f"✅ OpenAI-compatible API ready at http://localhost:{port}")
     newline()
 

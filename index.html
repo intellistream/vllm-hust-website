@@ -213,6 +213,14 @@
         margin-bottom: 18px;
       }
 
+      .contributors-section {
+        margin-top: 28px;
+      }
+
+      .contributors-section .table-container {
+        margin-top: 18px;
+      }
+
       .launchpad-grid {
         display: grid;
         grid-template-columns: minmax(0, 1.55fr) minmax(300px, 0.65fr);
@@ -1424,6 +1432,44 @@
         </div>
       </div>
 
+      <div class="section contributors-section" id="contributors">
+        <div class="section-kicker" data-i18n="contributors_kicker">People</div>
+        <h2 id="contributors-title">Core Contributors</h2>
+        <p id="contributors-description">
+          The people currently driving runtime, Ascend, benchmark, docs, website, and workstation work across the vLLM-HUST repositories.
+        </p>
+
+        <div id="contributors-loading" class="loading-state">
+          <div class="spinner"></div>
+          <p id="contributors-loading-text">Loading contributor data...</p>
+        </div>
+
+        <div id="contributors-error" class="empty-state" style="display: none">
+          <div class="empty-state-icon">⚠️</div>
+          <h3 id="contributors-error-title">Failed to Load Contributors</h3>
+          <p id="contributors-error-text">Please refresh the page or check the published contributor data.</p>
+        </div>
+
+        <div id="contributors-content" style="display: none">
+          <p id="contributors-meta" class="leaderboard-meta">Snapshot: -</p>
+
+          <div class="table-container">
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th id="contributors-head-rank">Rank</th>
+                  <th id="contributors-head-name">Contributor</th>
+                  <th id="contributors-head-lines">Changed Lines</th>
+                  <th id="contributors-head-added-deleted">Added / Deleted</th>
+                  <th id="contributors-head-repos">Active Repos</th>
+                </tr>
+              </thead>
+              <tbody id="contributors-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <div class="launchpad-grid" style="margin-top: 28px">
         <div class="demo-section">
           <div class="section-kicker" data-i18n="demo_kicker">Quick View</div>
@@ -1434,7 +1480,7 @@
             class="demo-container"
             style="border: 1px solid #333; border-radius: 8px; overflow: hidden; background: #000"
           >
-            <div class="demo-title-bar" id="demo-title-bar">📺 vllm-hust run --backend ascend</div>
+            <div class="demo-title-bar" id="demo-title-bar">📺 vllm serve on Ascend</div>
 
             <div
               id="demo-player"
@@ -1465,19 +1511,19 @@
               </div>
 
               <div class="quickstart-step">
-                <div id="quickstart-step-setup" class="quickstart-step-title">🔧 2. Setup Backend</div>
-                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-setup-command">vllm-hust install cuda</span> <span id="quickstart-setup-hint" style="color: #94a3b8"># or ascend / cpu</span></span>
+                <div id="quickstart-step-setup" class="quickstart-step-title">🚀 2. Start Server</div>
+                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-setup-command">vllm serve Qwen/Qwen2.5-1.5B-Instruct --port 8000</span> <span id="quickstart-setup-hint" style="color: #94a3b8"># choose a local or HF model</span></span>
               </div>
 
               <div class="quickstart-step">
-                <div id="quickstart-step-run" class="quickstart-step-title">⚡ 3. Run Inference</div>
-                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-run-command">vllm-hust run -p "Hello AI" --backend cuda</span></span>
+                <div id="quickstart-step-run" class="quickstart-step-title">💬 3. Send Request</div>
+                <span class="quickstart-command"><span style="color: #48bb78">$</span> <span id="quickstart-run-command">vllm chat --quick "Hello AI"</span></span>
               </div>
             </div>
 
             <div class="quickstart-note">
               <strong id="quickstart-smart-title">💡 Note:</strong>
-              <span id="quickstart-smart-detection">Pick the backend that matches your hardware.</span>
+              <span id="quickstart-smart-detection">After installation, use the standard vllm CLI entrypoint.</span>
             </div>
           </div>
         </div>
@@ -1581,7 +1627,7 @@
           demo_title: "⚡ Live Trace",
           demo_desc:
             "A short serving trace for the default path.",
-          demo_title_bar: "📺 vllm-hust run --backend ascend",
+          demo_title_bar: "📺 vllm serve on Ascend",
           demo_loading_placeholder: "Loading terminal demo...",
           start_api: "# Start API server",
           cta_docs: "📚 Documentation",
@@ -1589,15 +1635,15 @@
 
           quickstart_kicker: "Launch",
           quickstart_title: "🚀 Quick Start",
-          quickstart_description: "Three commands.",
+          quickstart_description: "Install, start the server, then send one request.",
           quickstart_step_install: "📦 1. Pip Install",
-          quickstart_step_setup: "🔧 2. Setup Backend",
-          quickstart_step_run: "⚡ 3. Run Inference",
+          quickstart_step_setup: "🚀 2. Start Server",
+          quickstart_step_run: "💬 3. Send Request",
           quickstart_setup_comment: "# Install CUDA, Ascend, or CPU backend automatically",
-          quickstart_setup_hint: "# or ascend / cpu",
+          quickstart_setup_hint: "# choose a local or HF model",
           quickstart_smart_title: "💡 Note:",
           quickstart_smart_detection:
-            "Pick the backend that matches your hardware.",
+            "After installation, use the standard vllm CLI entrypoint.",
 
           leaderboard_eyebrow: "vLLM Benchmark",
           leaderboard_title: "Performance Leaderboard",
@@ -1641,6 +1687,19 @@
           table_head_actions: "Actions",
           leaderboard_empty_title: "No Results Found",
           leaderboard_empty_text: "Try adjusting your filters to see more data.",
+          contributors_kicker: "People",
+          contributors_title: "Core Contributors",
+          contributors_description:
+            "The people currently driving runtime, Ascend, benchmark, docs, website, and workstation work across the vLLM-HUST repositories.",
+          contributors_loading_text: "Loading contributor data...",
+          contributors_error_title: "Failed to Load Contributors",
+          contributors_error_text: "Please refresh the page or check the published contributor data.",
+          contributors_head_rank: "Rank",
+          contributors_head_name: "Contributor",
+          contributors_head_lines: "Changed Lines",
+          contributors_head_added_deleted: "Added / Deleted",
+          contributors_head_repos: "Active Repos",
+          contributors_meta_template: "Snapshot: {date} • {count} contributors",
 
           workstation_title: "🖥️ AGI4S Serving Console",
           workstation_kicker: "Live Workspace",
@@ -1766,21 +1825,21 @@
           demo_kicker: "快速查看",
           demo_title: "⚡ 运行轨迹",
           demo_desc: "默认服务路径的简短演示。",
-          demo_title_bar: "📺 vllm-hust run --backend ascend",
+          demo_title_bar: "📺 vllm serve on Ascend",
           demo_loading_placeholder: "正在加载终端演示...",
           start_api: "# 启动 API 服务",
           cta_docs: "📚 文档",
           cta_github: "💻 GitHub",
           quickstart_kicker: "启动",
           quickstart_title: "🚀 快速开始",
-          quickstart_description: "三条命令。",
+          quickstart_description: "安装后直接启动服务，再发起一次请求。",
           quickstart_step_install: "📦 1. 安装",
-          quickstart_step_setup: "🔧 2. 配置后端",
-          quickstart_step_run: "⚡ 3. 运行",
+          quickstart_step_setup: "🚀 2. 启动服务",
+          quickstart_step_run: "💬 3. 发起请求",
           quickstart_setup_comment: "# 自动安装 CUDA、Ascend 或 CPU 后端",
-          quickstart_setup_hint: "# 或 ascend / cpu",
+          quickstart_setup_hint: "# 选择本地模型或 Hugging Face 模型",
           quickstart_smart_title: "💡 提示：",
-          quickstart_smart_detection: "选择与你的硬件匹配的后端即可。",
+          quickstart_smart_detection: "安装 vllm-hust 后，默认使用标准 vllm 命令入口。",
           leaderboard_eyebrow: "vLLM Benchmark",
           leaderboard_title: "性能排行榜",
           leaderboard_description: "基于 vLLM benchmark 产物，在同模型、同硬件、同精度、同 workload 下直接比较引擎表现。",
@@ -1861,6 +1920,19 @@
           table_head_actions: "操作",
           leaderboard_empty_title: "没有匹配结果",
           leaderboard_empty_text: "调整筛选条件后再试。",
+          contributors_kicker: "贡献者",
+          contributors_title: "核心贡献者",
+          contributors_description:
+            "展示当前持续推动 vLLM-HUST 各仓库运行时、Ascend、benchmark、文档、website 与 workstation 演进的主要贡献者。",
+          contributors_loading_text: "正在加载贡献者数据...",
+          contributors_error_title: "贡献者数据加载失败",
+          contributors_error_text: "请刷新页面，或检查公开的贡献者数据文件是否可访问。",
+          contributors_head_rank: "排名",
+          contributors_head_name: "贡献者",
+          contributors_head_lines: "变更行数",
+          contributors_head_added_deleted: "新增 / 删除",
+          contributors_head_repos: "活跃仓库数",
+          contributors_meta_template: "快照时间：{date} • 共 {count} 位贡献者",
 
           workstation_title: "🖥️ AGI4S 服务控制台",
           workstation_kicker: "实时工作台",
@@ -2030,6 +2102,16 @@
           "table-head-actions": dict.table_head_actions,
           "leaderboard-empty-title": dict.leaderboard_empty_title,
           "leaderboard-empty-text": dict.leaderboard_empty_text,
+          "contributors-title": dict.contributors_title,
+          "contributors-description": dict.contributors_description,
+          "contributors-loading-text": dict.contributors_loading_text,
+          "contributors-error-title": dict.contributors_error_title,
+          "contributors-error-text": dict.contributors_error_text,
+          "contributors-head-rank": dict.contributors_head_rank,
+          "contributors-head-name": dict.contributors_head_name,
+          "contributors-head-lines": dict.contributors_head_lines,
+          "contributors-head-added-deleted": dict.contributors_head_added_deleted,
+          "contributors-head-repos": dict.contributors_head_repos,
           "workstation-title": dict.workstation_title,
           "workstation-desc": dict.workstation_desc,
           "workstation-note": dict.workstation_note,
@@ -2094,6 +2176,71 @@
         window["vllm-hustCurrentLang"] = lang;
         window.dispatchEvent(new CustomEvent("vllm-hust:langchange", { detail: { lang } }));
         localStorage.setItem("vllm-hust_lang", lang);
+
+        if (window["vllm-hustContributorPayload"]) {
+          renderContributorMeta(window["vllm-hustContributorPayload"]);
+        }
+      }
+
+      function formatContributorMetaText(payload) {
+        const lang = window["vllm-hustCurrentLang"] || "en";
+        const dict = I18N[lang] || I18N.en;
+        return dict.contributors_meta_template
+          .replace("{date}", payload.updated_at || "-")
+          .replace("{count}", String((payload.contributors || []).length));
+      }
+
+      function renderContributorMeta(payload) {
+        const meta = document.getElementById("contributors-meta");
+        if (!meta) return;
+        meta.textContent = formatContributorMetaText(payload);
+      }
+
+      function renderContributors(payload) {
+        const tbody = document.getElementById("contributors-tbody");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        const contributors = Array.isArray(payload.contributors) ? payload.contributors : [];
+        for (const contributor of contributors) {
+          const row = document.createElement("tr");
+          const nameCell = contributor.github_url
+            ? `<a href="${contributor.github_url}" target="_blank" rel="noreferrer">${contributor.name}</a>`
+            : contributor.name;
+          row.innerHTML = `
+            <td>${contributor.rank}</td>
+            <td>${nameCell}</td>
+            <td>${Number(contributor.changed_lines).toLocaleString()}</td>
+            <td>${Number(contributor.added).toLocaleString()} / ${Number(contributor.deleted).toLocaleString()}</td>
+            <td>${contributor.active_repos}</td>
+          `;
+          tbody.appendChild(row);
+        }
+        renderContributorMeta(payload);
+      }
+
+      async function loadContributors() {
+        const loading = document.getElementById("contributors-loading");
+        const error = document.getElementById("contributors-error");
+        const content = document.getElementById("contributors-content");
+        if (!loading || !error || !content) return;
+
+        try {
+          const response = await fetch("./data/core_contributors.json", { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+          }
+          const payload = await response.json();
+          window["vllm-hustContributorPayload"] = payload;
+          renderContributors(payload);
+          loading.style.display = "none";
+          error.style.display = "none";
+          content.style.display = "block";
+        } catch (err) {
+          console.error("Failed to load contributor data", err);
+          loading.style.display = "none";
+          content.style.display = "none";
+          error.style.display = "block";
+        }
       }
 
       function initQueryAccordion() {
@@ -2123,6 +2270,7 @@
         const initial = detectDefaultLang();
         setLang(initial);
         initQueryAccordion();
+        loadContributors();
 
         const btn = document.getElementById("langToggle");
         if (btn) {

@@ -59,9 +59,10 @@ def _render_readme_block(meta: dict[str, Any]) -> str:
     )
     quickstart_title = quickstart.get("title_zh", "🚀 Quick Start")
     install_command = quickstart.get("install_command", "pip install vllm-hust")
-    run_command = quickstart.get(
-        "run_command", 'vllm-hust run -p "Hello AI" --backend cuda'
+    setup_command = quickstart.get(
+        "setup_command", "vllm serve Qwen/Qwen2.5-1.5B-Instruct --port 8000"
     )
+    run_command = quickstart.get("run_command", 'vllm chat --quick "Hello AI"')
 
     return "\n".join(
         [
@@ -82,17 +83,11 @@ def _render_readme_block(meta: dict[str, Any]) -> str:
             "# 安装",
             install_command,
             "",
-            "# Hello World",
-            "vllm-hust hello",
-            "",
-            "# 运行推理 (CPU 默认)",
-            'vllm-hust run -p "Hello, world!" --max-tokens 32',
-            "",
-            "# 运行推理 (Ascend NPU)",
-            run_command,
-            "",
             "# 启动 OpenAI 兼容服务器",
-            "vllm-hust serve --port 8000",
+            setup_command,
+            "",
+            "# 发起一次聊天请求",
+            run_command,
             "```",
             "",
             "_该区块由 `data/version_meta.json` 驱动，运行 `python scripts/sync_version_meta.py` 自动更新。_",

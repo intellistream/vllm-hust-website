@@ -6,16 +6,16 @@
   },
   "quickstart": {
     "title_zh": "🚀 Quick Start",
-    "description_zh": "使用统一入口快速安装、配置后端并启动服务。",
-    "install_step_label_zh": "📦 1. Pip Install",
-    "setup_step_label_zh": "🔧 2. Setup Backend",
-    "run_step_label_zh": "⚡ 3. Run Inference",
-    "smart_detection_zh": "会根据目标硬件提示合适的 vllm-hust 安装与后端配置入口。",
-    "smart_command": "vllm-hust install",
+    "description_zh": "安装后直接使用标准 vllm CLI 启动服务并发起请求。",
+    "install_step_label_zh": "📦 1. 安装",
+    "setup_step_label_zh": "🚀 2. 启动服务",
+    "run_step_label_zh": "💬 3. 发起请求",
+    "smart_detection_zh": "安装 vllm-hust 后，默认使用标准 vllm 命令入口。",
+    "smart_command": "vllm --help",
     "install_command": "pip install vllm-hust",
-    "setup_command": "vllm-hust install cuda",
-    "run_command": "vllm-hust run -p \"Hello AI\" --backend cuda",
-    "setup_hint": "# or ascend / cpu"
+    "setup_command": "vllm serve Qwen/Qwen2.5-1.5B-Instruct --port 8000",
+    "run_command": "vllm chat --quick \"Hello AI\"",
+    "setup_hint": "# choose a local or HF model"
   },
   "packages": [
     {
